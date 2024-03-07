@@ -8,12 +8,21 @@ public class Goat extends Entity implements Movable, CanDrag {
 
 	private Dragable dragged;
 
-	private void decreaseStep() {
-
+	private boolean decreaseStep() {
+		if (hasSteps()) {
+			stepAmount--;
+			return true;
+		}
+		return false;
 	}
 
 	public boolean hasSteps() {
-		return false;
+		return stepAmount > 0;
+	}
+
+
+	public Goat(int stepAmount) {
+		this.stepAmount = stepAmount;
 	}
 
 

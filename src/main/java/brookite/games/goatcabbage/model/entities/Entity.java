@@ -9,7 +9,15 @@ public abstract class Entity {
 	protected boolean _isSolid;
 
 	public boolean isSolid() {
-		return false;
+		return _isSolid;
+	}
+
+	public void setCell(Cell cell) {
+		this.cell = cell;
+	}
+
+	public Cell getCell() {
+		return cell;
 	}
 
 }
