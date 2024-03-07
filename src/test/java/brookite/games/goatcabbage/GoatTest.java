@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class GoatTest {
     @Test
     public void moveToDirectionsTest() {
-
+        //TODO: check cell changing after move
     }
 
     @Test

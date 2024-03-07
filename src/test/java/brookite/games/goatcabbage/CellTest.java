@@ -31,4 +31,9 @@ public class CellTest {
     @Test
     public void putSolidEntitiesTest() {
     }
+
+    @Test
+    public void connectionWithPaddockTest() {
+
+    }
 }
