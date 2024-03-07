@@ -1,6 +1,5 @@
 package brookite.games.goatcabbage.model;
 
-import brookite.games.goatcabbage.model.levels.LevelLoader;
 import brookite.games.goatcabbage.model.events.GameStateListener;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
 
