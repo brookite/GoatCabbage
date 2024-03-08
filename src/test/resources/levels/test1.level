@@ -1,0 +1,34 @@
+{
+     "name": "Example Level",
+     "field": {
+         "width": 128,
+         "height": 120
+     },
+     "goat": {
+         "position": [3, 2],  // cell position format is array of: [x, y]
+         "stepAmount": 30
+     },
+     "uiProps": { // this object may be omitted
+          "levelBackground": "image.png"
+     },
+     "commands": [
+      {
+          "command": "placeEntities",
+          "type": "box",
+          "positions": [
+              [3, 2],
+              [5, 7]
+          ]
+      },
+      {"command": "placeEntity", "type": "cabbage", "position": [7, 2]},
+      {"command": "placeEntity", "type": "box", "position": [5, 2]},
+      {"command": "setWall", "direction": "south", "position": [5, 2]}, // directions: [north, west, south, east]
+      {
+          "command": "createWallFigure",
+          "figure": [
+              {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1},
+              {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1}
+          ]
+      },
+     ]
+}

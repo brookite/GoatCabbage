@@ -35,7 +35,7 @@ public class Game {
     }
 
     public void nextEnvironment() {
-        currentEnvironment = (currentEnvironment + 1) % this.environments.length
+        currentEnvironment = (currentEnvironment + 1) % this.environments.length;
     }
 
     public void setEnvironments(GameEnvironment[] environments) {
