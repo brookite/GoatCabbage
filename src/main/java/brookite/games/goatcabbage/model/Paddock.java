@@ -6,6 +6,7 @@ import brookite.games.goatcabbage.model.entities.Cabbage;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Paddock {
     private ArrayList<Cell> cells;
@@ -25,12 +26,12 @@ public class Paddock {
 
     }
 
-    public void neighbor(Cell cell, Direction direction) {
-
+    public Cell neighbor(Cell cell, Direction direction) {
+        return null;
     }
 
-    public void cell(int row, int col) {
-
+    public Cell cell(int row, int col) {
+        return null;
     }
 
     @Override
@@ -38,5 +39,24 @@ public class Paddock {
         return super.toString();
     }
 
+    public Goat getGoat() {
+        return goat;
+    }
+
+    public Cabbage getCabbage() {
+        return cabbage;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public List<Cell> getCells() {
+        return new ArrayList<>(cells);
+    }
 }
 

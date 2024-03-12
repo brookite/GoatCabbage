@@ -6,15 +6,13 @@ import brookite.games.goatcabbage.model.levels.json.UIProperties;
 import java.util.Map;
 
 public abstract class GameEnvironment {
-	private Paddock paddock;
-	private int goatStepAmount;
 	private String name;
 
-	public abstract void create();
+	public abstract Paddock create();
 
-	protected abstract void createEntities();
+	protected abstract void createEntities(Paddock paddock);
 
-	protected abstract void placeWalls();
+	protected abstract void placeWalls(Paddock paddock);
 
 	public abstract UIProperties getUIProperties();
 

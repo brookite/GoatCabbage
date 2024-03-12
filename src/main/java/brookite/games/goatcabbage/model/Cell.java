@@ -1,10 +1,12 @@
 package brookite.games.goatcabbage.model;
 
+import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.events.CellStateListener;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.entities.Entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -48,7 +50,7 @@ public class Cell {
         return owner;
     }
 
-    public void setOwner(Paddock owner) {
+    void setOwner(Paddock owner) {
 
     }
 
@@ -86,5 +88,13 @@ public class Cell {
         return false;
     }
 
+    public boolean putEntity(Entity entity) {
+        entities.add(entity);
+        return true;
+    }
+
+    public boolean hasStateListeners() {
+        return !_listeners.isEmpty();
+    }
 }
 

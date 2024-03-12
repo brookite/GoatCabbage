@@ -1,0 +1,22 @@
+{
+     "name": "Example Level",
+     "field": {
+         "width": 128,
+         "height": 120
+     },
+     "goat": {
+         "position": [8, 8],
+         "stepAmount": 3
+     },
+     "commands": [
+      {
+          "command": "placeEntities",
+          "type": "box",
+          "positions": [
+              [3, 2],
+              [5, 7]
+          ]
+      },
+      {"command": "placeEntity", "type": "cabbage", "position": [9, 9]}
+     ]
+}

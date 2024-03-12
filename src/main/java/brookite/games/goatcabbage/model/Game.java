@@ -34,6 +34,8 @@ public class Game {
         _listeners.add(listener);
     }
 
+    public boolean hasGameStateListeners() {return !_listeners.isEmpty();}
+
     public void nextEnvironment() {
         currentEnvironment = (currentEnvironment + 1) % this.environments.length;
     }
@@ -59,4 +61,7 @@ public class Game {
 
     }
 
+    public Paddock getPaddock() {
+        return paddock;
+    }
 }

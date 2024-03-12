@@ -6,7 +6,9 @@ public interface CanDrag {
 
 	public abstract boolean canDrag(Direction direction);
 
-	public abstract void startDrag(Direction direction);
+	public abstract boolean startDrag(Direction direction);
+
+	public abstract boolean isDragged();
 
 	public abstract void stopDrag();
 

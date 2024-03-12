@@ -1,5 +1,6 @@
 package brookite.games.goatcabbage.model.levels;
 
+import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.levels.json.Level;
 import brookite.games.goatcabbage.model.levels.json.UIProperties;
 
@@ -57,17 +58,17 @@ public class LevelGameEnvironment extends GameEnvironment {
     }
 
     @Override
-    public void create() {
+    public Paddock create() {
+        return null;
+    }
+
+    @Override
+    protected void createEntities(Paddock paddock) {
 
     }
 
     @Override
-    protected void createEntities() {
-
-    }
-
-    @Override
-    protected void placeWalls() {
+    protected void placeWalls(Paddock paddock) {
 
     }
 

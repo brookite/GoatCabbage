@@ -16,6 +16,10 @@ public class Goat extends Entity implements Movable, CanDrag {
 		return false;
 	}
 
+	public int getStepAmount() {
+		return stepAmount;
+	}
+
 	public boolean hasSteps() {
 		return stepAmount > 0;
 	}
@@ -48,8 +52,13 @@ public class Goat extends Entity implements Movable, CanDrag {
 	 * @see brookite.games.goatcabbage.model.entities.CanDrag#startDrag(brookite.games.goatcabbage.model.utils.Direction)
 	 */
 	@Override
-	public void startDrag(Direction direction) {
+	public boolean startDrag(Direction direction) {
+		return false;
+	}
 
+	@Override
+	public boolean isDragged() {
+		return false;
 	}
 
 
