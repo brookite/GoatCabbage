@@ -12,7 +12,6 @@ public class Game {
     private Paddock paddock;
     private GameEnvironment[] environments;
     private int currentEnvironment = 0;
-    private GameEnvironment gameEnvironment;
 
     private ArrayList<GameStateListener> _listeners = new ArrayList<>();
 

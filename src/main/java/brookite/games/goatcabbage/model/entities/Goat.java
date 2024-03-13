@@ -38,6 +38,11 @@ public class Goat extends Entity implements Movable, CanDrag {
 		return false;
 	}
 
+	@Override
+	public boolean canMove(Direction direction) {
+		return false;
+	}
+
 
 	/**
 	 * @see brookite.games.goatcabbage.model.entities.CanDrag#canDrag(brookite.games.goatcabbage.model.utils.Direction)

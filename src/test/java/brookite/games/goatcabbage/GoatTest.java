@@ -52,6 +52,61 @@ public class GoatTest {
     }
 
     @Test
+    public void goatDragBoxWithBetweenBoxes() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        Box box2 = new Box();
+        Box box3 = new Box();
+        pd.cell(1, 1).putEntity(box3);
+        pd.cell(1, 2).putEntity(gt);
+        pd.cell(1, 3).putEntity(box);
+        pd.cell(1, 4).putEntity(box2);
+        Assertions.assertTrue(gt.canDrag(Direction.east()));
+        Assertions.assertTrue(gt.startDrag(Direction.east()));
+
+        Assertions.assertFalse(gt.move(Direction.north()));
+        Assertions.assertFalse(gt.move(Direction.south()));
+        Assertions.assertFalse(gt.move(Direction.east()));
+        Assertions.assertFalse(gt.move(Direction.west()));
+
+        Assertions.assertFalse(gt.canMove(Direction.north()));
+        Assertions.assertFalse(gt.canMove(Direction.south()));
+        Assertions.assertFalse(gt.canMove(Direction.east()));
+        Assertions.assertFalse(gt.canMove(Direction.west()));
+        gt.stopDrag();
+
+        Assertions.assertFalse(gt.canMove(Direction.north()));
+        Assertions.assertTrue(gt.canMove(Direction.south()));
+        Assertions.assertFalse(gt.canMove(Direction.east()));
+        Assertions.assertFalse(gt.canMove(Direction.west()));
+    }
+
+    @Test
+    public void goatDragBoxNearWall() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        pd.cell(2, 2).putEntity(gt);
+        pd.cell(2, 3).putEntity(box);
+        pd.cell(2, 3).setWall(Direction.east(), true);
+        Assertions.assertTrue(gt.canDrag(Direction.east()));
+        Assertions.assertTrue(gt.startDrag(Direction.east()));
+
+        Assertions.assertFalse(gt.canMove(Direction.north()));
+        Assertions.assertFalse(gt.canMove(Direction.south()));
+        Assertions.assertFalse(gt.canMove(Direction.east()));
+        Assertions.assertTrue(gt.canMove(Direction.west()));
+
+        Assertions.assertFalse(gt.move(Direction.north()));
+        Assertions.assertFalse(gt.move(Direction.south()));
+        Assertions.assertFalse(gt.move(Direction.east()));
+        Assertions.assertTrue(gt.move(Direction.west()));
+
+        gt.stopDrag();
+    }
+
+    @Test
     public void dragAndMoveBoxTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
