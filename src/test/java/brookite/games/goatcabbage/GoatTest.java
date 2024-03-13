@@ -52,7 +52,7 @@ public class GoatTest {
     }
 
     @Test
-    public void goatDragBoxWithBetweenBoxes() {
+    public void goatDragBoxBetweenBoxes() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
