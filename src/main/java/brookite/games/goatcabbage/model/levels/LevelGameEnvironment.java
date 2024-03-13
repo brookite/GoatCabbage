@@ -1,8 +1,8 @@
 package brookite.games.goatcabbage.model.levels;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.levels.json.Level;
-import brookite.games.goatcabbage.model.levels.json.UIProperties;
+import brookite.games.goatcabbage.model.levels.data.Level;
+import brookite.games.goatcabbage.model.levels.data.UIProperties;
 
 public class LevelGameEnvironment extends GameEnvironment {
     /**

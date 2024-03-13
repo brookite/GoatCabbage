@@ -1,11 +1,11 @@
 package brookite.games.goatcabbage.model.levels;
 
-import brookite.games.goatcabbage.model.levels.json.Command;
-import brookite.games.goatcabbage.model.levels.json.Level;
-import brookite.games.goatcabbage.model.levels.json.commands.CreateWallFigureCommand;
-import brookite.games.goatcabbage.model.levels.json.commands.PlaceEntitiesCommand;
-import brookite.games.goatcabbage.model.levels.json.commands.PlaceEntityCommand;
-import brookite.games.goatcabbage.model.levels.json.commands.SetWallCommand;
+import brookite.games.goatcabbage.model.levels.data.Command;
+import brookite.games.goatcabbage.model.levels.data.Level;
+import brookite.games.goatcabbage.model.levels.data.commands.CreateWallFigureCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.PlaceEntitiesCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.PlaceEntityCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.SetWallCommand;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

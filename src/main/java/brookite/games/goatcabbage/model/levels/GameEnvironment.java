@@ -1,9 +1,7 @@
 package brookite.games.goatcabbage.model.levels;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.levels.json.UIProperties;
-
-import java.util.Map;
+import brookite.games.goatcabbage.model.levels.data.UIProperties;
 
 public abstract class GameEnvironment {
 	private String name;

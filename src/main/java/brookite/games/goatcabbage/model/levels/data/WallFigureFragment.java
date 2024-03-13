@@ -1,4 +1,4 @@
-package brookite.games.goatcabbage.model.levels.json;
+package brookite.games.goatcabbage.model.levels.data;
 
 import java.util.Arrays;
 import java.util.Objects;

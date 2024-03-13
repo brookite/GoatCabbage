@@ -1,7 +1,7 @@
-package brookite.games.goatcabbage.model.levels.json.commands;
+package brookite.games.goatcabbage.model.levels.data.commands;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.levels.json.Command;
+import brookite.games.goatcabbage.model.levels.data.Command;
 
 import java.util.ArrayList;
 import java.util.List;

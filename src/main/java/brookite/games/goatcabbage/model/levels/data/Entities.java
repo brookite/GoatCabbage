@@ -1,4 +1,4 @@
-package brookite.games.goatcabbage.model.levels.json;
+package brookite.games.goatcabbage.model.levels.data;
 
 import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Cabbage;

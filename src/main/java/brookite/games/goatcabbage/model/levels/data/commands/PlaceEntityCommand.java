@@ -1,26 +1,25 @@
-package brookite.games.goatcabbage.model.levels.json.commands;
+package brookite.games.goatcabbage.model.levels.data.commands;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.levels.json.Command;
-import com.google.gson.annotations.SerializedName;
+import brookite.games.goatcabbage.model.levels.data.Command;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class SetWallCommand extends Command {
-    private String direction;
+public class PlaceEntityCommand extends Command {
+    private String type;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SetWallCommand that = (SetWallCommand) o;
-        return Objects.equals(direction, that.direction) && Arrays.equals(position, that.position);
+        PlaceEntityCommand that = (PlaceEntityCommand) o;
+        return Objects.equals(type, that.type) && Arrays.equals(position, that.position);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(direction);
+        int result = Objects.hash(type);
         result = 31 * result + Arrays.hashCode(position);
         return result;
     }
@@ -32,8 +31,8 @@ public class SetWallCommand extends Command {
 
     }
 
-    public String getDirection() {
-        return direction;
+    public String getType() {
+        return type;
     }
 
     public int[] getPosition() {
