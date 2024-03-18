@@ -1,6 +1,8 @@
 package brookite.games.goatcabbage.model;
 
 import brookite.games.goatcabbage.model.entities.Box;
+import brookite.games.goatcabbage.model.entities.Cabbage;
+import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.events.CellStateListener;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.entities.Entity;
@@ -25,8 +27,23 @@ public class Cell {
 
     private ArrayList<CellStateListener> _listeners = new ArrayList<>();
 
-    public void setWall(Direction position, boolean set) {
 
+    private int _getWallArrayIndexByDirection(Direction direction) {
+        int index = 0;
+        if (direction.equals(Direction.east())) {
+            index = 3;
+        } else if (direction.equals(Direction.south())) {
+            index = 2;
+        } else if (direction.equals(Direction.west())) {
+            index = 1;
+        } else if (direction.equals(Direction.north())) {
+            index = 0;
+        }
+        return index;
+    }
+
+    public void setWall(Direction direction, boolean set) {
+        _walls[_getWallArrayIndexByDirection(direction)] = set;
     }
 
     protected void fireEntitySteppedIn(Entity entity) {
@@ -51,7 +68,7 @@ public class Cell {
     }
 
     void setOwner(Paddock owner) {
-
+        this.owner = owner;
     }
 
     public List<Entity> getEntities() {
@@ -76,25 +93,49 @@ public class Cell {
         _listeners.remove(listener);
     }
 
-    public boolean isWall(Direction position) {
-        return false;
+    public boolean isWall(Direction direction) {
+        return _walls[_getWallArrayIndexByDirection(direction)];
+    }
+
+    public boolean hasSolidEntity() {
+        return getSolidEntity().isPresent();
     }
 
     public boolean isEmpty() {
-        return false;
+        return entities.isEmpty();
     }
 
     public boolean canPutEntity(Entity entity) {
-        return false;
+        return (!entity.isSolid() || !hasSolidEntity()) && !hasEntity(entity);
     }
 
     public boolean putEntity(Entity entity) {
-        entities.add(entity);
-        return true;
+        if (canPutEntity(entity)) {
+            entities.add(entity);
+            entity.setCell(this);
+
+            if (owner != null && entity instanceof Goat) {
+                owner.setGoat((Goat) entity);
+            }
+            if (owner != null && entity instanceof Cabbage) {
+                owner.setCabbage((Cabbage) entity);
+            }
+
+            return true;
+        }
+        return false;
     }
 
     public boolean hasStateListeners() {
         return !_listeners.isEmpty();
+    }
+
+    public boolean hasEntity(Entity entity) {
+        return entities.contains(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 }
 

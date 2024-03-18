@@ -1,7 +1,9 @@
 package brookite.games.goatcabbage.model.levels.data.commands;
 
 import brookite.games.goatcabbage.model.Paddock;
+import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.levels.data.Command;
+import brookite.games.goatcabbage.model.levels.data.Entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,10 @@ public class PlaceEntitiesCommand extends Command {
 
     @Override
     public void execute(Paddock paddock) {
-
+        for (int[] position : positions) {
+            Entity entity = Entities.createEntityByType(type);
+            paddock.cell(position[1], position[0]).putEntity(entity);
+        }
     }
 
     public String getType() {

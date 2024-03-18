@@ -5,8 +5,10 @@ import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.entities.Cabbage;
 import brookite.games.goatcabbage.model.utils.Direction;
 
+import javax.security.auth.login.AccountExpiredException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Paddock {
     private ArrayList<Cell> cells;
@@ -23,20 +25,45 @@ public class Paddock {
     }
 
     public void clear() {
-
+        cells = new ArrayList<>();
+        for (int i = 0; i < width * height; i++) {
+            cells.add(new Cell(this));
+        }
+        goat = null;
+        cabbage = null;
     }
 
-    public Cell neighbor(Cell cell, Direction direction) {
+    public Cell neighbour(Cell cell, Direction direction) {
+        for (int row = 1; row <= this.height; row++) {
+            for (int col = 1; col <= this.width; col++) {
+                if (cell(row, col) == cell) {
+                    if (direction.equals(Direction.north())) {
+                        row -= 1;
+                    } else if (direction.equals(Direction.south())) {
+                        row += 1;
+                    } else if (direction.equals(Direction.west())) {
+                        col -= 1;
+                    } else if (direction.equals(Direction.east())) {
+                        col += 1;
+                    }
+                    if (row < 1 || row > this.width || col < 1 || col > this.height) {
+                        return null;
+                    } else {
+                        return cell(row, col);
+                    }
+                }
+            }
+        }
         return null;
     }
 
     public Cell cell(int row, int col) {
-        return null;
+        return cells.get((row - 1) * this.width + (col - 1));
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("Paddock[%dx%d]", this.width, this.height);
     }
 
     public Goat getGoat() {
@@ -45,6 +72,26 @@ public class Paddock {
 
     public Cabbage getCabbage() {
         return cabbage;
+    }
+
+    boolean setGoat(Goat goat) {
+        for (Cell cell : cells) {
+            if (cell.hasEntity(goat)) {
+                this.goat = goat;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean setCabbage(Cabbage cabbage) {
+        for (Cell cell : cells) {
+            if (cell.hasEntity(cabbage)) {
+                this.cabbage = cabbage;
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getWidth() {

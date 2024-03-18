@@ -1,8 +1,14 @@
 package brookite.games.goatcabbage.model.levels;
 
 import brookite.games.goatcabbage.model.Paddock;
+import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.levels.data.Command;
 import brookite.games.goatcabbage.model.levels.data.Level;
 import brookite.games.goatcabbage.model.levels.data.UIProperties;
+import brookite.games.goatcabbage.model.levels.data.commands.CreateWallFigureCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.PlaceEntitiesCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.PlaceEntityCommand;
+import brookite.games.goatcabbage.model.levels.data.commands.SetWallCommand;
 
 public class LevelGameEnvironment extends GameEnvironment {
     /**
@@ -59,22 +65,37 @@ public class LevelGameEnvironment extends GameEnvironment {
 
     @Override
     public Paddock create() {
-        return null;
+        Paddock paddock = new Paddock(jsonLevel.getField().getWidth(), jsonLevel.getField().getHeight());
+        createEntities(paddock);
+        createEntities(paddock);
+        return paddock;
     }
 
     @Override
     protected void createEntities(Paddock paddock) {
+        Goat goat = new Goat(jsonLevel.getGoat().getStepAmount());
+        paddock.cell(jsonLevel.getGoat().getPosition()[1], jsonLevel.getGoat().getPosition()[0]).putEntity(goat);
+
+        for (Command cmd : jsonLevel.getCommands()) {
+            if (cmd instanceof PlaceEntitiesCommand || cmd instanceof PlaceEntityCommand) {
+                cmd.execute(paddock);
+            }
+        }
 
     }
 
     @Override
     protected void placeWalls(Paddock paddock) {
-
+        for (Command cmd : jsonLevel.getCommands()) {
+            if (cmd instanceof CreateWallFigureCommand || cmd instanceof SetWallCommand) {
+                cmd.execute(paddock);
+            }
+        }
     }
 
     @Override
     public UIProperties getUIProperties() {
-        return null;
+        return jsonLevel.getUiProps();
     }
 
     public Level getLevelObject() {return jsonLevel;}

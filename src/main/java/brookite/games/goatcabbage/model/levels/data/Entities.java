@@ -12,7 +12,7 @@ public class Entities {
             case "cabbage":
                 return new Cabbage();
             default:
-                return null;
+                throw new IllegalArgumentException("Invalid entity in level object");
         }
     }
 }

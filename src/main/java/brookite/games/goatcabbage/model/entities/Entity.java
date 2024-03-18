@@ -1,6 +1,7 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
+import brookite.games.goatcabbage.model.Paddock;
 
 public abstract class Entity {
 
@@ -13,7 +14,23 @@ public abstract class Entity {
 	}
 
 	public void setCell(Cell cell) {
-		this.cell = cell;
+		if (this.cell == cell) {
+			return;
+		}
+
+		if (this.cell != null) {
+			this.cell.removeEntity(this);
+		}
+
+		if (!cell.hasEntity(this)) {
+			if (cell.putEntity(this)) {
+				this.cell = cell;
+			} else {
+				this.cell.putEntity(this);
+			}
+		}
+
+
 	}
 
 	public Cell getCell() {
