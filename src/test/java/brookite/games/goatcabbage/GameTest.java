@@ -4,9 +4,7 @@ import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.Game;
 import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.entities.Goat;
-import brookite.games.goatcabbage.model.events.CellStateListener;
-import brookite.games.goatcabbage.model.events.GameResult;
-import brookite.games.goatcabbage.model.events.GameStateListener;
+import brookite.games.goatcabbage.model.events.*;
 import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelLoader;
 import brookite.games.goatcabbage.model.utils.Direction;
@@ -27,14 +25,21 @@ public class GameTest {
             Assertions.assertTrue(game.getPaddock().getCabbage().getCell().hasStateListeners());
             game.getPaddock().getCabbage().getCell().addStateListener(new CellStateListener() {
                 @Override
-                public void onEntitySteppedIn(Cell cell, Entity entity) {
-                    Assertions.assertInstanceOf(Goat.class, entity);
-                    Assumptions.assumeTrue(true);
+                public void onEntitySteppedIn(CellEvent event) {
+                    Assertions.assertEquals(game.getPaddock().getCabbage().getCell(), event.getTarget());
+                    Assertions.assertInstanceOf(Goat.class, event.getActor());
                 }
 
                 @Override
-                public void onEntitySteppedOut(Cell cell, Entity entity) {
+                public void onEntitySteppedOut(CellEvent event) {
 
+                }
+            });
+            game.getPaddock().getGoat().addEatEventListener(new EatActionListener() {
+                @Override
+                public void onEntityEaten(EatEvent event) {
+                    Assertions.assertEquals(game.getPaddock().getCabbage(), event.getVictim());
+                    Assumptions.assumeTrue(true);
                 }
             });
             game.start();

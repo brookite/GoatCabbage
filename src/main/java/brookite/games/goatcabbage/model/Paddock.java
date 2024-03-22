@@ -7,10 +7,11 @@ import brookite.games.goatcabbage.model.utils.Direction;
 
 import javax.security.auth.login.AccountExpiredException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class Paddock {
+public class Paddock implements Iterable<Cell> {
     private ArrayList<Cell> cells;
     private Goat goat;
     private Cabbage cabbage;
@@ -104,6 +105,11 @@ public class Paddock {
 
     public List<Cell> getCells() {
         return new ArrayList<>(cells);
+    }
+
+    @Override
+    public Iterator<Cell> iterator() {
+        return cells.iterator();
     }
 }
 

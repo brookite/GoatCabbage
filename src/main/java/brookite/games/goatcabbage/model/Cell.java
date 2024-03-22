@@ -3,6 +3,7 @@ package brookite.games.goatcabbage.model;
 import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Cabbage;
 import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.events.CellEvent;
 import brookite.games.goatcabbage.model.events.CellStateListener;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.entities.Entity;
@@ -48,13 +49,13 @@ public class Cell {
 
     protected void fireEntitySteppedIn(Entity entity) {
         for (CellStateListener listener : _listeners) {
-            listener.onEntitySteppedIn(this, entity);
+            listener.onEntitySteppedIn(new CellEvent(this, entity));
         }
     }
 
     protected void fireEntitySteppedOut(Entity entity) {
         for (CellStateListener listener : _listeners) {
-            listener.onEntitySteppedOut(this, entity);
+            listener.onEntitySteppedOut(new CellEvent(this, entity));
         }
     }
 
@@ -120,7 +121,7 @@ public class Cell {
             if (owner != null && entity instanceof Cabbage) {
                 owner.setCabbage((Cabbage) entity);
             }
-
+            fireEntitySteppedIn(entity);
             return true;
         }
         return false;
@@ -136,6 +137,8 @@ public class Cell {
 
     public void removeEntity(Entity entity) {
         entities.remove(entity);
+        entity.setCell(null);
+        fireEntitySteppedOut(entity);
     }
 }
 

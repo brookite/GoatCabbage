@@ -2,6 +2,9 @@ package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.Paddock;
+import brookite.games.goatcabbage.model.utils.Direction;
+
+import java.util.ArrayList;
 
 public abstract class Entity {
 
@@ -14,7 +17,8 @@ public abstract class Entity {
 	}
 
 	public void setCell(Cell cell) {
-		if (this.cell == cell) {
+		if (cell == null || this.cell == cell) {
+			this.cell = cell;
 			return;
 		}
 

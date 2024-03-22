@@ -1,8 +1,8 @@
 package brookite.games.goatcabbage.model;
 
-import brookite.games.goatcabbage.model.events.CellStateListener;
-import brookite.games.goatcabbage.model.events.GameResult;
-import brookite.games.goatcabbage.model.events.GameStateListener;
+import brookite.games.goatcabbage.model.entities.Entity;
+import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.events.*;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
 
 import java.util.ArrayList;
@@ -12,16 +12,36 @@ public class Game {
     private Paddock paddock;
     private GameEnvironment[] environments;
     private int currentEnvironment = 0;
+    private boolean isGameStarted = false;
 
     private ArrayList<GameStateListener> _listeners = new ArrayList<>();
 
     public void start() {
+        GameEnvironment env = getCurrentEnvironment();
+        this.paddock = env.create();
+
+        paddock.getGoat().addEatEventListener(new EatActionListener() {
+            @Override
+            public void onEntityEaten(EatEvent event) {
+                fireGameFinished((Entity) event.getEating(), true);
+            }
+        });
+        paddock.getGoat().addMoveEntityActionListener(new EntityMoveActionListener() {
+            @Override
+            public void entityMoved(MoveActionEvent event) {
+                Goat goat = (Goat) event.getActor();
+                if (!goat.hasSteps()) {
+                    fireGameFinished(null, false);
+                }
+            }
+        });
+        isGameStarted = true;
 
     }
 
-    private void fireGameFinished(boolean isWin, boolean nextGame) {
+    private void fireGameFinished(Entity winner, boolean isWin) {
         for (GameStateListener listener : _listeners) {
-            listener.onGameFinished(new GameResult(isWin, nextGame));
+            listener.onGameFinished(new GameResultEvent(winner, isWin));
         }
     }
 
@@ -53,11 +73,11 @@ public class Game {
     }
 
     public boolean started() {
-        return false;
+        return isGameStarted;
     }
 
     public void finish() {
-
+        isGameStarted = false;
     }
 
     public Paddock getPaddock() {

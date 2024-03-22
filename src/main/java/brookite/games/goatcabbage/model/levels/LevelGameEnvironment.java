@@ -67,7 +67,7 @@ public class LevelGameEnvironment extends GameEnvironment {
     public Paddock create() {
         Paddock paddock = new Paddock(jsonLevel.getField().getWidth(), jsonLevel.getField().getHeight());
         createEntities(paddock);
-        createEntities(paddock);
+        placeWalls(paddock);
         return paddock;
     }
 
