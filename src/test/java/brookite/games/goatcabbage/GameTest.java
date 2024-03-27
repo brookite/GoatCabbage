@@ -22,7 +22,9 @@ public class GameTest {
             game.setEnvironments(new LevelGameEnvironment[] {
                     LevelLoader.levelFromResource("levels/test2.level")
             });
-            Assertions.assertTrue(game.getPaddock().getCabbage().getCell().hasStateListeners());
+            game.start();
+            Assertions.assertTrue(game.getPaddock().getGoat().hasMoveEntityActionListeners());
+            Assertions.assertTrue(game.getPaddock().getGoat().hasEatActionListeners());
             game.getPaddock().getCabbage().getCell().addStateListener(new CellStateListener() {
                 @Override
                 public void onEntitySteppedIn(CellEvent event) {
@@ -42,7 +44,6 @@ public class GameTest {
                     Assumptions.assumeTrue(true);
                 }
             });
-            game.start();
             Assertions.assertTrue(game.started());
             game.getPaddock().getGoat().move(Direction.south());
             game.getPaddock().getGoat().move(Direction.east());

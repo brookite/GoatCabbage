@@ -10,10 +10,10 @@ public class PaddockTest {
     @Test
     public void neighborTest() {
         Paddock pd = new Paddock(5,5);
-        Assertions.assertEquals(pd.getCells().get(2), pd.neighbour(pd.cell(3, 2), Direction.north()));
-        Assertions.assertEquals(pd.getCells().get(12), pd.neighbour(pd.cell(3, 2), Direction.south()));
-        Assertions.assertEquals(pd.getCells().get(6), pd.neighbour(pd.cell(3, 2), Direction.west()));
-        Assertions.assertEquals(pd.getCells().get(8), pd.neighbour(pd.cell(3, 2), Direction.east()));
+        Assertions.assertEquals(pd.getCells().get(6), pd.neighbour(pd.cell(3, 2), Direction.north()));
+        Assertions.assertEquals(pd.getCells().get(16), pd.neighbour(pd.cell(3, 2), Direction.south()));
+        Assertions.assertEquals(pd.getCells().get(10), pd.neighbour(pd.cell(3, 2), Direction.west()));
+        Assertions.assertEquals(pd.getCells().get(12), pd.neighbour(pd.cell(3, 2), Direction.east()));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class PaddockTest {
         Assertions.assertEquals(pd.cell(1, 1), pd.getCells().get(0));
         Assertions.assertEquals(pd.cell(1, 5), pd.getCells().get(4));
         Assertions.assertEquals(pd.cell(3, 3), pd.getCells().get(12));
-        Assertions.assertEquals(pd.cell(5, 1), pd.getCells().get(21));
+        Assertions.assertEquals(pd.cell(5, 1), pd.getCells().get(20));
         Assertions.assertEquals(pd.cell(5, 5), pd.getCells().get(24));
     }
 

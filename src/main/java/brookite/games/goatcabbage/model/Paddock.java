@@ -3,6 +3,7 @@ package brookite.games.goatcabbage.model;
 
 import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.entities.Cabbage;
+import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import javax.security.auth.login.AccountExpiredException;
@@ -60,6 +61,17 @@ public class Paddock implements Iterable<Cell> {
 
     public Cell cell(int row, int col) {
         return cells.get((row - 1) * this.width + (col - 1));
+    }
+
+    public CellPosition cellPosition(Cell cell) {
+        for (int row = 1; row <= this.height; row++) {
+            for (int col = 1; col <= this.width; col++) {
+                if (cell(row, col) == cell) {
+                    return new CellPosition(row, col);
+                }
+            }
+        }
+        return null;
     }
 
     @Override

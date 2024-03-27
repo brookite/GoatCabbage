@@ -30,6 +30,7 @@ public class CellTest {
         Assertions.assertFalse(cell.isWall(Direction.east()));
         Assertions.assertFalse(cell.isWall(Direction.west()));
         Assertions.assertFalse(cell.isWall(Direction.south()));
+        cell.setWall(Direction.north(), false);
 
         cell.setWall(Direction.south(), true);
         Assertions.assertFalse(cell.isWall(Direction.north()));
@@ -50,7 +51,12 @@ public class CellTest {
         Assertions.assertFalse(cell.isWall(Direction.east()));
         Assertions.assertTrue(cell.isWall(Direction.west()));
         Assertions.assertFalse(cell.isWall(Direction.south()));
-        cell.setWall(Direction.east(), false);
+        cell.setWall(Direction.west(), false);
+
+        Assertions.assertFalse(cell.isWall(Direction.north()));
+        Assertions.assertFalse(cell.isWall(Direction.east()));
+        Assertions.assertFalse(cell.isWall(Direction.west()));
+        Assertions.assertFalse(cell.isWall(Direction.south()));
     }
 
     @Test

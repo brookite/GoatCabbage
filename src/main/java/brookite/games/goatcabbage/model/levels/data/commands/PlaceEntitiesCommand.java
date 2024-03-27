@@ -17,7 +17,7 @@ public class PlaceEntitiesCommand extends Command {
     public void execute(Paddock paddock) {
         for (int[] position : positions) {
             Entity entity = Entities.createEntityByType(type);
-            paddock.cell(position[1], position[0]).putEntity(entity);
+            paddock.cell(position[0], position[1]).putEntity(entity);
         }
     }
 

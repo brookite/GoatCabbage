@@ -8,11 +8,12 @@ import brookite.games.goatcabbage.model.events.MoveActionEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Goat extends Entity implements Movable, CanDrag, Eating {
 
-	protected ArrayList<EntityMoveActionListener> _moveListeners = new ArrayList<>();
-	protected ArrayList<EatActionListener> _eatListeners = new ArrayList<>();
+	private ArrayList<EntityMoveActionListener> _moveListeners = new ArrayList<>();
+	private ArrayList<EatActionListener> _eatListeners = new ArrayList<>();
 
 	public Goat() {
 		addMoveEntityActionListener(new EntityMoveActionListener() {
@@ -30,6 +31,7 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	private int stepAmount;
 
 	private Dragable dragged;
+	private Direction dragDirection;
 
 	private boolean decreaseStep() {
 		if (hasSteps()) {
@@ -48,6 +50,7 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	}
 
 	public Goat(int stepAmount) {
+		this();
 		this.stepAmount = stepAmount;
 	}
 
@@ -79,6 +82,11 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	@Override
 	public void removeEatEventListener(EatActionListener listener) {
 		_eatListeners.remove(listener);
+	}
+
+	@Override
+	public boolean hasEatActionListeners() {
+		return !_eatListeners.isEmpty();
 	}
 
 
@@ -128,11 +136,13 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 		} else if (isDragged() && neighbourCell.hasEntity(getDraggedEntity())) {
 			Entity draggedEntity = getDraggedEntity();
 			Cell neighbourForDraggedCell = neighbourCell.getOwner().neighbour(neighbourCell, direction);
-			return !neighbourForDraggedCell.canPutEntity(draggedEntity)
-					&& !neighbourForDraggedCell.isWall(direction.opposite())
-					&& !neighbourCell.isWall(direction.opposite()) && hasSteps();
+			return (direction.equals(dragDirection) || direction.equals(dragDirection.opposite())) && neighbourForDraggedCell.canPutEntity(draggedEntity)
+					&& !neighbourForDraggedCell.isWall(direction.opposite()) && !neighbourCell.isWall(direction)
+					&& !cell.isWall(direction) && !neighbourCell.isWall(direction.opposite()) && hasSteps();
 		} else {
-			return neighbourCell.canPutEntity(this) && !neighbourCell.isWall(direction.opposite()) && hasSteps();
+			return (!isDragged() || (direction.equals(dragDirection) || direction.equals(dragDirection.opposite())))
+					&& neighbourCell.canPutEntity(this)
+					&& !cell.isWall(direction) && !neighbourCell.isWall(direction.opposite()) && hasSteps();
 		}
 	}
 
@@ -150,8 +160,9 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	}
 
 
-	private void setDragged(Dragable dragable) {
+	private void setDragged(Dragable dragable, Direction direction) {
 		dragged = dragable;
+		dragDirection = direction;
 	}
 
 	private Entity getDraggedEntity() {
@@ -166,7 +177,7 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	public boolean startDrag(Direction direction) {
 		if (canDrag(direction)) {
 			Cell neighbourCell = cell.getOwner().neighbour(cell, direction);
-            setDragged((Dragable) neighbourCell.getEntities().stream().filter((Entity entity) -> entity instanceof Dragable).findFirst().get());
+            setDragged((Dragable) neighbourCell.getEntities().stream().filter((Entity entity) -> entity instanceof Dragable).findFirst().get(), direction);
 			return true;
 		}
 		return false;
@@ -182,12 +193,17 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	 */
 	@Override
 	public void stopDrag() {
-		dragged = null;
+		setDragged(null, null);
 	}
 
 	@Override
 	public void addMoveEntityActionListener(EntityMoveActionListener listener) {
 		_moveListeners.add(listener);
+	}
+
+	@Override
+	public boolean hasMoveEntityActionListeners() {
+		return !_moveListeners.isEmpty();
 	}
 
 	@Override

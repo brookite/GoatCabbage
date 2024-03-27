@@ -14,7 +14,7 @@ public class GoatTest {
         Paddock pd = new Paddock(10, 10);
         pd.cell(3, 3).putEntity(gt);
         Assertions.assertTrue(gt.move(Direction.east()));
-        Assertions.assertEquals(gt.getCell(), pd.cell(2, 3));
+        Assertions.assertEquals(gt.getCell(), pd.cell(3, 4));
     }
 
     @Test
@@ -128,8 +128,8 @@ public class GoatTest {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
-        pd.cell(1, 1).putEntity(gt);
-        pd.cell(1, 2).putEntity(box);
+        pd.cell(1, 2).putEntity(gt);
+        pd.cell(1, 3).putEntity(box);
         Assertions.assertTrue(gt.canDrag(Direction.east()));
         Assertions.assertTrue(gt.startDrag(Direction.east()));
 

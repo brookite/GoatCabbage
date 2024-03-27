@@ -6,7 +6,7 @@
      },
      "goat": {
          "position": [8, 8],
-         "stepAmount": 3
+         "stepAmount": 2
      },
      "commands": [
       {

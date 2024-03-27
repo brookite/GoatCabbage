@@ -27,7 +27,7 @@
           "command": "createWallFigure",
           "figure": [
               {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1},
-              {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1}
+              {"isVertical": true, "direction": "east", "length": 10, "startPosition": [5, 14], "step": 1}
           ]
       },
      ]

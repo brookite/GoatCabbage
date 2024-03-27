@@ -10,10 +10,8 @@ public abstract class Entity {
 
 	protected Cell cell;
 
-	protected boolean _isSolid;
-
 	public boolean isSolid() {
-		return _isSolid;
+		return true;
 	}
 
 	public void setCell(Cell cell) {
@@ -32,6 +30,8 @@ public abstract class Entity {
 			} else {
 				this.cell.putEntity(this);
 			}
+		} else {
+			this.cell = cell;
 		}
 
 

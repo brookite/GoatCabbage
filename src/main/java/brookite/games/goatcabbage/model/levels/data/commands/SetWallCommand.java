@@ -29,7 +29,7 @@ public class SetWallCommand extends Command {
 
     @Override
     public void execute(Paddock paddock) {
-        paddock.cell(position[1], position[0]).setWall(Directions.createDirectionByString(direction), true);
+        paddock.cell(position[0], position[1]).setWall(Directions.createDirectionByString(direction), true);
     }
 
     public String getDirection() {

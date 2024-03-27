@@ -64,6 +64,12 @@ public class LevelTest {
         Assertions.assertEquals(command5.getFigure().get(0).getLength(), 10);
         Assertions.assertArrayEquals(command5.getFigure().get(0).getStartPosition(), new int[]{5,5});
 
+        Assertions.assertEquals(command5.getFigure().get(1).getDirection(), "east");
+        Assertions.assertTrue(command5.getFigure().get(1).isVertical());
+        Assertions.assertEquals(command5.getFigure().get(1).getStep(), 1);
+        Assertions.assertEquals(command5.getFigure().get(1).getLength(), 10);
+        Assertions.assertArrayEquals(command5.getFigure().get(1).getStartPosition(), new int[]{5,14});
+
     }
 
     @Test
@@ -87,7 +93,11 @@ public class LevelTest {
 
         Assertions.assertTrue(pd.cell(5, 2).isWall(Direction.south()));
         for (int x = 5; x < 15; x++) {
-            Assertions.assertTrue(pd.cell(x, 5).isWall(Direction.south()));
+            Assertions.assertTrue(pd.cell(5, x).isWall(Direction.south()));
+        }
+
+        for (int y = 5; y < 15; y++) {
+            Assertions.assertTrue(pd.cell(y, 14).isWall(Direction.east()));
         }
 
         Assertions.assertFalse(pd.cell(15, 5).isWall(Direction.south()));

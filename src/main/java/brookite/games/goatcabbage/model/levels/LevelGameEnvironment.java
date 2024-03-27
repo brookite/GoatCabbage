@@ -26,7 +26,7 @@ public class LevelGameEnvironment extends GameEnvironment {
      *         "height: 128
      *     },
      *     "goat": {
-     *         "position": [3, 2],  // cell position format is array of: [x, y]
+     *         "position": [3, 2],  // cell position format is array of: [row, col]
      *         "stepAmount": 30
      *     },
      *     "uiProps": { // this object may be omitted
@@ -74,7 +74,7 @@ public class LevelGameEnvironment extends GameEnvironment {
     @Override
     protected void createEntities(Paddock paddock) {
         Goat goat = new Goat(jsonLevel.getGoat().getStepAmount());
-        paddock.cell(jsonLevel.getGoat().getPosition()[1], jsonLevel.getGoat().getPosition()[0]).putEntity(goat);
+        paddock.cell(jsonLevel.getGoat().getPosition()[0], jsonLevel.getGoat().getPosition()[1]).putEntity(goat);
 
         for (Command cmd : jsonLevel.getCommands()) {
             if (cmd instanceof PlaceEntitiesCommand || cmd instanceof PlaceEntityCommand) {
