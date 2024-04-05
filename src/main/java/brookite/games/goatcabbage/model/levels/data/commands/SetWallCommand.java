@@ -3,6 +3,7 @@ package brookite.games.goatcabbage.model.levels.data.commands;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.levels.data.Command;
+import brookite.games.goatcabbage.model.utils.CellPosition;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,8 +18,8 @@ public class SetWallCommand extends Command {
         paddock.cell(position[0], position[1]).putEntity(new Wall());
     }
 
-    public int[] getPosition() {
-        return position;
+    public CellPosition getPosition() {
+        return new CellPosition(position[0], position[1]);
     }
 
     @Override

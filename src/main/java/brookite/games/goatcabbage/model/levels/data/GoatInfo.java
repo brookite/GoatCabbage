@@ -1,5 +1,7 @@
 package brookite.games.goatcabbage.model.levels.data;
 
+import brookite.games.goatcabbage.model.utils.CellPosition;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -7,8 +9,8 @@ public class GoatInfo {
     private int[] position;
     private int stepAmount;
 
-    public int[] getPosition() {
-        return position;
+    public CellPosition getPosition() {
+        return new CellPosition(position[0], position[1]);
     }
 
     public int getStepAmount() {

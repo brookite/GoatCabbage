@@ -22,11 +22,11 @@ public class CreateWallFigureCommand extends Command {
             int rowDelta = fragment.getDirection().isVertical() ? fragment.getLength() : 1;
             int colDelta = fragment.getDirection().isVertical() ? 1 : fragment.getLength();
 
-            for (int row = fragment.getStartPosition()[0];
-                 row < fragment.getStartPosition()[0] + rowDelta;
+            for (int row = fragment.getStartPosition().row;
+                 row < fragment.getStartPosition().row + rowDelta;
                  row += rowStep) {
-                for (int col = fragment.getStartPosition()[1];
-                     col < fragment.getStartPosition()[1] + colDelta;
+                for (int col = fragment.getStartPosition().col;
+                     col < fragment.getStartPosition().col + colDelta;
                      col += colStep) {
                     paddock.cell(row, col).putEntity(new Wall());
                 }

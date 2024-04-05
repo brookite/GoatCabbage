@@ -77,6 +77,10 @@ public class Paddock implements Iterable<Cell> {
         return cells.get((row - 1) * this.width + (col - 1));
     }
 
+    public Cell cell(CellPosition pos) {
+        return cell(pos.row, pos.col);
+    }
+
     public CellPosition cellPosition(Cell cell) {
         for (int row = 1; row <= this.height; row++) {
             for (int col = 1; col <= this.width; col++) {

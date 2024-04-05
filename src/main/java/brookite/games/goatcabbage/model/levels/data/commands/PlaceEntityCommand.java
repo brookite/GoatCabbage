@@ -4,6 +4,7 @@ import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.levels.data.Command;
 import brookite.games.goatcabbage.model.levels.data.Entities;
+import brookite.games.goatcabbage.model.utils.CellPosition;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -39,7 +40,7 @@ public class PlaceEntityCommand extends Command {
         return type;
     }
 
-    public int[] getPosition() {
-        return position;
+    public CellPosition getPosition() {
+        return new CellPosition(position[0], position[1]);
     }
 }

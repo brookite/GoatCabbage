@@ -1,5 +1,6 @@
 package brookite.games.goatcabbage.model.levels.data;
 
+import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import java.util.Arrays;
@@ -34,8 +35,8 @@ public class WallFigureFragment {
         return length;
     }
 
-    public int[] getStartPosition() {
-        return startPosition;
+    public CellPosition getStartPosition() {
+        return new CellPosition(startPosition[0], startPosition[1]);
     }
 
     public int getStep() {

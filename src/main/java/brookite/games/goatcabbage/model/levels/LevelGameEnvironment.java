@@ -73,7 +73,7 @@ public class LevelGameEnvironment extends GameEnvironment {
     @Override
     protected void createEntities(Paddock paddock) {
         Goat goat = new Goat(jsonLevel.getGoat().getStepAmount());
-        paddock.cell(jsonLevel.getGoat().getPosition()[0], jsonLevel.getGoat().getPosition()[1]).putEntity(goat);
+        paddock.cell(jsonLevel.getGoat().getPosition()).putEntity(goat);
 
         for (Command cmd : jsonLevel.getCommands()) {
             cmd.execute(paddock);
