@@ -4,6 +4,7 @@ import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Cabbage;
+import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,74 +13,25 @@ public class CellTest {
     @Test
     public void setNewWallTest() {
         Cell cell = new Cell(null);
-        cell.setWall(Direction.north(), true);
-        Assertions.assertTrue(cell.isWall(Direction.north()));
-        cell.setWall(Direction.south(), true);
-        Assertions.assertTrue(cell.isWall(Direction.south()));
-        cell.setWall(Direction.east(), true);
-        Assertions.assertTrue(cell.isWall(Direction.east()));
-        cell.setWall(Direction.west(), true);
-        Assertions.assertTrue(cell.isWall(Direction.west()));
-    }
-
-    @Test
-    public void testCorrectOfSettingWall() {
-        Cell cell = new Cell(null);
-        cell.setWall(Direction.north(), true);
-        Assertions.assertTrue(cell.isWall(Direction.north()));
-        Assertions.assertFalse(cell.isWall(Direction.east()));
-        Assertions.assertFalse(cell.isWall(Direction.west()));
-        Assertions.assertFalse(cell.isWall(Direction.south()));
-        cell.setWall(Direction.north(), false);
-
-        cell.setWall(Direction.south(), true);
-        Assertions.assertFalse(cell.isWall(Direction.north()));
-        Assertions.assertFalse(cell.isWall(Direction.east()));
-        Assertions.assertFalse(cell.isWall(Direction.west()));
-        Assertions.assertTrue(cell.isWall(Direction.south()));
-        cell.setWall(Direction.south(), false);
-
-        cell.setWall(Direction.east(), true);
-        Assertions.assertFalse(cell.isWall(Direction.north()));
-        Assertions.assertTrue(cell.isWall(Direction.east()));
-        Assertions.assertFalse(cell.isWall(Direction.west()));
-        Assertions.assertFalse(cell.isWall(Direction.south()));
-        cell.setWall(Direction.east(), false);
-
-        cell.setWall(Direction.west(), true);
-        Assertions.assertFalse(cell.isWall(Direction.north()));
-        Assertions.assertFalse(cell.isWall(Direction.east()));
-        Assertions.assertTrue(cell.isWall(Direction.west()));
-        Assertions.assertFalse(cell.isWall(Direction.south()));
-        cell.setWall(Direction.west(), false);
-
-        Assertions.assertFalse(cell.isWall(Direction.north()));
-        Assertions.assertFalse(cell.isWall(Direction.east()));
-        Assertions.assertFalse(cell.isWall(Direction.west()));
-        Assertions.assertFalse(cell.isWall(Direction.south()));
+        cell.putEntity(new Wall());
+        Assertions.assertTrue(cell.hasSolidEntity());
+        Assertions.assertInstanceOf(Wall.class, cell.getSolidEntity().get());
     }
 
     @Test
     public void setExistingWallTest() {
         Cell cell = new Cell(null);
-        cell.setWall(Direction.north(), true);
-        cell.setWall(Direction.north(), true);
-        Assertions.assertTrue(cell.isWall(Direction.north()));
-        Assertions.assertTrue(cell.isWall(Direction.north()));
-
-        cell.setWall(Direction.south(), false);
-        cell.setWall(Direction.south(), false);
-        Assertions.assertFalse(cell.isWall(Direction.south()));
+        Assertions.assertFalse(cell.putEntity(new Wall()));
+        Assertions.assertFalse(cell.putEntity(new Wall()));
     }
 
     @Test
     public void removeWallTest() {
         Cell cell = new Cell(null);
-        cell.setWall(Direction.north(), true);
-        Assertions.assertTrue(cell.isWall(Direction.north()));
-
-        cell.setWall(Direction.north(), false);
-        Assertions.assertFalse(cell.isWall(Direction.north()));
+        Wall wall = new Wall();
+        Assertions.assertTrue(cell.putEntity(wall));
+        cell.removeEntity(wall);
+        Assertions.assertTrue(cell.hasSolidEntity());
     }
 
     @Test

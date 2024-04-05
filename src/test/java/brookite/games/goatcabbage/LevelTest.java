@@ -54,18 +54,15 @@ public class LevelTest {
         Assertions.assertEquals(command3.getType(), "box");
         Assertions.assertArrayEquals(command3.getPosition(), new int[] {5, 2});
 
-        Assertions.assertEquals(command4.getDirection(), "south");
         Assertions.assertArrayEquals(command3.getPosition(), new int[] {5, 2});
 
         Assertions.assertEquals(command5.getFigure().size(), 2);
-        Assertions.assertEquals(command5.getFigure().get(0).getDirection(), "south");
-        Assertions.assertFalse(command5.getFigure().get(0).isVertical());
+        Assertions.assertEquals(command5.getFigure().get(0).getDirection(), "west");;
         Assertions.assertEquals(command5.getFigure().get(0).getStep(), 1);
         Assertions.assertEquals(command5.getFigure().get(0).getLength(), 10);
         Assertions.assertArrayEquals(command5.getFigure().get(0).getStartPosition(), new int[]{5,5});
 
-        Assertions.assertEquals(command5.getFigure().get(1).getDirection(), "east");
-        Assertions.assertTrue(command5.getFigure().get(1).isVertical());
+        Assertions.assertEquals(command5.getFigure().get(1).getDirection(), "south");
         Assertions.assertEquals(command5.getFigure().get(1).getStep(), 1);
         Assertions.assertEquals(command5.getFigure().get(1).getLength(), 10);
         Assertions.assertArrayEquals(command5.getFigure().get(1).getStartPosition(), new int[]{5,14});
@@ -91,16 +88,16 @@ public class LevelTest {
         Assertions.assertInstanceOf(Box.class, pd.cell(5, 2).getSolidEntity().get());
         Assertions.assertTrue(pd.cell(7,2).getPassableEntities().contains(pd.getCabbage()));
 
-        Assertions.assertTrue(pd.cell(5, 2).isWall(Direction.south()));
+        Assertions.assertTrue(pd.cell(40, 2).isWall());
         for (int x = 5; x < 15; x++) {
-            Assertions.assertTrue(pd.cell(5, x).isWall(Direction.south()));
+            Assertions.assertTrue(pd.cell(5, x).isWall());
         }
 
         for (int y = 5; y < 15; y++) {
-            Assertions.assertTrue(pd.cell(y, 14).isWall(Direction.east()));
+            Assertions.assertTrue(pd.cell(y, 14).isWall());
         }
 
-        Assertions.assertFalse(pd.cell(15, 5).isWall(Direction.south()));
+        Assertions.assertFalse(pd.cell(15, 5).isWall());
 
     }
 }

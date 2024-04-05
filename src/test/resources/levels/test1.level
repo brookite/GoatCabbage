@@ -22,12 +22,12 @@
       },
       {"command": "placeEntity", "type": "cabbage", "position": [7, 2]},
       {"command": "placeEntity", "type": "box", "position": [5, 2]},
-      {"command": "setWall", "direction": "south", "position": [5, 2]},
+      {"command": "setWall", "position": [40, 2]},
       {
           "command": "createWallFigure",
           "figure": [
-              {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1},
-              {"isVertical": true, "direction": "east", "length": 10, "startPosition": [5, 14], "step": 1}
+              {"direction": "east", length": 10, "startPosition": [20, 5], "step": 1},
+              {"direction": "south", length": 10, "startPosition": [20, 14], "step": 1}
           ]
       },
      ]

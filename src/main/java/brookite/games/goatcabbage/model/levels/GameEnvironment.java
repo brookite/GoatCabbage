@@ -10,8 +10,6 @@ public abstract class GameEnvironment {
 
 	protected abstract void createEntities(Paddock paddock);
 
-	protected abstract void placeWalls(Paddock paddock);
-
 	public abstract UIProperties getUIProperties();
 
 	public String getName() {

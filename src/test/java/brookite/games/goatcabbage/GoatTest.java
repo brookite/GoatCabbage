@@ -3,6 +3,7 @@ package brookite.games.goatcabbage;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class GoatTest {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         pd.cell(3, 3).putEntity(gt);
-        Assertions.assertTrue(gt.move(Direction.east()));
+        Assertions.assertTrue(gt.move(Direction.EAST));
         Assertions.assertEquals(gt.getCell(), pd.cell(3, 4));
     }
 
@@ -30,8 +31,8 @@ public class GoatTest {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         pd.cell(4, 3).putEntity(gt);
-        pd.cell(4, 3).setWall(Direction.south(), true);
-        Assertions.assertFalse(gt.move(Direction.south()));
+        pd.cell(4, 3).putEntity(new Wall());
+        Assertions.assertFalse(gt.move(Direction.SOUTH));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class GoatTest {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         pd.cell(1, 1).putEntity(gt);
-        Assertions.assertFalse(gt.move(Direction.west()));
+        Assertions.assertFalse(gt.move(Direction.WEST));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GoatTest {
         Paddock pd = new Paddock(10, 10);
         pd.cell(1, 1).putEntity(gt);
         pd.cell(1, 2).putEntity(new Box());
-        Assertions.assertFalse(gt.move(Direction.west()));
+        Assertions.assertFalse(gt.move(Direction.WEST));
     }
 
     @Test
@@ -62,24 +63,23 @@ public class GoatTest {
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
         pd.cell(1, 4).putEntity(box2);
-        Assertions.assertTrue(gt.canDrag(Direction.east()));
-        Assertions.assertTrue(gt.startDrag(Direction.east()));
+        Assertions.assertTrue(gt.canTake(Direction.EAST));
+        Assertions.assertTrue(gt.take(Direction.EAST));
 
-        Assertions.assertFalse(gt.move(Direction.north()));
-        Assertions.assertFalse(gt.move(Direction.south()));
-        Assertions.assertFalse(gt.move(Direction.east()));
-        Assertions.assertFalse(gt.move(Direction.west()));
+        Assertions.assertFalse(gt.move(Direction.NORTH));
+        Assertions.assertFalse(gt.move(Direction.SOUTH));
+        Assertions.assertFalse(gt.move(Direction.EAST));
+        Assertions.assertFalse(gt.move(Direction.WEST));
 
-        Assertions.assertFalse(gt.canMove(Direction.north()));
-        Assertions.assertFalse(gt.canMove(Direction.south()));
-        Assertions.assertFalse(gt.canMove(Direction.east()));
-        Assertions.assertFalse(gt.canMove(Direction.west()));
-        gt.stopDrag();
+        Assertions.assertFalse(gt.canMove(Direction.NORTH));
+        Assertions.assertFalse(gt.canMove(Direction.SOUTH));
+        Assertions.assertFalse(gt.canMove(Direction.EAST));
+        Assertions.assertFalse(gt.canMove(Direction.WEST));
 
-        Assertions.assertFalse(gt.canMove(Direction.north()));
-        Assertions.assertTrue(gt.canMove(Direction.south()));
-        Assertions.assertFalse(gt.canMove(Direction.east()));
-        Assertions.assertFalse(gt.canMove(Direction.west()));
+        Assertions.assertFalse(gt.canMove(Direction.NORTH));
+        Assertions.assertTrue(gt.canMove(Direction.SOUTH));
+        Assertions.assertFalse(gt.canMove(Direction.EAST));
+        Assertions.assertFalse(gt.canMove(Direction.WEST));
     }
 
     @Test
@@ -89,21 +89,19 @@ public class GoatTest {
         Box box = new Box();
         pd.cell(2, 2).putEntity(gt);
         pd.cell(2, 3).putEntity(box);
-        pd.cell(2, 3).setWall(Direction.east(), true);
-        Assertions.assertTrue(gt.canDrag(Direction.east()));
-        Assertions.assertTrue(gt.startDrag(Direction.east()));
+        pd.cell(2, 3).putEntity(new Wall());
+        Assertions.assertTrue(gt.canTake(Direction.EAST));
+        Assertions.assertTrue(gt.take(Direction.EAST));
 
-        Assertions.assertFalse(gt.canMove(Direction.north()));
-        Assertions.assertFalse(gt.canMove(Direction.south()));
-        Assertions.assertFalse(gt.canMove(Direction.east()));
-        Assertions.assertTrue(gt.canMove(Direction.west()));
+        Assertions.assertFalse(gt.canMove(Direction.NORTH));
+        Assertions.assertFalse(gt.canMove(Direction.SOUTH));
+        Assertions.assertFalse(gt.canMove(Direction.EAST));
+        Assertions.assertTrue(gt.canMove(Direction.WEST));
 
-        Assertions.assertFalse(gt.move(Direction.north()));
-        Assertions.assertFalse(gt.move(Direction.south()));
-        Assertions.assertFalse(gt.move(Direction.east()));
-        Assertions.assertTrue(gt.move(Direction.west()));
-
-        gt.stopDrag();
+        Assertions.assertFalse(gt.move(Direction.NORTH));
+        Assertions.assertFalse(gt.move(Direction.SOUTH));
+        Assertions.assertFalse(gt.move(Direction.EAST));
+        Assertions.assertTrue(gt.move(Direction.WEST));
     }
 
     @Test
@@ -113,14 +111,13 @@ public class GoatTest {
         Box box = new Box();
         pd.cell(1, 1).putEntity(gt);
         pd.cell(1, 2).putEntity(box);
-        Assertions.assertTrue(gt.canDrag(Direction.east()));
-        Assertions.assertTrue(gt.startDrag(Direction.east()));
+        Assertions.assertTrue(gt.canTake(Direction.EAST));
+        Assertions.assertTrue(gt.take(Direction.EAST));
 
-        Assertions.assertFalse(gt.move(Direction.north()));
-        Assertions.assertFalse(gt.move(Direction.south()));
-        Assertions.assertTrue(gt.move(Direction.east()));
-        Assertions.assertFalse(gt.move(Direction.east()));
-        gt.stopDrag();
+        Assertions.assertFalse(gt.move(Direction.NORTH));
+        Assertions.assertFalse(gt.move(Direction.SOUTH));
+        Assertions.assertTrue(gt.move(Direction.EAST));
+        Assertions.assertFalse(gt.move(Direction.EAST));
     }
 
     @Test
@@ -130,14 +127,13 @@ public class GoatTest {
         Box box = new Box();
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
-        Assertions.assertTrue(gt.canDrag(Direction.east()));
-        Assertions.assertTrue(gt.startDrag(Direction.east()));
+        Assertions.assertTrue(gt.canTake(Direction.EAST));
+        Assertions.assertTrue(gt.take(Direction.EAST));
 
-        Assertions.assertFalse(gt.move(Direction.north()));
-        Assertions.assertFalse(gt.move(Direction.south()));
-        Assertions.assertTrue(gt.move(Direction.west()));
-        Assertions.assertFalse(gt.move(Direction.west()));
-        gt.stopDrag();
+        Assertions.assertFalse(gt.move(Direction.NORTH));
+        Assertions.assertFalse(gt.move(Direction.SOUTH));
+        Assertions.assertTrue(gt.move(Direction.WEST));
+        Assertions.assertFalse(gt.move(Direction.WEST));
     }
 
 }

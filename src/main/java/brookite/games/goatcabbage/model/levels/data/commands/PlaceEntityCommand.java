@@ -31,6 +31,7 @@ public class PlaceEntityCommand extends Command {
     @Override
     public void execute(Paddock paddock) {
         Entity entity = Entities.createEntityByType(type);
+        paddock.cell(position[0], position[1]).clear();
         paddock.cell(position[0], position[1]).putEntity(entity);
     }
 

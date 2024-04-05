@@ -4,12 +4,12 @@ import brookite.games.goatcabbage.model.utils.Direction;
 
 public interface CanDrag {
 
-	boolean canDrag(Direction direction);
+	boolean canTake(Direction direction);
 
-	boolean startDrag(Direction direction);
+	boolean take(Direction direction);
 
-	boolean isDragged();
+	boolean isTaken();
 
-	void stopDrag();
+	void drag(Direction newDirection);
 
 }

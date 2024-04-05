@@ -44,11 +44,11 @@ public class LevelGameEnvironment extends GameEnvironment {
      *          },
      *          {"command": "placeEntity", "type": "cabbage", "position": [7, 2]},
      *          {"command": "placeEntity", "type": "box", "position": [5, 2]},
-     *          {"command": "setWall", "direction": "south", "position": [5, 2]}, // directions: [north, west, south, east]
+     *          {"command": "setWall", "position": [5, 2]},
      *          {
      *              "command": "createWallFigure",
      *              "figure": [
-     *                  {"isVertical": false, "direction": "south", "length": 10, "startPosition": [5, 5], "step": 1}
+     *                  {"direction": "east", "length": 10, "startPosition": [5, 5], "step": 1} // directions: [north, west, south, east]
      *                  ...
      *              ]
      *          },
@@ -67,7 +67,6 @@ public class LevelGameEnvironment extends GameEnvironment {
     public Paddock create() {
         Paddock paddock = new Paddock(jsonLevel.getField().getWidth(), jsonLevel.getField().getHeight());
         createEntities(paddock);
-        placeWalls(paddock);
         return paddock;
     }
 
@@ -77,20 +76,9 @@ public class LevelGameEnvironment extends GameEnvironment {
         paddock.cell(jsonLevel.getGoat().getPosition()[0], jsonLevel.getGoat().getPosition()[1]).putEntity(goat);
 
         for (Command cmd : jsonLevel.getCommands()) {
-            if (cmd instanceof PlaceEntitiesCommand || cmd instanceof PlaceEntityCommand) {
-                cmd.execute(paddock);
-            }
+            cmd.execute(paddock);
         }
 
-    }
-
-    @Override
-    protected void placeWalls(Paddock paddock) {
-        for (Command cmd : jsonLevel.getCommands()) {
-            if (cmd instanceof CreateWallFigureCommand || cmd instanceof SetWallCommand) {
-                cmd.execute(paddock);
-            }
-        }
     }
 
     @Override

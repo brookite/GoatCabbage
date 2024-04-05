@@ -6,13 +6,13 @@ public class Directions {
     public static Direction createDirectionByString(String direction) {
         switch (direction) {
             case "south":
-                return Direction.south();
+                return Direction.SOUTH;
             case "north":
-                return Direction.north();
+                return Direction.NORTH;
             case "east":
-                return Direction.east();
+                return Direction.EAST;
             case "west":
-                return Direction.west();
+                return Direction.WEST;
             default:
                 throw new IllegalArgumentException("Invalid direction in level object");
         }

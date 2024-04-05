@@ -1,6 +1,7 @@
 package brookite.games.goatcabbage.model.levels.data.commands;
 
 import brookite.games.goatcabbage.model.Paddock;
+import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.levels.data.Command;
 import brookite.games.goatcabbage.model.levels.data.Directions;
 import brookite.games.goatcabbage.model.levels.data.WallFigureFragment;
@@ -15,11 +16,11 @@ public class CreateWallFigureCommand extends Command {
     @Override
     public void execute(Paddock paddock) {
         for (WallFigureFragment fragment : figure) {
-            int rowStep = fragment.isVertical() ? fragment.getStep() : 1;
-            int colStep = fragment.isVertical() ? 1 : fragment.getStep();
+            int rowStep = fragment.getDirection().isVertical() ? fragment.getStep() : 1;
+            int colStep = fragment.getDirection().isVertical() ? 1 : fragment.getStep();
 
-            int rowDelta = fragment.isVertical() ? fragment.getLength() : 1;
-            int colDelta = fragment.isVertical() ? 1 : fragment.getLength();
+            int rowDelta = fragment.getDirection().isVertical() ? fragment.getLength() : 1;
+            int colDelta = fragment.getDirection().isVertical() ? 1 : fragment.getLength();
 
             for (int row = fragment.getStartPosition()[0];
                  row < fragment.getStartPosition()[0] + rowDelta;
@@ -27,7 +28,7 @@ public class CreateWallFigureCommand extends Command {
                 for (int col = fragment.getStartPosition()[1];
                      col < fragment.getStartPosition()[1] + colDelta;
                      col += colStep) {
-                    paddock.cell(row, col).setWall(Directions.createDirectionByString(fragment.getDirection()), true);
+                    paddock.cell(row, col).putEntity(new Wall());
                 }
             }
         }

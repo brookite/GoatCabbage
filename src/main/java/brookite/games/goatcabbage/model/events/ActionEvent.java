@@ -2,15 +2,9 @@ package brookite.games.goatcabbage.model.events;
 
 import java.util.EventObject;
 
-public class ActionEvent extends EventObject {
-    public enum Type {
-        EAT, MOVE
-    }
+public abstract class ActionEvent extends EventObject {
 
-    protected Type type;
-
-    public ActionEvent(Object source, Type eventType) {
+    public ActionEvent(Object source) {
         super(source);
-        this.type = eventType;
     }
 }

@@ -1,10 +1,11 @@
 package brookite.games.goatcabbage.model.levels.data;
 
+import brookite.games.goatcabbage.model.utils.Direction;
+
 import java.util.Arrays;
 import java.util.Objects;
 
 public class WallFigureFragment {
-    private boolean isVertical;
     private String direction;
     private int length;
     private int[] startPosition;
@@ -15,22 +16,18 @@ public class WallFigureFragment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WallFigureFragment that = (WallFigureFragment) o;
-        return isVertical == that.isVertical && length == that.length && step == that.step && Objects.equals(direction, that.direction) && Arrays.equals(startPosition, that.startPosition);
+        return length == that.length && step == that.step && Objects.equals(direction, that.direction) && Arrays.equals(startPosition, that.startPosition);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(isVertical, direction, length, step);
+        int result = Objects.hash(direction, length, step);
         result = 31 * result + Arrays.hashCode(startPosition);
         return result;
     }
 
-    public boolean isVertical() {
-        return isVertical;
-    }
-
-    public String getDirection() {
-        return direction;
+    public Direction getDirection() {
+        return Directions.createDirectionByString(direction);
     }
 
     public int getLength() {
@@ -42,6 +39,6 @@ public class WallFigureFragment {
     }
 
     public int getStep() {
-        return step;
+        return Math.abs(step);
     }
 }

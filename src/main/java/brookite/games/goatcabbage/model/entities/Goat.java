@@ -1,28 +1,25 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
-import brookite.games.goatcabbage.model.events.EatActionListener;
+import brookite.games.goatcabbage.model.events.ActionEvent;
+import brookite.games.goatcabbage.model.events.ActionListener;
 import brookite.games.goatcabbage.model.events.EatEvent;
-import brookite.games.goatcabbage.model.events.EntityMoveActionListener;
-import brookite.games.goatcabbage.model.events.MoveActionEvent;
+import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-public class Goat extends Entity implements Movable, CanDrag, Eating {
-
-	private ArrayList<EntityMoveActionListener> _moveListeners = new ArrayList<>();
-	private ArrayList<EatActionListener> _eatListeners = new ArrayList<>();
-
+public class Goat extends MovableEntity implements CanDrag, Solid {
 	public Goat() {
-		addMoveEntityActionListener(new EntityMoveActionListener() {
+		addActionListener(new ActionListener() {
 			@Override
-			public void entityMoved(MoveActionEvent event) {
-				Cell cell = event.getNewPosition();
-				for (Entity entity : cell.getPassableEntities()) {
-					if (entity instanceof Cabbage) {
-						eat((Cabbage) entity);
+			public void onActionPerformed(ActionEvent event) {
+				if (event instanceof MoveEvent moveEvent) {
+					Cell cell = moveEvent.getNewPosition();
+					for (Entity entity : cell.getPassableEntities()) {
+						if (entity instanceof Cabbage) {
+							eat((Cabbage) entity);
+						}
 					}
 				}
 			}
@@ -30,7 +27,7 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	}
 	private int stepAmount;
 
-	private Dragable dragged;
+	private Entity dragged;
 	private Direction dragDirection;
 
 	private boolean decreaseStep() {
@@ -54,7 +51,6 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 		this.stepAmount = stepAmount;
 	}
 
-	@Override
 	public boolean eat(Entity entity) {
 		if (entity instanceof Cabbage) {
 			Cabbage cabbage = (Cabbage) entity;
@@ -69,153 +65,98 @@ public class Goat extends Entity implements Movable, CanDrag, Eating {
 	}
 
 	protected void fireCabbageEaten(Cabbage cabbage) {
-		for (EatActionListener listener : _eatListeners) {
-			listener.onEntityEaten(new EatEvent(this, cabbage));
-		}
+		fireActionEvent(new EatEvent(this, cabbage));
 	}
 
-	@Override
-	public void addEatEventListener(EatActionListener listener) {
-		_eatListeners.add(listener);
-	}
-
-	@Override
-	public void removeEatEventListener(EatActionListener listener) {
-		_eatListeners.remove(listener);
-	}
-
-	@Override
-	public boolean hasEatActionListeners() {
-		return !_eatListeners.isEmpty();
-	}
-
-
-	/**
-	 * @see brookite.games.goatcabbage.model.entities.Movable#move(brookite.games.goatcabbage.model.utils.Direction)
-	 */
 	@Override
 	public boolean move(Direction direction) {
-		Cell oldCell = this.cell;
-
-		if (canDrag(direction)) {
-			startDrag(direction);
-			return false;
-		}
-
 		if (!canMove(direction)) {
 			return false;
 		}
 
-		Cell neighbourCell = cell.getOwner().neighbour(cell, direction);
-
-		Cell neighbourForDraggedCell = null;
-		Entity draggedEntity = getDraggedEntity();
-		if (isDragged()) {
-			neighbourForDraggedCell = neighbourCell.getOwner().neighbour(neighbourCell, direction);
-			neighbourCell.removeEntity(draggedEntity);
+		if (canTake(direction)) {
+			take(direction);
+			return false;
 		}
+
+		Cell oldCell = this.cell;
+		Cell neighbourCell = cell.neighbour(direction);
 
 		decreaseStep();
-		neighbourCell.putEntity(this);
+		cell.removeEntity(this);
 
-		if (neighbourForDraggedCell != null) {
-			neighbourForDraggedCell.putEntity(draggedEntity);
-			stopDrag();
+		if (isTaken() && (direction == dragDirection || direction == dragDirection.opposite())) {
+			drag(direction);
 		}
+
+		neighbourCell.putEntity(this);
 
 		fireEntityMoved(this, oldCell, direction);
 
 		return true;
 	}
 
+	private void fireEntityMoved(Goat goat, Cell oldCell, Direction direction) {
+		fireActionEvent(new MoveEvent(goat, oldCell, this.cell, direction));
+	}
+
 	@Override
 	public boolean canMove(Direction direction) {
-		Cell neighbourCell = cell.getOwner().neighbour(cell, direction);
+		Cell neighbourCell = cell.neighbour(direction);
+
 		if (neighbourCell == null) {
 			return false;
-		} else if (isDragged() && neighbourCell.hasEntity(getDraggedEntity())) {
-			Entity draggedEntity = getDraggedEntity();
-			Cell neighbourForDraggedCell = neighbourCell.getOwner().neighbour(neighbourCell, direction);
-			return (direction.equals(dragDirection) || direction.equals(dragDirection.opposite())) && neighbourForDraggedCell.canPutEntity(draggedEntity)
-					&& !neighbourForDraggedCell.isWall(direction.opposite()) && !neighbourCell.isWall(direction)
-					&& !cell.isWall(direction) && !neighbourCell.isWall(direction.opposite()) && hasSteps();
-		} else {
-			return (!isDragged() || (direction.equals(dragDirection) || direction.equals(dragDirection.opposite())))
-					&& neighbourCell.canPutEntity(this)
-					&& !cell.isWall(direction) && !neighbourCell.isWall(direction.opposite()) && hasSteps();
 		}
+
+		if (neighbourCell.hasDraggableEntity()) {
+			Cell neighbourForDraggedCell = neighbourCell.neighbour(direction);
+			if (neighbourForDraggedCell != null) {
+				return neighbourForDraggedCell.canPutEntity(neighbourCell.getDraggableEntities().get(0));
+			}
+			return false;
+		}
+
+		return neighbourCell.canPutEntity(this);
 	}
 
 
-	/**
-	 * @see brookite.games.goatcabbage.model.entities.CanDrag#canDrag(brookite.games.goatcabbage.model.utils.Direction)
-	 */
 	@Override
-	public boolean canDrag(Direction direction) {
-		Cell neighbourCell = cell.getOwner().neighbour(cell, direction);
+	public boolean canTake(Direction direction) {
+		Cell neighbourCell = cell.neighbour(direction);
 		if (neighbourCell == null || dragged != null) {
 			return false;
 		}
-		return neighbourCell.getEntities().stream().anyMatch((Entity entity) -> entity instanceof Dragable);
+		return neighbourCell.getEntities().stream().anyMatch((Entity entity) -> entity instanceof Draggable);
 	}
 
-
-	private void setDragged(Dragable dragable, Direction direction) {
-		dragged = dragable;
-		dragDirection = direction;
-	}
-
-	private Entity getDraggedEntity() {
-		return (Entity) dragged;
-	}
-
-
-	/**
-	 * @see brookite.games.goatcabbage.model.entities.CanDrag#startDrag(brookite.games.goatcabbage.model.utils.Direction)
-	 */
 	@Override
-	public boolean startDrag(Direction direction) {
-		if (canDrag(direction)) {
-			Cell neighbourCell = cell.getOwner().neighbour(cell, direction);
-            setDragged((Dragable) neighbourCell.getEntities().stream().filter((Entity entity) -> entity instanceof Dragable).findFirst().get(), direction);
-			return true;
+	public boolean take(Direction direction) {
+		if (!canTake(direction)) {
+			return false;
 		}
-		return false;
-	}
-
-	@Override
-	public boolean isDragged() {
+		Cell neighbourCell = cell.neighbour(direction);
+		Optional<Entity> draggableEntity = neighbourCell.getEntities().stream().filter((Entity entity) -> entity instanceof Draggable).findFirst();;
+		dragged = draggableEntity.orElse(null);
 		return dragged != null;
 	}
 
-	/**
-	 * @see brookite.games.goatcabbage.model.entities.CanDrag#stopDrag()
-	 */
-	@Override
-	public void stopDrag() {
-		setDragged(null, null);
+	private Entity getDraggedEntity() {
+		return dragged;
 	}
 
 	@Override
-	public void addMoveEntityActionListener(EntityMoveActionListener listener) {
-		_moveListeners.add(listener);
-	}
-
-	@Override
-	public boolean hasMoveEntityActionListeners() {
-		return !_moveListeners.isEmpty();
-	}
-
-	@Override
-	public void removeEntityActionListener(EntityMoveActionListener listener) {
-		_moveListeners.remove(listener);
-	}
-
-	protected void fireEntityMoved(Entity target, Cell oldCell, Direction direction) {
-		MoveActionEvent event = new MoveActionEvent(this, oldCell, cell, direction);
-		for (EntityMoveActionListener listener : _moveListeners) {
-			listener.entityMoved(event);
+	public void drag(Direction newDirection) {
+		Cell cell = dragged.getCell();
+		Cell neighbourCell = cell.neighbour(newDirection);
+		if (neighbourCell.canPutEntity(dragged)) {
+			cell.removeEntity(dragged);
+			neighbourCell.putEntity(dragged);
 		}
+	}
+
+	@Override
+	public boolean isTaken() {
+		return dragged != null;
 	}
 
 }

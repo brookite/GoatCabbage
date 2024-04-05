@@ -1,5 +1,6 @@
 package brookite.games.goatcabbage.model;
 
+import brookite.games.goatcabbage.model.entities.Cabbage;
 import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.events.*;
@@ -20,18 +21,24 @@ public class Game {
         GameEnvironment env = getCurrentEnvironment();
         this.paddock = env.create();
 
-        paddock.getGoat().addEatEventListener(new EatActionListener() {
+        paddock.getGoat().addActionListener(new ActionListener() {
             @Override
-            public void onEntityEaten(EatEvent event) {
-                fireGameFinished((Entity) event.getEating(), true);
+            public void onActionPerformed(ActionEvent event) {
+                if (event instanceof EatEvent eatEvent) {
+                    if (eatEvent.getVictim() instanceof Cabbage) {
+                        fireGameFinished((Entity) eatEvent.getEating(), true);
+                    }
+                }
             }
         });
-        paddock.getGoat().addMoveEntityActionListener(new EntityMoveActionListener() {
+        paddock.getGoat().addActionListener(new ActionListener() {
             @Override
-            public void entityMoved(MoveActionEvent event) {
-                Goat goat = (Goat) event.getActor();
-                if (!goat.hasSteps()) {
-                    fireGameFinished(null, false);
+            public void onActionPerformed(ActionEvent event) {
+                if (event instanceof MoveEvent moveEvent) {
+                    Goat goat = (Goat) moveEvent.getActor();
+                    if (!goat.hasSteps()) {
+                        fireGameFinished(null, false);
+                    }
                 }
             }
         });

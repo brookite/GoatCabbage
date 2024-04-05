@@ -1,5 +1,4 @@
 package brookite.games.goatcabbage.model.entities;
 
-public interface Dragable {
-
+public interface Solid {
 }

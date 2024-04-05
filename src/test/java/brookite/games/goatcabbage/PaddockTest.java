@@ -10,19 +10,19 @@ public class PaddockTest {
     @Test
     public void neighborTest() {
         Paddock pd = new Paddock(5,5);
-        Assertions.assertEquals(pd.getCells().get(6), pd.neighbour(pd.cell(3, 2), Direction.north()));
-        Assertions.assertEquals(pd.getCells().get(16), pd.neighbour(pd.cell(3, 2), Direction.south()));
-        Assertions.assertEquals(pd.getCells().get(10), pd.neighbour(pd.cell(3, 2), Direction.west()));
-        Assertions.assertEquals(pd.getCells().get(12), pd.neighbour(pd.cell(3, 2), Direction.east()));
+        Assertions.assertEquals(pd.getCells().get(6), pd.cell(3, 2).neighbour(Direction.NORTH));
+        Assertions.assertEquals(pd.getCells().get(16), pd.cell(3, 2).neighbour(Direction.SOUTH));
+        Assertions.assertEquals(pd.getCells().get(10), pd.cell(3, 2).neighbour(Direction.WEST));
+        Assertions.assertEquals(pd.getCells().get(12), pd.cell(3, 2).neighbour(Direction.EAST));
     }
 
     @Test
     public void neighborOnBorderTest() {
         Paddock pd = new Paddock(5,5);
-        Assertions.assertNull(pd.neighbour(pd.cell(1, 5), Direction.east()));
-        Assertions.assertNull(pd.neighbour(pd.cell(1, 1), Direction.west()));
-        Assertions.assertNull(pd.neighbour(pd.cell(5, 5), Direction.south()));
-        Assertions.assertNull(pd.neighbour(pd.cell(1, 1), Direction.north()));
+        Assertions.assertNull(pd.cell(1, 5).neighbour(Direction.EAST));
+        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.WEST));
+        Assertions.assertNull(pd.cell(5, 5).neighbour(Direction.SOUTH));
+        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.NORTH));
     }
 
     @Test

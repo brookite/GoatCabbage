@@ -1,4 +1,4 @@
 package brookite.games.goatcabbage.model.entities;
 
-public class Cabbage extends Entity {
+public class Wall extends Entity implements Solid {
 }

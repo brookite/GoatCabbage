@@ -35,17 +35,17 @@ public class Paddock implements Iterable<Cell> {
         cabbage = null;
     }
 
-    public Cell neighbour(Cell cell, Direction direction) {
+    Cell findNeighbour(Cell cell, Direction direction) {
         for (int row = 1; row <= this.height; row++) {
             for (int col = 1; col <= this.width; col++) {
                 if (cell(row, col) == cell) {
-                    if (direction.equals(Direction.north())) {
+                    if (direction.equals(Direction.NORTH)) {
                         row -= 1;
-                    } else if (direction.equals(Direction.south())) {
+                    } else if (direction.equals(Direction.SOUTH)) {
                         row += 1;
-                    } else if (direction.equals(Direction.west())) {
+                    } else if (direction.equals(Direction.WEST)) {
                         col -= 1;
-                    } else if (direction.equals(Direction.east())) {
+                    } else if (direction.equals(Direction.EAST)) {
                         col += 1;
                     }
                     if (row < 1 || row > this.width || col < 1 || col > this.height) {
@@ -58,6 +58,20 @@ public class Paddock implements Iterable<Cell> {
         }
         return null;
     }
+
+    boolean isNeighbours(Cell cell1, Cell cell2) {
+        CellPosition cell1Position = position(cell1);
+        return cell(cell1Position.row - 1, cell1Position.col).equals(cell2)
+                || cell(cell1Position.row, cell1Position.col - 1).equals(cell2)
+                || cell(cell1Position.row + 1, cell1Position.col).equals(cell2)
+                || cell(cell1Position.row, cell1Position.col + 1).equals(cell2);
+    }
+
+    CellPosition position(Cell cell) {
+        int index = cells.indexOf(cell);
+        return new CellPosition((index / width) + 1, (index % width) + 1);
+    }
+
 
     public Cell cell(int row, int col) {
         return cells.get((row - 1) * this.width + (col - 1));

@@ -1,66 +1,22 @@
 package brookite.games.goatcabbage.model;
 
-import brookite.games.goatcabbage.model.entities.Box;
-import brookite.games.goatcabbage.model.entities.Cabbage;
-import brookite.games.goatcabbage.model.entities.Goat;
-import brookite.games.goatcabbage.model.events.CellEvent;
-import brookite.games.goatcabbage.model.events.CellStateListener;
+import brookite.games.goatcabbage.model.entities.*;
+import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
-import brookite.games.goatcabbage.model.entities.Entity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Cell {
-
-    /**
-     * Direction position format in array: [NORTH, WEST, SOUTH, EAST]
-     */
-    private boolean[] _walls = new boolean[4];
-
     private ArrayList<Entity> entities;
 
     private Paddock owner;
 
-    private ArrayList<CellStateListener> _listeners = new ArrayList<>();
-
-
-    private int _getWallArrayIndexByDirection(Direction direction) {
-        int index = 0;
-        if (direction.equals(Direction.east())) {
-            index = 3;
-        } else if (direction.equals(Direction.south())) {
-            index = 2;
-        } else if (direction.equals(Direction.west())) {
-            index = 1;
-        } else if (direction.equals(Direction.north())) {
-            index = 0;
-        }
-        return index;
-    }
-
-    public void setWall(Direction direction, boolean set) {
-        _walls[_getWallArrayIndexByDirection(direction)] = set;
-    }
-
-    protected void fireEntitySteppedIn(Entity entity) {
-        for (CellStateListener listener : _listeners) {
-            listener.onEntitySteppedIn(new CellEvent(this, entity));
-        }
-    }
-
-    protected void fireEntitySteppedOut(Entity entity) {
-        for (CellStateListener listener : _listeners) {
-            listener.onEntitySteppedOut(new CellEvent(this, entity));
-        }
-    }
-
     public Cell(Paddock owner) {
-        this.owner = owner;
+        setOwner(owner);
         entities = new ArrayList<>();
     }
 
@@ -77,29 +33,23 @@ public class Cell {
     }
 
     public Optional<Entity> getSolidEntity() {
-        return entities.stream().filter(Entity::isSolid).findFirst();
+        return entities.stream().filter((Entity entity) -> entity instanceof Solid).findFirst();
     }
 
     public List<Entity> getPassableEntities() {
-        return entities.stream().filter(Predicate.not(Entity::isSolid)).collect(Collectors.toList());
-    }
-
-    public void addStateListener(CellStateListener listener) {
-        if (!_listeners.contains(listener)) {
-            _listeners.add(listener);
-        }
-    }
-
-    public void removeStateListener(CellStateListener listener) {
-        _listeners.remove(listener);
-    }
-
-    public boolean isWall(Direction direction) {
-        return _walls[_getWallArrayIndexByDirection(direction)];
+        return entities.stream().filter((Entity entity) -> entity instanceof Solid).collect(Collectors.toList());
     }
 
     public boolean hasSolidEntity() {
         return getSolidEntity().isPresent();
+    }
+
+    public boolean hasDraggableEntity() {
+        return !getDraggableEntities().isEmpty();
+    }
+
+    public List<Entity> getDraggableEntities() {
+        return entities.stream().filter((Entity entity) -> entity instanceof Draggable).collect(Collectors.toList());
     }
 
     public boolean isEmpty() {
@@ -107,7 +57,7 @@ public class Cell {
     }
 
     public boolean canPutEntity(Entity entity) {
-        return (!entity.isSolid() || !hasSolidEntity()) && !hasEntity(entity);
+        return (!(entity instanceof Solid) || !hasSolidEntity()) && !hasEntity(entity);
     }
 
     public boolean putEntity(Entity entity) {
@@ -121,24 +71,44 @@ public class Cell {
             if (owner != null && entity instanceof Cabbage) {
                 owner.setCabbage((Cabbage) entity);
             }
-            fireEntitySteppedIn(entity);
             return true;
         }
         return false;
-    }
-
-    public boolean hasStateListeners() {
-        return !_listeners.isEmpty();
     }
 
     public boolean hasEntity(Entity entity) {
         return entities.contains(entity);
     }
 
+    public boolean isWall() {
+        if (hasSolidEntity()) {
+            return this.getSolidEntity().get() instanceof Wall;
+        }
+        return false;
+    }
+
     public void removeEntity(Entity entity) {
         entities.remove(entity);
         entity.setCell(null);
-        fireEntitySteppedOut(entity);
+    }
+
+    public Cell neighbour(Direction direction) {
+        return owner.findNeighbour(this, direction);
+    }
+
+    public boolean isNeighbour(Cell cell) {
+        return owner.isNeighbours(this, cell);
+    }
+
+    public CellPosition position() {
+        return owner.position(this);
+    }
+
+    public void clear() {
+        for (Entity entity : entities) {
+            entity.setCell(null);
+        }
+        entities = new ArrayList<>();
     }
 }
 
