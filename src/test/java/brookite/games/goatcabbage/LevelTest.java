@@ -39,6 +39,7 @@ public class LevelTest {
         Assertions.assertEquals(levelJson.getGoat().getStepAmount(), 30);
 
         Command[] commands = levelJson.getCommands();
+        Assertions.assertEquals(commands.length, 5);
         PlaceEntitiesCommand command1 = (PlaceEntitiesCommand) commands[0];
         PlaceEntityCommand command2 = (PlaceEntityCommand) commands[1];
         PlaceEntityCommand command3 = (PlaceEntityCommand) commands[2];
@@ -58,15 +59,15 @@ public class LevelTest {
         Assertions.assertEquals(command3.getPosition(), new CellPosition(5, 2));
 
         Assertions.assertEquals(command5.getFigure().size(), 2);
-        Assertions.assertEquals(command5.getFigure().get(0).getDirection(), "west");;
+        Assertions.assertEquals(Direction.EAST, command5.getFigure().get(0).getDirection());
         Assertions.assertEquals(command5.getFigure().get(0).getStep(), 1);
         Assertions.assertEquals(command5.getFigure().get(0).getLength(), 10);
-        Assertions.assertEquals(command5.getFigure().get(0).getStartPosition(), new CellPosition(5, 5));
+        Assertions.assertEquals(command5.getFigure().get(0).getStartPosition(), new CellPosition(20, 5));
 
-        Assertions.assertEquals(command5.getFigure().get(1).getDirection(), "south");
+        Assertions.assertEquals(Direction.SOUTH, command5.getFigure().get(1).getDirection());
         Assertions.assertEquals(command5.getFigure().get(1).getStep(), 1);
         Assertions.assertEquals(command5.getFigure().get(1).getLength(), 10);
-        Assertions.assertEquals(command5.getFigure().get(1).getStartPosition(), new CellPosition(5,14));
+        Assertions.assertEquals(command5.getFigure().get(1).getStartPosition(), new CellPosition(20,14));
 
     }
 
@@ -91,14 +92,16 @@ public class LevelTest {
 
         Assertions.assertTrue(pd.cell(40, 2).isWall());
         for (int x = 5; x < 15; x++) {
-            Assertions.assertTrue(pd.cell(5, x).isWall());
+            Assertions.assertTrue(pd.cell(20, x).isWall());
         }
 
-        for (int y = 5; y < 15; y++) {
+        Assertions.assertFalse(pd.cell(20, 15).isWall());
+
+        for (int y = 20; y < 30; y++) {
             Assertions.assertTrue(pd.cell(y, 14).isWall());
         }
 
-        Assertions.assertFalse(pd.cell(15, 5).isWall());
+        Assertions.assertFalse(pd.cell(30, 14).isWall());
 
     }
 }

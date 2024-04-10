@@ -21,7 +21,7 @@ public class CellTest {
     @Test
     public void setExistingWallTest() {
         Cell cell = new Cell(null);
-        Assertions.assertFalse(cell.putEntity(new Wall()));
+        Assertions.assertTrue(cell.putEntity(new Wall()));
         Assertions.assertFalse(cell.putEntity(new Wall()));
     }
 
@@ -31,7 +31,7 @@ public class CellTest {
         Wall wall = new Wall();
         Assertions.assertTrue(cell.putEntity(wall));
         cell.removeEntity(wall);
-        Assertions.assertTrue(cell.hasSolidEntity());
+        Assertions.assertFalse(cell.hasSolidEntity());
     }
 
     @Test
@@ -71,6 +71,15 @@ public class CellTest {
         Assertions.assertTrue(cell.putEntity(cabbage));
         Assertions.assertTrue(cell.getEntities().contains(cabbage));
         Assertions.assertTrue(cell.getEntities().contains(box));
+    }
+
+    @Test
+    public void neighborOnBorderTest() {
+        Paddock pd = new Paddock(5,5);
+        Assertions.assertNull(pd.cell(1, 5).neighbour(Direction.EAST));
+        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.WEST));
+        Assertions.assertNull(pd.cell(5, 5).neighbour(Direction.SOUTH));
+        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.NORTH));
     }
 
     @Test

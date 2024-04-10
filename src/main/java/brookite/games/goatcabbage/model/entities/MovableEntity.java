@@ -21,7 +21,7 @@ public abstract class MovableEntity extends Entity {
         return true;
     }
 
-    private void fireEntityMoved(Entity entity, Cell oldCell, Direction direction) {
+    protected void fireEntityMoved(Entity entity, Cell oldCell, Direction direction) {
         fireActionEvent(new MoveEvent(entity, oldCell, this.cell, direction));
     }
 

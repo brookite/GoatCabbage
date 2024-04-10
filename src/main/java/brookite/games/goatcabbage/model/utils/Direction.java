@@ -16,24 +16,6 @@ public enum Direction {
         };
     }
 
-    public int getRowDelta() {
-        return switch (this) {
-            case NORTH -> -1;
-            case SOUTH -> 1;
-            case EAST -> 0;
-            case WEST -> 0;
-        };
-    }
-
-    public int getColDelta() {
-        return switch (this) {
-            case NORTH -> 0;
-            case SOUTH -> 0;
-            case EAST -> 1;
-            case WEST -> -1;
-        };
-    }
-
     public boolean isVertical() {
         return this == NORTH || this == SOUTH;
     }

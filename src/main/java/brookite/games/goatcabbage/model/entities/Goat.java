@@ -65,21 +65,49 @@ public class Goat extends MovableEntity implements Solid {
 
 	@Override
 	public boolean move(Direction direction) {
+		Cell oldCell = this.cell;
 		Cell neighbourCell = cell.neighbour(direction);
 		Cell neighbourCellBehind = cell.neighbour(direction.opposite());
-		if (neighbourCell.hasSolidEntity() && neighbourCell.getSolidEntity().get() instanceof Box box) {
+		if (neighbourCell != null &&
+				neighbourCell.hasSolidEntity() &&
+				neighbourCell.getSolidEntity().get() instanceof Box box
+		) {
             boolean dragResult = box.drag(this, direction);
 			if (!dragResult) {
 				return false;
 			}
 		}
-		if (neighbourCellBehind.hasSolidEntity() && neighbourCellBehind.getSolidEntity().get() instanceof Box box)
+
+		boolean canDragBack = false;
+
+		if (neighbourCellBehind != null &&
+				neighbourCellBehind.hasSolidEntity() &&
+				neighbourCellBehind.getSolidEntity().get() instanceof Box box)
 		{
-            box.drag(this, direction);
+			canDragBack = box.canDrag(this, direction);
 		}
+
+		if (!canMove(direction)) {
+			return false;
+		}
+
+		cell.removeEntity(this);
+
+		neighbourCell.putEntity(this);
 		decreaseStep();
 
-		return super.move(direction);
+		fireEntityMoved(this, oldCell, direction);
+
+		if (canDragBack) {
+			Box box = (Box) neighbourCellBehind.getSolidEntity().get();
+			box.drag(this, direction);
+		}
+		return true;
+	}
+
+	@Override
+	protected boolean canMove(Direction direction) {
+		return super.canMove(direction) && hasSteps();
 	}
 
 }

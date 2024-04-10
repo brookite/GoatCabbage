@@ -22,6 +22,10 @@ public class GameTest {
             game.setEnvironments(new LevelGameEnvironment[] {
                     LevelLoader.levelFromResource("levels/test2.level")
             });
+            game.addGameStateListener(result -> {
+                Assertions.assertTrue(result.isWin());
+                throw new EventCalledException();
+            });
             game.start();
             Assertions.assertTrue(game.getPaddock().getGoat().hasActionListeners());
             game.getPaddock().getGoat().addActionListener(new ActionListener() {
@@ -29,14 +33,14 @@ public class GameTest {
                 public void onActionPerformed(ActionEvent event) {
                     if (event instanceof EatEvent eatEvent) {
                         Assertions.assertEquals(game.getPaddock().getCabbage(), eatEvent.getVictim());
-                        Assumptions.assumeTrue(true);
                     }
                 }
             });
             Assertions.assertTrue(game.started());
             game.getPaddock().getGoat().move(Direction.SOUTH);
-            game.getPaddock().getGoat().move(Direction.EAST);
-            Assertions.fail("Event wasn't called");
+            Assertions.assertThrows(EventCalledException.class, () -> {
+                Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST));
+            });
         } catch (IOException e) {
             Assertions.fail("Level wasn't loaded");
         }
@@ -52,15 +56,16 @@ public class GameTest {
             });
             game.addGameStateListener(result -> {
                 Assertions.assertFalse(result.isWin());
-                Assumptions.assumeTrue(true);
+                throw new EventCalledException();
             });
             Assertions.assertTrue(game.hasGameStateListeners());
             game.start();
             Assertions.assertTrue(game.started());
             game.getPaddock().getGoat().move(Direction.NORTH);
             game.getPaddock().getGoat().move(Direction.EAST);
-            game.getPaddock().getGoat().move(Direction.EAST);
-            Assertions.fail("Event wasn't called");
+            Assertions.assertThrows(EventCalledException.class, () -> {
+                Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST));
+            });
         } catch (IOException e) {
             Assertions.fail("Level wasn't loaded");
         }

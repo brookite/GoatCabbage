@@ -37,7 +37,7 @@ public class Cell {
     }
 
     public List<Entity> getPassableEntities() {
-        return entities.stream().filter((Entity entity) -> entity instanceof Solid).collect(Collectors.toList());
+        return entities.stream().filter((Entity entity) -> !(entity instanceof Solid)).collect(Collectors.toList());
     }
 
     public boolean hasSolidEntity() {

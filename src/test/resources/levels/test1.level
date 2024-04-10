@@ -26,9 +26,9 @@
       {
           "command": "createWallFigure",
           "figure": [
-              {"direction": "east", length": 10, "startPosition": [20, 5], "step": 1},
-              {"direction": "south", length": 10, "startPosition": [20, 14], "step": 1}
+              {"direction": "east", "length": 10, "startPosition": [20, 5], "step": 1},
+              {"direction": "south", "length": 10, "startPosition": [20, 14], "step": 1}
           ]
-      },
+      }
      ]
 }

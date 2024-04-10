@@ -16,14 +16,6 @@ public class PaddockTest {
         Assertions.assertEquals(pd.getCells().get(12), pd.cell(3, 2).neighbour(Direction.EAST));
     }
 
-    @Test
-    public void neighborOnBorderTest() {
-        Paddock pd = new Paddock(5,5);
-        Assertions.assertNull(pd.cell(1, 5).neighbour(Direction.EAST));
-        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.WEST));
-        Assertions.assertNull(pd.cell(5, 5).neighbour(Direction.SOUTH));
-        Assertions.assertNull(pd.cell(1, 1).neighbour(Direction.NORTH));
-    }
 
     @Test
     public void cellTest() {

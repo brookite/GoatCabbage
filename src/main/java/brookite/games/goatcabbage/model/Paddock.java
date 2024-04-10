@@ -7,10 +7,7 @@ import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import javax.security.auth.login.AccountExpiredException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Paddock implements Iterable<Cell> {
     private ArrayList<Cell> cells;
@@ -61,19 +58,25 @@ public class Paddock implements Iterable<Cell> {
 
     boolean isNeighbours(Cell cell1, Cell cell2) {
         CellPosition cell1Position = position(cell1);
-        return cell(cell1Position.row - 1, cell1Position.col).equals(cell2)
-                || cell(cell1Position.row, cell1Position.col - 1).equals(cell2)
-                || cell(cell1Position.row + 1, cell1Position.col).equals(cell2)
-                || cell(cell1Position.row, cell1Position.col + 1).equals(cell2);
+        return cell(cell1Position.row - 1, cell1Position.col) == cell2
+                || cell(cell1Position.row, cell1Position.col - 1) == cell2
+                || cell(cell1Position.row + 1, cell1Position.col) == cell2
+                || cell(cell1Position.row, cell1Position.col + 1) == cell2;
     }
 
     CellPosition position(Cell cell) {
         int index = cells.indexOf(cell);
+        if (index == -1) {
+            return null;
+        }
         return new CellPosition((index / width) + 1, (index % width) + 1);
     }
 
 
     public Cell cell(int row, int col) {
+        if (row < 1 || col < 1 || row > this.height || col > this.width) {
+            return null;
+        }
         return cells.get((row - 1) * this.width + (col - 1));
     }
 
