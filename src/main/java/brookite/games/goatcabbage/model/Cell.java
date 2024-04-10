@@ -44,14 +44,6 @@ public class Cell {
         return getSolidEntity().isPresent();
     }
 
-    public boolean hasDraggableEntity() {
-        return !getDraggableEntities().isEmpty();
-    }
-
-    public List<Entity> getDraggableEntities() {
-        return entities.stream().filter((Entity entity) -> entity instanceof Draggable).collect(Collectors.toList());
-    }
-
     public boolean isEmpty() {
         return entities.isEmpty();
     }
