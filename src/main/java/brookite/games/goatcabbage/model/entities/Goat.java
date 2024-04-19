@@ -67,25 +67,6 @@ public class Goat extends MovableEntity implements Solid {
 	public boolean move(Direction direction) {
 		Cell oldCell = this.cell;
 		Cell neighbourCell = cell.neighbour(direction);
-		Cell neighbourCellBehind = cell.neighbour(direction.opposite());
-		if (neighbourCell != null &&
-				neighbourCell.hasSolidEntity() &&
-				neighbourCell.getSolidEntity().get() instanceof Box box
-		) {
-            boolean dragResult = box.drag(this, direction);
-			if (!dragResult) {
-				return false;
-			}
-		}
-
-		boolean canDragBack = false;
-
-		if (neighbourCellBehind != null &&
-				neighbourCellBehind.hasSolidEntity() &&
-				neighbourCellBehind.getSolidEntity().get() instanceof Box box)
-		{
-			canDragBack = box.canDrag(this, direction);
-		}
 
 		if (!canMove(direction)) {
 			return false;
@@ -97,12 +78,49 @@ public class Goat extends MovableEntity implements Solid {
 		decreaseStep();
 
 		fireEntityMoved(this, oldCell, direction);
-
-		if (canDragBack) {
-			Box box = (Box) neighbourCellBehind.getSolidEntity().get();
-			box.drag(this, direction);
-		}
 		return true;
+	}
+
+	protected boolean canPull(Direction direction) {
+		Cell neighbourCellBehind = cell.neighbour(direction.opposite());
+		Cell neighbourCell = cell.neighbour(direction);
+		return neighbourCell != null && neighbourCellBehind != null &&
+				neighbourCell.canPutEntity(this) && neighbourCellBehind.hasEntity(Box.class);
+	}
+
+	protected boolean canPush(Direction direction) {
+		Cell neighbourCell = cell.neighbour(direction);
+		if (neighbourCell != null && neighbourCell.hasEntity(Box.class)) {
+			Cell neighbourForBoxCell = neighbourCell.neighbour(direction);
+			return neighbourForBoxCell != null && neighbourForBoxCell.canPutEntity(neighbourCell.getSolidEntity().get());
+		}
+		return false;
+	}
+
+	public boolean movePull(Direction direction) {
+		if (!canPull(direction)) {
+			return false;
+		}
+		Cell neighbourCellBehind = cell.neighbour(direction.opposite());
+		Box box = (Box) neighbourCellBehind.getSolidEntity().get();
+		boolean result = move(direction);
+		if (result) {
+			return box.move(direction);
+		}
+		return false;
+	}
+
+	public boolean movePush(Direction direction) {
+		if (!canPush(direction)) {
+			return false;
+		}
+		Cell neighbourCell = cell.neighbour(direction);
+		Box box = (Box) neighbourCell.getSolidEntity().get();
+		boolean result = box.move(direction);
+		if (result) {
+			return move(direction);
+		}
+		return false;
 	}
 
 	@Override

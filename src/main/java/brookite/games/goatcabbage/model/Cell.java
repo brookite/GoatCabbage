@@ -72,6 +72,10 @@ public class Cell {
         return entities.contains(entity);
     }
 
+    public boolean hasEntity(Class<? extends Entity> entityClass) {
+        return entities.stream().anyMatch(entityClass::isInstance);
+    }
+
     public boolean isWall() {
         if (hasSolidEntity()) {
             return this.getSolidEntity().get() instanceof Wall;
