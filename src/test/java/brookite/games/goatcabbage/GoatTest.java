@@ -83,11 +83,18 @@ public class GoatTest {
         Assertions.assertFalse(gt.move(Direction.NORTH));
         Assertions.assertFalse(gt.move(Direction.EAST));
         Assertions.assertFalse(gt.move(Direction.WEST));
+
+        Assertions.assertFalse(gt.movePull(Direction.WEST));
+        Assertions.assertFalse(gt.movePull(Direction.EAST));
+
+        Assertions.assertFalse(gt.movePush(Direction.WEST));
+        Assertions.assertFalse(gt.movePush(Direction.EAST));
+
         Assertions.assertTrue(gt.move(Direction.SOUTH));
     }
 
     @Test
-    public void goatDragBackBoxBetweenBoxes() {
+    public void goatTryPullManyBoxes() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
@@ -96,15 +103,57 @@ public class GoatTest {
         pd.cell(1, 3).putEntity(box);
         pd.cell(1, 4).putEntity(box2);
 
-        Assertions.assertFalse(gt.move(Direction.EAST));
-        Assertions.assertTrue(gt.move(Direction.WEST));
+        Assertions.assertFalse(gt.movePush(Direction.EAST));
+        Assertions.assertTrue(gt.movePull(Direction.WEST));
         Assertions.assertEquals(gt.getCell(), pd.cell(1, 1));
         Assertions.assertEquals(box.getCell(), pd.cell(1, 2));
         Assertions.assertEquals(box2.getCell(), pd.cell(1, 4));
     }
 
     @Test
-    public void goatDragBoxNearWall() {
+    public void goatTryPushManyBoxes() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        Box box2 = new Box();
+        pd.cell(1, 2).putEntity(gt);
+        pd.cell(1, 3).putEntity(box);
+        pd.cell(1, 4).putEntity(box2);
+
+        Assertions.assertFalse(gt.movePush(Direction.WEST));
+        Assertions.assertEquals(gt.getCell(), pd.cell(1, 2));
+        Assertions.assertEquals(box.getCell(), pd.cell(1, 3));
+        Assertions.assertEquals(box2.getCell(), pd.cell(1, 4));
+    }
+
+    @Test
+    public void goatTryPushBoxNearOuterWall() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        pd.cell(2, 9).putEntity(gt);
+        pd.cell(2, 10).putEntity(box);
+
+        Assertions.assertFalse(gt.movePush(Direction.EAST));
+        Assertions.assertEquals(gt.getCell(), pd.cell(2, 9));
+        Assertions.assertEquals(box.getCell(), pd.cell(2, 10));
+    }
+
+    @Test
+    public void goatTryPullBoxNearOuterWall() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        pd.cell(2, 10).putEntity(gt);
+        pd.cell(2, 9).putEntity(box);
+
+        Assertions.assertFalse(gt.movePull(Direction.EAST));
+        Assertions.assertEquals(gt.getCell(), pd.cell(2, 10));
+        Assertions.assertEquals(box.getCell(), pd.cell(2, 9));
+    }
+
+    @Test
+    public void goatPushBoxNearWall() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
@@ -112,60 +161,74 @@ public class GoatTest {
         pd.cell(2, 3).putEntity(box);
         pd.cell(2, 4).putEntity(new Wall());
 
-        Assertions.assertFalse(gt.move(Direction.EAST));
+        Assertions.assertFalse(gt.movePush(Direction.EAST));
         Assertions.assertEquals(gt.getCell(), pd.cell(2, 2));
-        Assertions.assertTrue(gt.move(Direction.WEST));
+        Assertions.assertEquals(box.getCell(), pd.cell(2, 3));
+        Assertions.assertTrue(gt.movePull(Direction.WEST));
         Assertions.assertEquals(gt.getCell(), pd.cell(2, 1));
+        Assertions.assertEquals(box.getCell(), pd.cell(2, 2));
     }
 
     @Test
-    public void dragAndMoveBoxAtHorizontalTest() {
+    public void testInvalidUsageOfPullAndPush() {
+        Goat gt = new Goat(30);
+        Paddock pd = new Paddock(10, 10);
+        Box box = new Box();
+        pd.cell(2, 2).putEntity(gt);
+        pd.cell(2, 3).putEntity(box);
+
+        Assertions.assertFalse(gt.movePush(Direction.WEST));
+        Assertions.assertFalse(gt.movePull(Direction.EAST));
+    }
+
+    @Test
+    public void pushBoxAtHorizontalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
         pd.cell(1, 1).putEntity(gt);
         pd.cell(1, 2).putEntity(box);
 
-        Assertions.assertTrue(gt.move(Direction.EAST));
+        Assertions.assertTrue(gt.movePush(Direction.EAST));
         Assertions.assertEquals(gt.getCell(), pd.cell(1, 2));
         Assertions.assertEquals(box.getCell(), pd.cell(1, 3));
 
     }
 
     @Test
-    public void dragAndMoveBackBoxAtHorizontalTest() {
+    public void pullBoxAtHorizontalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
-        Assertions.assertTrue(gt.move(Direction.WEST));
+        Assertions.assertTrue(gt.movePull(Direction.WEST));
         Assertions.assertEquals(gt.getCell(), pd.cell(1, 1));
         Assertions.assertEquals(box.getCell(), pd.cell(1, 2));
     }
 
     @Test
-    public void dragAndMoveBoxAtVerticalTest() {
+    public void pullMoveBoxAtVerticalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
         pd.cell(5, 5).putEntity(gt);
         pd.cell(4, 5).putEntity(box);
 
-        Assertions.assertTrue(gt.move(Direction.SOUTH));
+        Assertions.assertTrue(gt.movePull(Direction.SOUTH));
         Assertions.assertEquals(gt.getCell(), pd.cell(6, 5));
         Assertions.assertEquals(box.getCell(), pd.cell(5, 5));
 
     }
 
     @Test
-    public void dragAndMoveBackBoxAtVerticalTest() {
+    public void pullBoxAtVerticalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         Box box = new Box();
         pd.cell(5, 5).putEntity(gt);
         pd.cell(6, 5).putEntity(box);
-        Assertions.assertTrue(gt.move(Direction.NORTH));
+        Assertions.assertTrue(gt.movePull(Direction.NORTH));
         Assertions.assertEquals(gt.getCell(), pd.cell(4, 5));
         Assertions.assertEquals(box.getCell(), pd.cell(5, 5));
     }
