@@ -18,6 +18,7 @@ public class Main {
                     GameFrame frame = new GameFrame();
                     frame.setVisible(true);
                     frame.finishGame();
+                    frame.startGame();
                 }
         });
     }

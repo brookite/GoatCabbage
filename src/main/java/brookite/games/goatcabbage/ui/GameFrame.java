@@ -12,7 +12,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame() {
         try {
-            setIconImage(ImageLoader.loadAsIcon("icon.png", 0.6f).getImage());
+            setIconImage(ImageLoader.loadAsImageIcon("icon.png").getImage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

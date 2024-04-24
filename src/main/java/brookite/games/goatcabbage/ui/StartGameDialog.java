@@ -1,5 +1,7 @@
 package brookite.games.goatcabbage.ui;
 
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -26,37 +28,26 @@ public class StartGameDialog extends JDialog {
         playButton = new JButton("Играть");
         cancelButton = new JButton("Отмена");
 
-        JPanel panel = new JPanel(new GridLayout(3, 1));
-        panel.setBorder(new EmptyBorder(padding, padding, padding, padding));
-        panel.add(new JLabel("Выберите уровень:"));
-        panel.add(levelComboBox);
+        JPanel panel = new JPanel(new MigLayout("insets 8", "[grow,center]", ""));
+        panel.add(new JLabel("Выберите уровень:"), "alignx center, wrap");
+        panel.add(levelComboBox, "alignx center, wrap");
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(playButton);
-        buttonPanel.add(cancelButton);
-
-        panel.add(buttonPanel);
+        panel.add(playButton, "split 2, sizegroup btn, tag ok");
+        panel.add(cancelButton, "sizegroup btn, tag cancel");
         add(panel);
 
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                for (ActionListener playActionListener : playActionListeners)
-                    playActionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
-            }
+        playButton.addActionListener(e -> {
+            dispose();
+            playActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null)));
         });
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                for (ActionListener cancelActionListener : cancelActionListeners)
-                    cancelActionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
-            }
+        cancelButton.addActionListener(e -> {
+            dispose();
+            cancelActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null)));
         });
 
         getRootPane().setDefaultButton(playButton);
+
     }
 
     public void addLevelSelectedListener(ActionListener listener) {
