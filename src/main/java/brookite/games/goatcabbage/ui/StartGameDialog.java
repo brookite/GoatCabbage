@@ -19,8 +19,7 @@ public class StartGameDialog extends JDialog {
 
     public StartGameDialog(Frame parent) {
         super(parent, "Выберите уровень", true);
-        setResizable(true);
-        setSize(300, 150);
+        setResizable(false);
         int padding = 8;
         setLocationRelativeTo(parent);
 
@@ -35,6 +34,7 @@ public class StartGameDialog extends JDialog {
         panel.add(playButton, "split 2, sizegroup btn, tag ok");
         panel.add(cancelButton, "sizegroup btn, tag cancel");
         add(panel);
+        pack();
 
         playButton.addActionListener(e -> {
             dispose();

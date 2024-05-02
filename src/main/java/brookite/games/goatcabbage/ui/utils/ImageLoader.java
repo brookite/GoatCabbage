@@ -10,8 +10,7 @@ public class ImageLoader {
     public static ImageIcon loadAsImageIcon(String imageName) throws IOException {
         URL imageURL = ImageLoader.class.getResource("/images/" + imageName);
         if (imageURL != null) {
-            ImageIcon icon = new ImageIcon(imageURL);
-            return icon;
+            return new ImageIcon(imageURL);
         } else {
             throw new IOException("Image not found");
         }
@@ -19,12 +18,13 @@ public class ImageLoader {
 
     public static Icon loadAsScaledIcon(String imageName, float scale) throws IOException {
         ImageIcon icon = loadAsImageIcon(imageName);
-        if (icon != null) {
-            int width = (int) (icon.getIconWidth() * scale);
-            int height = (int) (icon.getIconHeight() * scale);
-            return new ScaledImageIcon(icon, width, height);
-        } else {
-            return null;
-        }
+        int width = (int) (icon.getIconWidth() * scale);
+        int height = (int) (icon.getIconHeight() * scale);
+        return new ScaledImageIcon(icon, width, height);
+    }
+
+    public static Icon loadAsScaledIcon(String imageName, int width, int height) throws IOException {
+        ImageIcon icon = loadAsImageIcon(imageName);
+        return new ScaledImageIcon(icon, width, height);
     }
 }

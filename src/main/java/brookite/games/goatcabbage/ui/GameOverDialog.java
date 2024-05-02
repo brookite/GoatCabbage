@@ -22,8 +22,8 @@ public class GameOverDialog extends JDialog {
     public GameOverDialog(GameFrame parent, GameResultEvent resultEvent, int stepsTaken, int boxesMoved) {
         super(parent, resultEvent.isWin() ? "Победа" : "Игра окончена", true);
         gameFrame = parent;
-        setSize(380, 380);
         setLocationRelativeTo(parent);
+        setResizable(false);
 
         JPanel panel = new JPanel(new MigLayout("wrap 1, insets 10", "[center]", "[top]20[top]push[center]push[bottom]"));
 
@@ -57,6 +57,7 @@ public class GameOverDialog extends JDialog {
         panel.add(finishButton, "tag no");
 
         add(panel);
+        pack();
 
         nextLevelButton.addActionListener(new ActionListener() {
             @Override
