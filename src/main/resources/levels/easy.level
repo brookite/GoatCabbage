@@ -1,0 +1,35 @@
+{
+     "name": "Easy",
+     "field": {
+         "width": 7,
+         "height": 7
+     },
+     "goat": {
+         "position": [7, 1],
+         "stepAmount": 15
+     },
+     "commands": [
+      {
+          "command": "placeEntities",
+          "type": "box",
+          "positions": [
+              [3, 2],
+              [5, 7],
+              [4, 4],
+              [6, 7],
+              [3, 5],
+              [5, 5]
+          ]
+      },
+      {
+      "command": "placeEntities",
+       "type": "wall",
+       "positions": [
+           [3, 2],
+           [4, 7],
+           [7, 7]
+       ]
+       },
+      {"command": "placeEntity", "type": "cabbage", "position": [4, 5]}
+     ]
+}

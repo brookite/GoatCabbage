@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class BoxWidget extends EntityWidget {
-    public BoxWidget(CellWidget cell, Box entity) {
-        super(cell, entity);
+    public BoxWidget(Box entity) {
+        super(entity);
     }
 
     @Override

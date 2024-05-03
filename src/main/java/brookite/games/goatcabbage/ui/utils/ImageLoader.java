@@ -2,15 +2,19 @@ package brookite.games.goatcabbage.ui.utils;
 
 import com.formdev.flatlaf.util.ScaledImageIcon;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 public class ImageLoader {
     public static ImageIcon loadAsImageIcon(String imageName) throws IOException {
         URL imageURL = ImageLoader.class.getResource("/images/" + imageName);
+
         if (imageURL != null) {
-            return new ImageIcon(imageURL);
+            BufferedImage image = ImageIO.read(imageURL);
+            return new ImageIcon(image);
         } else {
             throw new IOException("Image not found");
         }

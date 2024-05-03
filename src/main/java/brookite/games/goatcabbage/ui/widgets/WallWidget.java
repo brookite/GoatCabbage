@@ -1,14 +1,15 @@
 package brookite.games.goatcabbage.ui.widgets;
 
 import brookite.games.goatcabbage.model.entities.Box;
+import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 
 import javax.swing.*;
 import java.io.IOException;
 
 public class WallWidget extends EntityWidget {
-    public WallWidget(CellWidget cell, Box entity) {
-        super(cell, entity);
+    public WallWidget(Wall entity) {
+        super(entity);
     }
 
     @Override

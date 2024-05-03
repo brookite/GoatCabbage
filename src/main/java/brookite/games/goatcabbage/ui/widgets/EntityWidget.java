@@ -3,10 +3,14 @@ package brookite.games.goatcabbage.ui.widgets;
 import brookite.games.goatcabbage.model.entities.Entity;
 
 public abstract class EntityWidget extends CellItemWidget {
-    private Entity entity;
+    protected Entity entity;
 
-    public EntityWidget(CellWidget cell, Entity entity) {
-        super(cell);
+    public EntityWidget(Entity entity) {
+        super();
         this.entity = entity;
+    }
+
+    public Entity getModelEntity() {
+        return entity;
     }
 }

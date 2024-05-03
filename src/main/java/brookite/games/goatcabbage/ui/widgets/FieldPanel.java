@@ -1,18 +1,28 @@
 package brookite.games.goatcabbage.ui.widgets;
 
-import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.Paddock;
+import brookite.games.goatcabbage.model.Cell;
+import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.utils.CellPosition;
+import brookite.games.goatcabbage.ui.WidgetFactory;
 import net.miginfocom.swing.MigLayout;
+
+import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 
 public class FieldPanel extends JPanel {
     private int _horizontalCellCount = 10;
     private int _verticalCellCount = 10;
 
+    private EntityWidget _actor;
+
     private static final int MAX_HORIZONTAL_CELL_COUNT = 24;
     private static final int MAX_VERTICAL_CELL_COUNT = 10;
+
+    private Paddock _modelField;
 
     public void setHorizontalCellCount(int count) throws IllegalArgumentException {
         if (count > MAX_HORIZONTAL_CELL_COUNT) {
@@ -37,16 +47,16 @@ public class FieldPanel extends JPanel {
         for (int i = 0; i < _verticalCellCount; i++) {
             for (int j = 0; j < _horizontalCellCount; j++) {
                 if (j == _horizontalCellCount - 1) {
-                    add(new CellWidget(), "wrap");
+                    add(new CellWidget(this), "wrap");
                 }
                 else {
-                    add(new CellWidget());
+                    add(new CellWidget(this));
                 }
             }
         }
     }
 
-    void changeBackground(ImageIcon icon) {
+    public void changeBackground(ImageIcon icon) {
         CellWidget.icon = icon;
     }
 
@@ -58,11 +68,36 @@ public class FieldPanel extends JPanel {
         return (CellWidget) getComponent((row - 1) * _verticalCellCount + (col - 1));
     }
 
-    public FieldPanel() {
+    public EntityWidget getActorWidget() {
+        return _actor;
+    }
+
+    public FieldPanel(Paddock paddock) {
         super();
+        changePaddock(paddock);
+    }
+
+    public void changePaddock(Paddock paddock) {
+        _modelField = paddock;
+        setHorizontalCellCount(paddock.getWidth());
+        setVerticalCellCount(paddock.getHeight());
         setLayout(new MigLayout("gap 1"));
         prepareNewField();
-        cellAt(2, 2).addItem(new GoatWidget(cellAt(2, 2), new Goat()));
+        placeWidgets();
+    }
+
+    private void placeWidgets() {
+        for (Cell cell : _modelField) {
+            List<Entity> entities = cell.getEntities();
+            Collections.reverse(entities);
+            for (Entity entity : entities) {
+                EntityWidget entityWidget = WidgetFactory.placeEntityWidget(entity, this);
+                if (entityWidget instanceof GoatWidget) {
+                    _actor = entityWidget;
+                    _actor.requestFocus();
+                }
+            }
+        }
     }
 
     @Override
