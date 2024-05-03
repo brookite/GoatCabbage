@@ -16,7 +16,9 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 public class LevelLoader {
-	private static final String[] LEVEL_PATHS = new String[] {};
+	private static final String[] LEVEL_PATHS = new String[] {
+			"levels/easy.level"
+	};
 
 	public static LevelGameEnvironment levelFromResource(String resourceFile) throws IOException {
 		Command.Deserializer deserializer = new Command.Deserializer("command");

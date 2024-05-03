@@ -5,12 +5,13 @@ import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Cell {
+public class Cell implements Iterable<Entity> {
     private ArrayList<Entity> entities;
 
     private Paddock owner;
@@ -105,6 +106,11 @@ public class Cell {
             entity.setCell(null);
         }
         entities = new ArrayList<>();
+    }
+
+    @Override
+    public Iterator<Entity> iterator() {
+        return entities.iterator();
     }
 }
 
