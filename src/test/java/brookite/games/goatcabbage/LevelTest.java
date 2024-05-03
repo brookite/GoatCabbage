@@ -33,7 +33,7 @@ public class LevelTest {
         Assertions.assertEquals(levelJson.getField().getWidth(), 128);
         Assertions.assertEquals(levelJson.getField().getHeight(), 120);
         Assertions.assertEquals(levelJson.getName(), "Example Level");
-        Assertions.assertEquals(levelJson.getUiProps().getLevelBackground(), "image.png");
+        Assertions.assertEquals(levelJson.getUiProps().getLevelCellBackground(), "image.png");
 
         Assertions.assertEquals(levelJson.getGoat().getPosition(), new CellPosition(8, 8));
         Assertions.assertEquals(levelJson.getGoat().getStepAmount(), 30);
