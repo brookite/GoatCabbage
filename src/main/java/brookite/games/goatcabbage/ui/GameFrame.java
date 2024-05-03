@@ -23,12 +23,9 @@ public class GameFrame extends JFrame {
     public GameFrame() {
         /*
         TODO:
-        - image icon cache optimization
-        - goat step counter
         - start game with empty paddock, select level
         - win/lose event
         - widget rendering improvement
-        - pull/push logic
         - resize optimizations and improvements
         - diagrams
          */

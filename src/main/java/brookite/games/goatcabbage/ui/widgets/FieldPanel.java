@@ -16,6 +16,7 @@ import java.util.Collections;
 public class FieldPanel extends JPanel {
     private int _horizontalCellCount = 10;
     private int _verticalCellCount = 10;
+    static final Color DEFAULT_COLOR = new Color(54, 38, 27);
 
     private EntityWidget _actor;
 
@@ -74,6 +75,7 @@ public class FieldPanel extends JPanel {
 
     public FieldPanel(Paddock paddock) {
         super();
+        setBackground(DEFAULT_COLOR);
         changePaddock(paddock);
     }
 

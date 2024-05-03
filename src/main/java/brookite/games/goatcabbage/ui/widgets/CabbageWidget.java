@@ -8,16 +8,22 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class CabbageWidget extends EntityWidget {
+    private static final ImageIcon icon;
+
+    static {
+        try {
+            icon = ImageLoader.loadAsImageIcon("cabbage.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public CabbageWidget(Cabbage entity) {
         super(entity);
     }
 
     @Override
     public ImageIcon getSourceIcon() {
-        try {
-            return ImageLoader.loadAsImageIcon("cabbage.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return icon;
     }
 }

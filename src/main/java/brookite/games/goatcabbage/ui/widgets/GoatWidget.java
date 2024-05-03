@@ -6,13 +6,26 @@ import brookite.games.goatcabbage.model.events.ActionListener;
 import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class GoatWidget extends EntityWidget {
+    private static final ImageIcon icon;
+    private JLabel _stepCounter;
+
+    static {
+        try {
+            icon = ImageLoader.loadAsImageIcon("goat.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private class GoatKeyListener extends KeyAdapter {
         @Override
         public void keyReleased(KeyEvent e) {
@@ -32,7 +45,12 @@ public class GoatWidget extends EntityWidget {
                     break;
             }
             if (direction != null && !e.isControlDown()) {
-                getGoat().move(direction);
+                boolean movePushResult = getGoat().movePush(direction);
+                if (!movePushResult) {
+                    getGoat().move(direction);
+                }
+            } else if (direction != null) {
+                getGoat().movePull(direction);
             }
         }
     }
@@ -48,12 +66,18 @@ public class GoatWidget extends EntityWidget {
                     oldCell.removeItem(GoatWidget.this);
                     CellWidget newCell = field.cellAt(moveEvent.getNewPosition().position());
                     newCell.addItem(GoatWidget.this);
+                    _stepCounter.setText(Integer.toString(getGoat().getStepAmount()));
                     field.repaint();
                     requestFocus();
                 }
             }
         });
         addKeyListener(new GoatKeyListener());
+        setLayout(new MigLayout("nogrid"));
+        _stepCounter = new JLabel(Integer.toString(goat.getStepAmount()));
+        _stepCounter.setFont(new Font("Arial", Font.BOLD, 13));
+        _stepCounter.setForeground(FieldPanel.DEFAULT_COLOR);
+        add(_stepCounter, "pos 0% 200%");
     }
 
     Goat getGoat() {
@@ -62,10 +86,6 @@ public class GoatWidget extends EntityWidget {
 
     @Override
     public ImageIcon getSourceIcon() {
-        try {
-            return ImageLoader.loadAsImageIcon("goat.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return icon;
     }
 }

@@ -1,6 +1,5 @@
 package brookite.games.goatcabbage.ui.widgets;
 
-import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 
@@ -12,12 +11,18 @@ public class WallWidget extends EntityWidget {
         super(entity);
     }
 
-    @Override
-    public ImageIcon getSourceIcon() {
+    private static final ImageIcon icon;
+
+    static {
         try {
-            return ImageLoader.loadAsImageIcon("fence2.png");
+            icon = ImageLoader.loadAsImageIcon("fence2.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ImageIcon getSourceIcon() {
+        return icon;
     }
 }
