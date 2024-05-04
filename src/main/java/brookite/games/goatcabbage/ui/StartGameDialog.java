@@ -38,7 +38,7 @@ public class StartGameDialog extends JDialog {
                 preview.setPaddock(((GameEnvironment)e.getItem()).create());
                 preview.setCellSize(CellWidget.SMALLEST_SIZE);
                 repaint();
-                setSize(new Dimension(preview.getPreferredSize().width, getHeight()));
+                pack();
             }
         });
         preview.setPaddock(((GameEnvironment)levelComboBox.getSelectedItem()).create());

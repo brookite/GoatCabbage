@@ -28,12 +28,6 @@ public class GameFrame extends JFrame {
     private final Game _model;
 
     public GameFrame() {
-        /*
-        TODO:
-        - add many levels
-        - diagrams
-         */
-
         _model = new Game();
         try {
             _model.setEnvironments(LevelLoader.loadAllLevels());
@@ -105,10 +99,10 @@ public class GameFrame extends JFrame {
         add(_field, "wrap");
         repaint();
         revalidate();
+        pack();
         if (_field.getActorWidget() != null) {
             _field.getActorWidget().requestFocus();
         }
-        setSize(_field.getPreferredSize());
     }
 
     public void createMenu() {
@@ -142,7 +136,7 @@ public class GameFrame extends JFrame {
 
         keyHelpItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(GameFrame.this, "Управление:\nW - вверх,\nA - влево,\nS - вниз,\nD - вправо.\n\nПри нажатии Ctrl можно тянуть к себе коробку, если она находится рядом с Козой", "Помощь", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(GameFrame.this, "Управление:\nW - вверх,\nA - влево,\nS - вниз,\nD - вправо.\n\nПри удерживании Ctrl можно тянуть к себе коробку, если она находится рядом с Козой", "Помощь", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

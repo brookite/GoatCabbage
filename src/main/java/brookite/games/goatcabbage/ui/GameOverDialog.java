@@ -28,10 +28,10 @@ public class GameOverDialog extends JDialog {
 
         JPanel panel = new JPanel(new MigLayout("wrap 1, insets 10", "[center]", "[top]20[top]push[center]push[bottom]"));
 
-        nextLevelButton = new JButton("Перейти к следующему уровню");
+        nextLevelButton = new JButton("Следующий уровень");
         finishButton = new JButton("Закончить игру");
 
-        JLabel titleLabel = new JLabel(resultEvent.isWin() ? "Вы победили!" : "Игра окончена");
+        titleLabel = new JLabel(resultEvent.isWin() ? "Вы победили!" : "Игра окончена");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(titleLabel, "alignx center, wrap");
@@ -49,15 +49,16 @@ public class GameOverDialog extends JDialog {
         }
         panel.add(iconLabel, "alignx center, wrap");
 
-        JLabel stepsLabel = new JLabel("Шагов: " + stepsTaken);
-        JLabel boxesMovedLabel = new JLabel("Передвинутых коробок: " + boxesMoved);
+        stepsLabel = new JLabel("Шагов: " + stepsTaken);
+        boxesMovedLabel = new JLabel("Передвинутых коробок: " + boxesMoved);
         panel.add(stepsLabel, "alignx center, wrap");
         panel.add(boxesMovedLabel, "alignx center, wrap");
 
-        panel.add(nextLevelButton, "split 2, tag yes");
-        panel.add(finishButton, "tag no");
+        panel.add(finishButton, "split 2, tag no");
+        panel.add(nextLevelButton, "tag yes");
 
         add(panel);
+        setPreferredSize(new Dimension(360, 200));
         pack();
         setLocationRelativeTo(parent);
 

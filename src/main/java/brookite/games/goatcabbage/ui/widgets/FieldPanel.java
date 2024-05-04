@@ -4,8 +4,6 @@ import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.entities.Entity;
 import brookite.games.goatcabbage.model.entities.Goat;
-import brookite.games.goatcabbage.model.levels.GameEnvironment;
-import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.ui.WidgetFactory;
 import net.miginfocom.swing.MigLayout;
@@ -24,7 +22,7 @@ public class FieldPanel extends JPanel {
     private EntityWidget _actor;
 
     private static final int MAX_HORIZONTAL_CELL_COUNT = 24;
-    private static final int MAX_VERTICAL_CELL_COUNT = 12;
+    private static final int MAX_VERTICAL_CELL_COUNT = 15;
 
     int _usedSteps = 0;
     int _movedBox = 0;
@@ -88,7 +86,7 @@ public class FieldPanel extends JPanel {
     }
 
     public CellWidget cellAt(int row, int col) {
-        return (CellWidget) getComponent((row - 1) * _verticalCellCount + (col - 1));
+        return (CellWidget) getComponent((row - 1) * _horizontalCellCount + (col - 1));
     }
 
     public EntityWidget getActorWidget() {

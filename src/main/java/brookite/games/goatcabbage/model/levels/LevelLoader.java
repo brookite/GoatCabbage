@@ -16,9 +16,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 public class LevelLoader {
-	private static final String[] LEVEL_PATHS = new String[] {
-			"levels/easy.level"
-	};
+	public static final int LEVEL_COUNT = 39;
 
 	public static LevelGameEnvironment levelFromResource(String resourceFile) throws IOException {
 		Command.Deserializer deserializer = new Command.Deserializer("command");
@@ -43,9 +41,9 @@ public class LevelLoader {
 	}
 
 	public static LevelGameEnvironment[] loadAllLevels() throws IOException {
-		LevelGameEnvironment[] array = new LevelGameEnvironment[LEVEL_PATHS.length];
-		for (int i = 0; i < array.length; i++) {
-			array[i] = levelFromResource(LEVEL_PATHS[i]);
+		LevelGameEnvironment[] array = new LevelGameEnvironment[LEVEL_COUNT];
+		for (int i = 1; i < LEVEL_COUNT + 1; i++) {
+			array[i - 1] = levelFromResource(String.format("levels/level_%d.level", i));
 		}
 		return array;
 	}
