@@ -9,7 +9,7 @@
          "stepAmount": 30
      },
      "uiProps": {
-          "levelBackground": "image.png"
+          "cellBackground": "image.png"
      },
      "commands": [
       {
