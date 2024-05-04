@@ -2,6 +2,8 @@ package brookite.games.goatcabbage.ui;
 
 
 import brookite.games.goatcabbage.model.Game;
+import brookite.games.goatcabbage.model.events.GameResultEvent;
+import brookite.games.goatcabbage.model.events.GameStateListener;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelLoader;
@@ -11,10 +13,9 @@ import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -26,16 +27,10 @@ public class GameFrame extends JFrame {
 
     private final Game _model;
 
-    private static final Dimension minimumSize = new Dimension(1230, 550);
-
     public GameFrame() {
         /*
         TODO:
-        - start game with empty paddock, select level
-        - win/lose event
-        - block push box on cabbage in model
-        - widget rendering improvement
-        - resize optimizations and improvements
+        - add many levels
         - diagrams
          */
 
@@ -45,11 +40,20 @@ public class GameFrame extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        _model.addGameStateListener(new GameStateListener() {
+            @Override
+            public void onGameFinished(GameResultEvent result) {
+                if (_model.started()) {
+                    finishGame(result);
+                }
+            }
+        });
         _startGameDialog = new StartGameDialog(this, _model.getEnvironments());
         _startGameDialog.addLevelSelectedListener((ActionEvent e) -> {
             GameEnvironment env = (GameEnvironment) e.getSource();
             if (env != null) {
-                setLevel(env);
+                _model.setCurrentEnvironment(env);
+                startGame();
             }
         });
         setTitle("GoatCabbage | Коза и капуста");
@@ -60,9 +64,12 @@ public class GameFrame extends JFrame {
         }
         setLayout(new MigLayout("align center center"));
         createMenu();
-        setMinimumSize(minimumSize);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        _field = FieldFactory.fromLevel(new EmptyLevel());
+
+        _field = FieldFactory.empty();
+        _field.setPaddock(new EmptyLevel().create());
+
         add(_field, "wrap");
         pack();
         if (_field.getActorWidget() != null) {
@@ -70,25 +77,38 @@ public class GameFrame extends JFrame {
         }
     }
 
-    public void startGame() {
+    public void selectNewLevel() {
         _startGameDialog.setVisible(true);
     }
 
-    public void setLevel(GameEnvironment level) {
-        if (_field != null) {
-            remove(_field);
-        }
-        _model.setCurrentEnvironment(level);
-        _field = FieldFactory.fromLevel((LevelGameEnvironment) _model.getCurrentEnvironment());
-        add(_field, "wrap");
-        repaint();
-        if (_field.getActorWidget() != null) {
-            _field.getActorWidget().requestFocus();
+    public void finishGame(GameResultEvent result) {
+        _model.finish();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GameOverDialog gameOver = new GameOverDialog(GameFrame.this, result, _field.getUsedSteps(), _field.getMovedBox());
+                gameOver.setVisible(true);
+            }
+        });
+        for (KeyListener kl : _field.getActorWidget().getKeyListeners()) {
+            _field.getActorWidget().removeKeyListener(kl);
         }
     }
 
-    public void finishGame() {
-        //new GameOverDialog(this, new GameResultEvent(new Goat(),true), 0, 0).setVisible(true);
+    public void startGame() {
+        if (_field != null) {
+            remove(_field);
+        }
+        _field = FieldFactory.fromLevel(_model.getCurrentEnvironment());
+        _model.start();
+        _field.setPaddock(_model.getPaddock());
+        add(_field, "wrap");
+        repaint();
+        revalidate();
+        if (_field.getActorWidget() != null) {
+            _field.getActorWidget().requestFocus();
+        }
+        setSize(_field.getPreferredSize());
     }
 
     public void createMenu() {
@@ -118,7 +138,7 @@ public class GameFrame extends JFrame {
             }
         });
 
-        newGameItem.addActionListener((ActionEvent e) -> startGame());
+        newGameItem.addActionListener((ActionEvent e) -> selectNewLevel());
 
         keyHelpItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -134,7 +154,7 @@ public class GameFrame extends JFrame {
                 } catch (IOException | URISyntaxException ex) {
                     throw new RuntimeException(ex);
                 }
-                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>\n<br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
+                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 04.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
                 try {
                     JOptionPane.showMessageDialog(GameFrame.this, text, "Об игре", JOptionPane.PLAIN_MESSAGE, ImageLoader.loadAsScaledIcon("icon.png", 128, 128));
                 } catch (IOException ex) {
@@ -142,5 +162,9 @@ public class GameFrame extends JFrame {
                 }
             }
         });
+    }
+
+    public void selectNextLevel() {
+        _model.nextEnvironment();
     }
 }

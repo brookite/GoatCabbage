@@ -1,6 +1,8 @@
 package brookite.games.goatcabbage.ui;
 
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
+import brookite.games.goatcabbage.ui.widgets.CellWidget;
+import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -8,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,6 +19,7 @@ public class StartGameDialog extends JDialog {
     private JComboBox<GameEnvironment> levelComboBox;
     private JButton playButton;
     private JButton cancelButton;
+    private FieldPanel preview;
 
     private java.util.List<ActionListener> playActionListeners = new ArrayList<>();
     private java.util.List<ActionListener> cancelActionListeners = new ArrayList<>();
@@ -22,21 +27,37 @@ public class StartGameDialog extends JDialog {
     public StartGameDialog(Frame parent, Collection<GameEnvironment> environments) {
         super(parent, "Выберите уровень", true);
         setResizable(false);
-        int padding = 8;
         setLocationRelativeTo(parent);
 
+        preview = FieldFactory.empty();
+
         levelComboBox = new JComboBox<>(environments.toArray(new GameEnvironment[0]));
+        levelComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                preview.setPaddock(((GameEnvironment)e.getItem()).create());
+                preview.setCellSize(CellWidget.SMALLEST_SIZE);
+                repaint();
+                setSize(new Dimension(preview.getPreferredSize().width, getHeight()));
+            }
+        });
+        preview.setPaddock(((GameEnvironment)levelComboBox.getSelectedItem()).create());
+        preview.setCellSize(CellWidget.SMALLEST_SIZE);
+
         playButton = new JButton("Играть");
         cancelButton = new JButton("Отмена");
 
         JPanel panel = new JPanel(new MigLayout("insets 8", "[grow,center]", ""));
-        panel.add(new JLabel("Выберите уровень:"), "alignx center, wrap");
+        panel.add(new JLabel("Выберите уровень:"), "wrap");
         panel.add(levelComboBox, "alignx center, wrap");
+        panel.add(new JLabel("Предварительный просмотр:"), "wrap");
+        panel.add(preview, "grow, wrap");
 
         panel.add(playButton, "split 2, sizegroup btn, tag ok");
         panel.add(cancelButton, "sizegroup btn, tag cancel");
         add(panel);
         pack();
+        setLocationRelativeTo(parent);
 
         playButton.addActionListener(e -> {
             dispose();

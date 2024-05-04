@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameOverDialog extends JDialog {
     private final GameFrame gameFrame;
@@ -58,10 +59,13 @@ public class GameOverDialog extends JDialog {
 
         add(panel);
         pack();
+        setLocationRelativeTo(parent);
 
         nextLevelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameFrame.selectNextLevel();
+                gameFrame.startGame();
                 dispose();
             }
         });

@@ -1,9 +1,7 @@
 package brookite.games.goatcabbage.ui.utils;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
-import brookite.games.goatcabbage.model.levels.data.Level;
 import brookite.games.goatcabbage.model.levels.data.UIProperties;
 
 public class EmptyLevel extends LevelGameEnvironment {
@@ -14,7 +12,7 @@ public class EmptyLevel extends LevelGameEnvironment {
 
     @Override
     public Paddock create() {
-        return new Paddock(24, 10);
+        return new Paddock(5, 5);
     }
 
     @Override

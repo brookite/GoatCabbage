@@ -17,7 +17,7 @@ public class Main {
                 public void run() {
                     GameFrame frame = new GameFrame();
                     frame.setVisible(true);
-                    frame.startGame();
+                    frame.selectNewLevel();
                 }
         });
     }

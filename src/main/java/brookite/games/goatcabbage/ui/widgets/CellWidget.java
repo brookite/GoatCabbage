@@ -11,6 +11,11 @@ public class CellWidget extends JPanel {
     static ImageIcon icon;
     private final FieldPanel parent;
 
+    public static final int SMALLEST_SIZE = 8;
+    public static final int SMALL_SIZE = 48;
+    public static final int MEDIUM_SIZE = 64;
+    public static final int LARGE_SIZE = 96;
+
     static {
         try {
             icon = ImageLoader.loadAsImageIcon("cell.png");
@@ -34,7 +39,14 @@ public class CellWidget extends JPanel {
 
     public void addItem(CellItemWidget item) {
         if (item.getCell() == this || item.getCell() == null) {
+            Component[] components = getComponents();
+            for (Component cmp : components) {
+                remove(cmp);
+            }
             add(item, "pos 0 0");
+            for (Component cmp : components) {
+                add(cmp, "pos 0 0");
+            }
             item.setCell(this);
         }
     }

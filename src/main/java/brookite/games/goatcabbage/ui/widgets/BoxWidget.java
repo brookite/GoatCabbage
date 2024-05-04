@@ -30,6 +30,7 @@ public class BoxWidget extends EntityWidget {
                     FieldPanel field = getCell().getParent();
                     getCell().removeItem(BoxWidget.this);
                     field.cellAt(moveEvent.getNewPosition().position()).addItem(BoxWidget.this);
+                    field._movedBox += 1;
                 }
             }
         });

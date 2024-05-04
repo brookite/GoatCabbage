@@ -3,6 +3,9 @@ package brookite.games.goatcabbage.ui.widgets;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.entities.Entity;
+import brookite.games.goatcabbage.model.entities.Goat;
+import brookite.games.goatcabbage.model.levels.GameEnvironment;
+import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.ui.WidgetFactory;
 import net.miginfocom.swing.MigLayout;
@@ -21,7 +24,10 @@ public class FieldPanel extends JPanel {
     private EntityWidget _actor;
 
     private static final int MAX_HORIZONTAL_CELL_COUNT = 24;
-    private static final int MAX_VERTICAL_CELL_COUNT = 10;
+    private static final int MAX_VERTICAL_CELL_COUNT = 12;
+
+    int _usedSteps = 0;
+    int _movedBox = 0;
 
     private Paddock _modelField;
 
@@ -55,6 +61,22 @@ public class FieldPanel extends JPanel {
                 }
             }
         }
+        int maxCellInLine = Math.max(_horizontalCellCount, _verticalCellCount);
+        if (maxCellInLine <= 5) {
+            setCellSize(CellWidget.LARGE_SIZE);
+        } else if (maxCellInLine <= 8) {
+            setCellSize(CellWidget.MEDIUM_SIZE);
+        } else {
+            setCellSize(CellWidget.SMALL_SIZE);
+        }
+    }
+
+    public void setCellSize(int size) {
+        for (Component cmp : getComponents()) {
+            Dimension dim = new Dimension(size, size);
+            cmp.setPreferredSize(dim);
+            cmp.setSize(dim);
+        }
     }
 
     public void changeBackground(ImageIcon icon) {
@@ -73,13 +95,12 @@ public class FieldPanel extends JPanel {
         return _actor;
     }
 
-    public FieldPanel(Paddock paddock) {
+    public FieldPanel() {
         super();
         setBackground(DEFAULT_COLOR);
-        changePaddock(paddock);
     }
 
-    public void changePaddock(Paddock paddock) {
+    public void setPaddock(Paddock paddock) {
         _modelField = paddock;
         setHorizontalCellCount(paddock.getWidth());
         setVerticalCellCount(paddock.getHeight());
@@ -96,6 +117,7 @@ public class FieldPanel extends JPanel {
                 EntityWidget entityWidget = WidgetFactory.placeEntityWidget(entity, this);
                 if (entityWidget instanceof GoatWidget) {
                     _actor = entityWidget;
+                    _usedSteps = ((Goat)_actor.getModelEntity()).getStepAmount();
                     _actor.requestFocus();
                 }
             }
@@ -105,5 +127,13 @@ public class FieldPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
+
+    public int getUsedSteps() {
+        return _usedSteps;
+    }
+
+    public int getMovedBox() {
+        return _movedBox;
     }
 }

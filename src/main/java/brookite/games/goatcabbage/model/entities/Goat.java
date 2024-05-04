@@ -92,7 +92,7 @@ public class Goat extends MovableEntity implements Solid {
 		Cell neighbourCell = cell.neighbour(direction);
 		if (neighbourCell != null && neighbourCell.hasEntity(Box.class)) {
 			Cell neighbourForBoxCell = neighbourCell.neighbour(direction);
-			return neighbourForBoxCell != null && neighbourForBoxCell.canPutEntity(neighbourCell.getSolidEntity().get());
+			return neighbourForBoxCell != null && !neighbourForBoxCell.hasEntity(Cabbage.class) && neighbourForBoxCell.canPutEntity(neighbourCell.getSolidEntity().get());
 		}
 		return false;
 	}
