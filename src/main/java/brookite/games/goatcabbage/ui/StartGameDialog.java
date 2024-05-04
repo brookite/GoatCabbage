@@ -1,5 +1,6 @@
 package brookite.games.goatcabbage.ui;
 
+import brookite.games.goatcabbage.model.levels.GameEnvironment;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -8,22 +9,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class StartGameDialog extends JDialog {
-    private JComboBox<String> levelComboBox;
+    private JComboBox<GameEnvironment> levelComboBox;
     private JButton playButton;
     private JButton cancelButton;
 
     private java.util.List<ActionListener> playActionListeners = new ArrayList<>();
     private java.util.List<ActionListener> cancelActionListeners = new ArrayList<>();
 
-    public StartGameDialog(Frame parent) {
+    public StartGameDialog(Frame parent, Collection<GameEnvironment> environments) {
         super(parent, "Выберите уровень", true);
         setResizable(false);
         int padding = 8;
         setLocationRelativeTo(parent);
 
-        levelComboBox = new JComboBox<>(new String[]{"Easy", "Medium", "Hard"});
+        levelComboBox = new JComboBox<>(environments.toArray(new GameEnvironment[0]));
         playButton = new JButton("Играть");
         cancelButton = new JButton("Отмена");
 
@@ -38,12 +40,12 @@ public class StartGameDialog extends JDialog {
 
         playButton.addActionListener(e -> {
             dispose();
-            playActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null)));
+            playActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(levelComboBox.getSelectedItem(), ActionEvent.ACTION_PERFORMED, null)));
         });
 
         cancelButton.addActionListener(e -> {
             dispose();
-            cancelActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null)));
+            cancelActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(levelComboBox.getSelectedItem(), ActionEvent.ACTION_PERFORMED, null)));
         });
 
         getRootPane().setDefaultButton(playButton);

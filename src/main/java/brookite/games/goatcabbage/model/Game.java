@@ -75,6 +75,16 @@ public class Game {
         return environments[currentEnvironment];
     }
 
+    public boolean setCurrentEnvironment(GameEnvironment newCurrent) {
+        for (int i = 0; i < environments.length; i++) {
+            if (newCurrent == environments[i]) {
+                currentEnvironment = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<GameEnvironment> getEnvironments() {
         return List.of(environments);
     }

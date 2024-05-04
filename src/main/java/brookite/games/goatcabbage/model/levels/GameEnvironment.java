@@ -16,4 +16,8 @@ public abstract class GameEnvironment {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

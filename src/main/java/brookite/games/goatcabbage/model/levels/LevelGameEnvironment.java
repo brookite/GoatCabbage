@@ -82,6 +82,11 @@ public class LevelGameEnvironment extends GameEnvironment {
     }
 
     @Override
+    public String getName() {
+        return jsonLevel.getName();
+    }
+
+    @Override
     public UIProperties getUIProperties() {
         return jsonLevel.getUiProps();
     }
