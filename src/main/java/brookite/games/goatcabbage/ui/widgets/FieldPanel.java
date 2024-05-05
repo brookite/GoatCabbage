@@ -115,7 +115,6 @@ public class FieldPanel extends JPanel {
                 EntityWidget entityWidget = WidgetFactory.placeEntityWidget(entity, this);
                 if (entityWidget instanceof GoatWidget) {
                     _actor = entityWidget;
-                    _usedSteps = ((Goat)_actor.getModelEntity()).getStepAmount();
                     _actor.requestFocus();
                 }
             }

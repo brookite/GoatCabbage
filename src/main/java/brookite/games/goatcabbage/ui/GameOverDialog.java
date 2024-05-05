@@ -58,7 +58,6 @@ public class GameOverDialog extends JDialog {
         panel.add(nextLevelButton, "tag yes");
 
         add(panel);
-        setPreferredSize(new Dimension(360, 200));
         pack();
         setLocationRelativeTo(parent);
 

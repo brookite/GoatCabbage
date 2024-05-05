@@ -68,7 +68,7 @@ public class GoatWidget extends EntityWidget {
                     newCell.addItem(GoatWidget.this);
                     _stepCounter.setText(Integer.toString(getGoat().getStepAmount()));
                     field.repaint();
-                    field._usedSteps -= 1;
+                    field._usedSteps += 1;
                     requestFocus();
                 }
             }
