@@ -45,7 +45,7 @@ public class Paddock implements Iterable<Cell> {
                     } else if (direction.equals(Direction.EAST)) {
                         col += 1;
                     }
-                    if (row < 1 || row > this.width || col < 1 || col > this.height) {
+                    if (row < 1 || row > this.height || col < 1 || col > this.width) {
                         return null;
                     } else {
                         return cell(row, col);
