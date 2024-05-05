@@ -121,11 +121,6 @@ public class FieldPanel extends JPanel {
         }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
-
     public int getUsedSteps() {
         return _usedSteps;
     }

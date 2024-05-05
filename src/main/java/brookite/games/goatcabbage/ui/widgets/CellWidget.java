@@ -43,9 +43,9 @@ public class CellWidget extends JPanel {
             for (Component cmp : components) {
                 remove(cmp);
             }
-            add(item, "pos 0 0");
+            add(item, "pos 0 0, w 100%, h 100%");
             for (Component cmp : components) {
-                add(cmp, "pos 0 0");
+                add(cmp, "pos 0 0, w 100%, h 100%");
             }
             item.setCell(this);
         }

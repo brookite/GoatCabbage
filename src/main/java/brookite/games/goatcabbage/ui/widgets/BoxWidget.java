@@ -28,8 +28,10 @@ public class BoxWidget extends EntityWidget {
             public void onActionPerformed(ActionEvent event) {
                 if (event instanceof MoveEvent moveEvent) {
                     FieldPanel field = getCell().getParent();
+                    getCell().repaint();
                     getCell().removeItem(BoxWidget.this);
                     field.cellAt(moveEvent.getNewPosition().position()).addItem(BoxWidget.this);
+                    field.cellAt(moveEvent.getNewPosition().position()).repaint();
                     field._movedBox += 1;
                 }
             }

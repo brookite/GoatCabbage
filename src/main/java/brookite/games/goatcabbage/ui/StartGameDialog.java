@@ -69,8 +69,12 @@ public class StartGameDialog extends JDialog {
             cancelActionListeners.forEach(listener -> listener.actionPerformed(new ActionEvent(levelComboBox.getSelectedItem(), ActionEvent.ACTION_PERFORMED, null)));
         });
 
-        getRootPane().setDefaultButton(playButton);
+    }
 
+    @Override
+    public void setVisible(boolean state) {
+        getRootPane().setDefaultButton(playButton);
+        super.setVisible(state);
     }
 
     public void addLevelSelectedListener(ActionListener listener) {

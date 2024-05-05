@@ -67,7 +67,8 @@ public class GoatWidget extends EntityWidget {
                     CellWidget newCell = field.cellAt(moveEvent.getNewPosition().position());
                     newCell.addItem(GoatWidget.this);
                     _stepCounter.setText(Integer.toString(getGoat().getStepAmount()));
-                    field.repaint();
+                    oldCell.repaint();
+                    newCell.repaint();
                     field._usedSteps += 1;
                     requestFocus();
                 }
@@ -78,7 +79,7 @@ public class GoatWidget extends EntityWidget {
         _stepCounter = new JLabel(Integer.toString(goat.getStepAmount()));
         _stepCounter.setFont(new Font("Arial", Font.BOLD, 13));
         _stepCounter.setForeground(FieldPanel.DEFAULT_COLOR);
-        add(_stepCounter, "pos 0% 180%");
+        add(_stepCounter, "pos 0% 75%");
     }
 
     Goat getGoat() {
