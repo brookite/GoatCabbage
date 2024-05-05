@@ -16,8 +16,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -142,13 +146,18 @@ public class GameFrame extends JFrame {
 
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String usedGraphics = "";
-                try {
-                    usedGraphics = Files.readString(Paths.get(getClass().getClassLoader().getResource("images/LICENSES.txt").toURI()));
-                } catch (IOException | URISyntaxException ex) {
-                    throw new RuntimeException(ex);
+                StringBuilder usedGraphics = new StringBuilder();
+                try (InputStream inputStream = getClass().getResourceAsStream("/images/LICENSES.txt");
+                     InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                     BufferedReader reader = new BufferedReader(streamReader)) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        usedGraphics.append(line).append("\n");
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 05.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
+                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 05.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics.toString());
                 try {
                     JOptionPane.showMessageDialog(GameFrame.this, text, "Об игре", JOptionPane.PLAIN_MESSAGE, ImageLoader.loadAsScaledIcon("icon.png", 128, 128));
                 } catch (IOException ex) {
