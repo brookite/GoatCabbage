@@ -97,7 +97,7 @@ public class GameFrame extends JFrame {
         if (_field != null) {
             remove(_field);
         }
-        _field = FieldFactory.fromLevel(_model.getCurrentEnvironment());
+        _field = FieldFactory.fromLevel((LevelGameEnvironment) _model.getCurrentEnvironment());
         _model.start();
         _field.setPaddock(_model.getPaddock());
         add(_field, "wrap");

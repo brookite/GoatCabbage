@@ -8,10 +8,10 @@ import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 import java.io.IOException;
 
 public class FieldFactory {
-    public static FieldPanel fromLevel(GameEnvironment level) {
+    public static FieldPanel fromLevel(LevelGameEnvironment level) {
         FieldPanel field = new FieldPanel();
         try {
-            if (level instanceof LevelGameEnvironment levelEnv && levelEnv.getUIProperties() != null) {
+            if (level.getUIProperties() != null) {
                 field.changeBackground(ImageLoader.loadAsImageIcon(level.getUIProperties().getLevelCellBackground()));
             }
         } catch (IOException e) {

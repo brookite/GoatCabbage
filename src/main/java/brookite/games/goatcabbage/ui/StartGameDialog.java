@@ -85,7 +85,7 @@ public class StartGameDialog extends JDialog {
         cancelActionListeners.add(listener);
     }
 
-    public String getLevel() {
-        return (String) levelComboBox.getSelectedItem();
+    public GameEnvironment getLevel() {
+        return (GameEnvironment) levelComboBox.getSelectedItem();
     }
 }
