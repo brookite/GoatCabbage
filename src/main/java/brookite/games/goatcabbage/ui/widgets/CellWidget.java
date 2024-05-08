@@ -17,11 +17,7 @@ public class CellWidget extends JPanel {
     public static final int LARGE_SIZE = 96;
 
     static {
-        try {
-            icon = ImageLoader.loadAsImageIcon("cell.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public CellWidget(FieldPanel parent) {
@@ -60,8 +56,14 @@ public class CellWidget extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (CellWidget.icon != null) {
-            g.drawImage(CellWidget.icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+        if (CellWidget.icon == null) {
+            try {
+                icon = ImageLoader.loadAsImageIcon("cell.png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+
+        g.drawImage(CellWidget.icon.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }

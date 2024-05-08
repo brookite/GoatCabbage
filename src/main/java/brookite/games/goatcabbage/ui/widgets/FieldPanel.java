@@ -3,7 +3,6 @@ package brookite.games.goatcabbage.ui.widgets;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.entities.Entity;
-import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.ui.WidgetFactory;
 import net.miginfocom.swing.MigLayout;
@@ -93,12 +92,13 @@ public class FieldPanel extends JPanel {
         return _actor;
     }
 
-    public FieldPanel() {
+    public FieldPanel(Paddock paddock) {
         super();
         setBackground(DEFAULT_COLOR);
+        setPaddock(paddock);
     }
 
-    public void setPaddock(Paddock paddock) {
+    private void setPaddock(Paddock paddock) {
         _modelField = paddock;
         setHorizontalCellCount(paddock.getWidth());
         setVerticalCellCount(paddock.getHeight());

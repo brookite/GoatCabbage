@@ -15,16 +15,9 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class GoatWidget extends EntityWidget {
-    private static final ImageIcon icon;
+    private static ImageIcon icon;
     private JLabel _stepCounter;
 
-    static {
-        try {
-            icon = ImageLoader.loadAsImageIcon("goat.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private class GoatKeyListener extends KeyAdapter {
         @Override
@@ -88,6 +81,13 @@ public class GoatWidget extends EntityWidget {
 
     @Override
     public ImageIcon getSourceIcon() {
+        if (icon == null) {
+            try {
+                icon = ImageLoader.loadAsImageIcon("goat.png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return icon;
     }
 }

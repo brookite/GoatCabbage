@@ -11,15 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class BoxWidget extends EntityWidget {
-    private static final ImageIcon icon;
-
-    static {
-        try {
-            icon = ImageLoader.loadAsImageIcon("box.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static ImageIcon icon;
 
     public BoxWidget(Box entity) {
         super(entity);
@@ -40,6 +32,13 @@ public class BoxWidget extends EntityWidget {
 
     @Override
     public ImageIcon getSourceIcon() {
+        if (icon == null) {
+            try {
+                icon = ImageLoader.loadAsImageIcon("box.png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return icon;
     }
 }

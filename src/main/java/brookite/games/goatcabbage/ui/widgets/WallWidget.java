@@ -11,18 +11,18 @@ public class WallWidget extends EntityWidget {
         super(entity);
     }
 
-    private static final ImageIcon icon;
+    private static ImageIcon icon;
 
-    static {
-        try {
-            icon = ImageLoader.loadAsImageIcon("fence2.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public ImageIcon getSourceIcon() {
+        if (icon == null) {
+            try {
+                icon = ImageLoader.loadAsImageIcon("fence2.png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return icon;
     }
 }

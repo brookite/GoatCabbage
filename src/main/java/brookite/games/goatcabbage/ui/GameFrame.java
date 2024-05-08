@@ -46,7 +46,7 @@ public class GameFrame extends JFrame {
                 }
             }
         });
-        _startGameDialog = new StartGameDialog(this, _model.getEnvironments());
+        _startGameDialog = new StartGameDialog(this);
         _startGameDialog.addLevelSelectedListener((ActionEvent e) -> {
             GameEnvironment env = (GameEnvironment) e.getSource();
             if (env != null) {
@@ -66,7 +66,6 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         _field = FieldFactory.empty();
-        _field.setPaddock(new EmptyLevel().create());
 
         add(_field, "wrap");
         pack();
@@ -93,13 +92,16 @@ public class GameFrame extends JFrame {
         }
     }
 
+    public Game getGameModel() {
+        return _model;
+    }
+
     public void startGame() {
         if (_field != null) {
             remove(_field);
         }
-        _field = FieldFactory.fromLevel((LevelGameEnvironment) _model.getCurrentEnvironment());
         _model.start();
-        _field.setPaddock(_model.getPaddock());
+        _field = FieldFactory.fromGameModel(_model);
         add(_field, "wrap");
         repaint();
         revalidate();
@@ -157,7 +159,7 @@ public class GameFrame extends JFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 05.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics.toString());
+                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 08.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics.toString());
                 try {
                     JOptionPane.showMessageDialog(GameFrame.this, text, "Об игре", JOptionPane.PLAIN_MESSAGE, ImageLoader.loadAsScaledIcon("icon.png", 128, 128));
                 } catch (IOException ex) {
