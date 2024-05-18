@@ -3,3 +3,5 @@
 <p>cell.png <a href="https://freepik.com/free-vector/seamless-textured-grass-natural-grass-pattern_11930799.htm">Designed by babysofja / Freepik</a></p>
 <p>fence1.png <a href="https://freepik.com/free-vector/garden-wooden-fence-hardwood-icon-isolated_88799912.htm">Designed by djvstock / Freepik</a></p>
 <p>fence2.png <a href="https://freepik.com/free-vector/garden-wooden-fence-natural-icon-isolated_88799989.htm">Designed by djvstock / Freepik</a></p>
+<p>metal_box.png <a href="https://freepik.com/icon/crate_134522#fromView=search&page=1&position=80&uuid=509d797e-1941-46cd-80a8-cf11a6435d48">Designed by Smashicons / Freepik</a></p>
+<p>magnetic_box.png <a href="https://freepik.com/icon/magnet_16015666#fromView=search&page=1&position=2&uuid=5511030d-a5c3-4b53-bc46-4326682d7fa8">Designed by Pop Vectors / Freepik</a></p>
