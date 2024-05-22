@@ -9,15 +9,17 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ImageLoader {
-    public static ImageIcon loadAsImageIcon(String imageName) throws IOException {
+    public static BufferedImage loadImage(String imageName) throws IOException {
         URL imageURL = ImageLoader.class.getResource("/images/" + imageName);
 
         if (imageURL != null) {
-            BufferedImage image = ImageIO.read(imageURL);
-            return new ImageIcon(image);
-        } else {
-            throw new IOException("Image not found");
+            return ImageIO.read(imageURL);
         }
+        throw new IOException("Не найдено изображение");
+    }
+
+    public static ImageIcon loadAsImageIcon(String imageName) throws IOException {
+        return new ImageIcon(loadImage(imageName));
     }
 
     public static Icon loadAsScaledIcon(String imageName, float scale) throws IOException {

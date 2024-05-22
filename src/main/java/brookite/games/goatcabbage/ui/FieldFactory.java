@@ -8,17 +8,19 @@ import brookite.games.goatcabbage.ui.utils.EmptyLevel;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class FieldFactory {
     public static FieldPanel fromEnvironment(GameEnvironment env) {
-        FieldPanel field = new FieldPanel(env.create());
+        FieldPanel field = FieldFactory.empty();
         try {
+            field = new FieldPanel(env.create());
             if (env.getUIProperties() != null) {
                 field.changeBackground(ImageLoader.loadAsImageIcon(env.getUIProperties().getLevelCellBackground()));
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | IllegalStateException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
         return field;
     }
@@ -31,7 +33,7 @@ public class FieldFactory {
                 field.changeBackground(ImageLoader.loadAsImageIcon(env.getUIProperties().getLevelCellBackground()));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
         return field;
     }

@@ -35,8 +35,8 @@ public class GameFrame extends JFrame {
         _model = new Game();
         try {
             _model.setEnvironments(LevelLoader.loadAllLevels());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
         _model.addGameStateListener(new GameStateListener() {
             @Override
