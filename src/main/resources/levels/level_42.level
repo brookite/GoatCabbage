@@ -1,13 +1,13 @@
 {
-    "name": "Уровень 5",
+    "name": "Уровень 42",
     "field": {
-        "width": 8,
+        "width": 12,
         "height": 7
     },
     "goat": {
         "position": [
-            4,
-            5
+            6,
+            10
         ],
         "stepAmount": 30
     },
@@ -17,20 +17,16 @@
             "type": "box",
             "positions": [
                 [
-                    3,
-                    5
-                ],
-                [
-                    4,
+                    2,
                     4
                 ],
                 [
-                    4,
-                    6
+                    3,
+                    11
                 ],
                 [
-                    5,
-                    5
+                    6,
+                    2
                 ]
             ]
         },
@@ -67,12 +63,28 @@
                     8
                 ],
                 [
+                    1,
+                    9
+                ],
+                [
+                    1,
+                    10
+                ],
+                [
+                    1,
+                    11
+                ],
+                [
+                    1,
+                    12
+                ],
+                [
                     2,
                     2
                 ],
                 [
                     2,
-                    8
+                    12
                 ],
                 [
                     3,
@@ -80,7 +92,7 @@
                 ],
                 [
                     3,
-                    8
+                    12
                 ],
                 [
                     4,
@@ -92,7 +104,7 @@
                 ],
                 [
                     4,
-                    8
+                    12
                 ],
                 [
                     5,
@@ -100,7 +112,7 @@
                 ],
                 [
                     5,
-                    8
+                    12
                 ],
                 [
                     6,
@@ -108,7 +120,7 @@
                 ],
                 [
                     6,
-                    8
+                    12
                 ],
                 [
                     7,
@@ -141,6 +153,22 @@
                 [
                     7,
                     8
+                ],
+                [
+                    7,
+                    9
+                ],
+                [
+                    7,
+                    10
+                ],
+                [
+                    7,
+                    11
+                ],
+                [
+                    7,
+                    12
                 ]
             ]
         },
@@ -149,21 +177,81 @@
             "type": "cabbage",
             "positions": [
                 [
-                    3,
-                    4
-                ],
-                [
-                    3,
-                    6
-                ],
-                [
-                    5,
-                    4
-                ],
-                [
-                    5,
-                    6
+                    2,
+                    11
                 ]
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                5
+            ],
+            "properties": {
+                "northPole": "east",
+                "rotateTopRight": false
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                6
+            ],
+            "properties": {
+                "northPole": "south",
+                "rotateTopRight": false
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                7
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                10
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                4,
+                5
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                4,
+                9
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                6,
+                5
             ]
         }
     ]

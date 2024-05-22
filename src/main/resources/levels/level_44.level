@@ -1,0 +1,418 @@
+{
+    "name": "Уровень 44",
+    "field": {
+        "width": 14,
+        "height": 9
+    },
+    "goat": {
+        "position": [
+            6,
+            11
+        ],
+        "stepAmount": 30
+    },
+    "commands": [
+        {
+            "command": "placeEntities",
+            "type": "box",
+            "positions": [
+                [
+                    2,
+                    4
+                ],
+                [
+                    6,
+                    2
+                ]
+            ]
+        },
+        {
+            "command": "placeEntities",
+            "type": "wall",
+            "positions": [
+                [
+                    1,
+                    2
+                ],
+                [
+                    1,
+                    3
+                ],
+                [
+                    1,
+                    4
+                ],
+                [
+                    1,
+                    5
+                ],
+                [
+                    1,
+                    6
+                ],
+                [
+                    1,
+                    7
+                ],
+                [
+                    1,
+                    8
+                ],
+                [
+                    1,
+                    9
+                ],
+                [
+                    1,
+                    10
+                ],
+                [
+                    1,
+                    11
+                ],
+                [
+                    1,
+                    12
+                ],
+                [
+                    1,
+                    13
+                ],
+                [
+                    2,
+                    2
+                ],
+                [
+                    2,
+                    14
+                ],
+                [
+                    3,
+                    2
+                ],
+                [
+                    3,
+                    13
+                ],
+                [
+                    3,
+                    14
+                ],
+                [
+                    4,
+                    1
+                ],
+                [
+                    4,
+                    2
+                ],
+                [
+                    4,
+                    14
+                ],
+                [
+                    5,
+                    1
+                ],
+                [
+                    5,
+                    14
+                ],
+                [
+                    6,
+                    1
+                ],
+                [
+                    6,
+                    14
+                ],
+                [
+                    7,
+                    1
+                ],
+                [
+                    7,
+                    14
+                ],
+                [
+                    8,
+                    1
+                ],
+                [
+                    8,
+                    14
+                ],
+                [
+                    9,
+                    1
+                ],
+                [
+                    9,
+                    2
+                ],
+                [
+                    9,
+                    3
+                ],
+                [
+                    9,
+                    4
+                ],
+                [
+                    9,
+                    5
+                ],
+                [
+                    9,
+                    6
+                ],
+                [
+                    9,
+                    7
+                ],
+                [
+                    9,
+                    8
+                ],
+                [
+                    9,
+                    9
+                ],
+                [
+                    9,
+                    10
+                ],
+                [
+                    9,
+                    11
+                ],
+                [
+                    9,
+                    12
+                ],
+                [
+                    9,
+                    13
+                ],
+                [
+                    9,
+                    14
+                ]
+            ]
+        },
+        {
+            "command": "placeEntities",
+            "type": "cabbage",
+            "positions": [
+                [
+                    2,
+                    13
+                ]
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                4
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                5
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                6
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                7
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                8
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                9
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                10
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                11
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                12
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                4,
+                6
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                5,
+                6
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                6,
+                4
+            ],
+            "properties": {
+                "northPole": "north",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                6,
+                6
+            ],
+            "properties": {
+                "northPole": "south",
+                "rotateTopRight": false
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                7,
+                11
+            ],
+            "properties": {
+                "northPole": "north",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                7,
+                13
+            ],
+            "properties": {
+                "northPole": "north",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                8,
+                3
+            ],
+            "properties": {
+                "northPole": "south",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                8,
+                5
+            ],
+            "properties": {
+                "northPole": "north",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                8,
+                8
+            ],
+            "properties": {
+                "northPole": "south",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                8,
+                10
+            ],
+            "properties": {
+                "northPole": "south",
+                "rotateTopRight": false
+            }
+        }
+    ]
+}

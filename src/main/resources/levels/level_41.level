@@ -1,7 +1,7 @@
 {
-    "name": "Уровень 39",
+    "name": "Уровень 41",
     "field": {
-        "width": 11,
+        "width": 12,
         "height": 7
     },
     "goat": {
@@ -22,15 +22,15 @@
                 ],
                 [
                     3,
-                    9
+                    11
+                ],
+                [
+                    4,
+                    7
                 ],
                 [
                     6,
                     2
-                ],
-                [
-                    6,
-                    7
                 ]
             ]
         },
@@ -79,12 +79,16 @@
                     11
                 ],
                 [
+                    1,
+                    12
+                ],
+                [
                     2,
                     2
                 ],
                 [
                     2,
-                    11
+                    12
                 ],
                 [
                     3,
@@ -92,7 +96,7 @@
                 ],
                 [
                     3,
-                    11
+                    12
                 ],
                 [
                     4,
@@ -104,7 +108,7 @@
                 ],
                 [
                     4,
-                    11
+                    12
                 ],
                 [
                     5,
@@ -112,7 +116,7 @@
                 ],
                 [
                     5,
-                    11
+                    12
                 ],
                 [
                     6,
@@ -120,7 +124,7 @@
                 ],
                 [
                     6,
-                    11
+                    12
                 ],
                 [
                     7,
@@ -174,7 +178,7 @@
             "positions": [
                 [
                     2,
-                    3
+                    11
                 ]
             ]
         },
@@ -182,7 +186,27 @@
             "command": "placeEntity",
             "type": "magnet_box",
             "position": [
-                2,
+                3,
+                6
+            ],
+            "properties": {
+                "northPole": "east",
+                "rotateTopRight": false
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                7
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
                 8
             ],
             "properties": {
@@ -194,8 +218,8 @@
             "command": "placeEntity",
             "type": "metal_box",
             "position": [
-                2,
-                10
+                4,
+                5
             ]
         },
         {
@@ -203,7 +227,19 @@
             "type": "magnet_box",
             "position": [
                 4,
-                5
+                6
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                4,
+                8
             ],
             "properties": {
                 "northPole": "west",
@@ -215,32 +251,8 @@
             "type": "metal_box",
             "position": [
                 4,
-                8
+                9
             ]
-        },
-        {
-            "command": "placeEntity",
-            "type": "magnet_box",
-            "position": [
-                5,
-                3
-            ],
-            "properties": {
-                "northPole": "north",
-                "rotateTopRight": true
-            }
-        },
-        {
-            "command": "placeEntity",
-            "type": "magnet_box",
-            "position": [
-                5,
-                8
-            ],
-            "properties": {
-                "northPole": "east",
-                "rotateTopRight": false
-            }
         },
         {
             "command": "placeEntity",

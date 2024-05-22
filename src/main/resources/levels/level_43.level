@@ -1,7 +1,7 @@
 {
-    "name": "Уровень 39",
+    "name": "Уровень 43",
     "field": {
-        "width": 11,
+        "width": 13,
         "height": 7
     },
     "goat": {
@@ -22,15 +22,11 @@
                 ],
                 [
                     3,
-                    9
+                    12
                 ],
                 [
                     6,
                     2
-                ],
-                [
-                    6,
-                    7
                 ]
             ]
         },
@@ -79,12 +75,20 @@
                     11
                 ],
                 [
+                    1,
+                    12
+                ],
+                [
+                    1,
+                    13
+                ],
+                [
                     2,
                     2
                 ],
                 [
                     2,
-                    11
+                    13
                 ],
                 [
                     3,
@@ -92,7 +96,7 @@
                 ],
                 [
                     3,
-                    11
+                    13
                 ],
                 [
                     4,
@@ -104,7 +108,7 @@
                 ],
                 [
                     4,
-                    11
+                    13
                 ],
                 [
                     5,
@@ -112,7 +116,7 @@
                 ],
                 [
                     5,
-                    11
+                    13
                 ],
                 [
                     6,
@@ -120,7 +124,7 @@
                 ],
                 [
                     6,
-                    11
+                    13
                 ],
                 [
                     7,
@@ -165,6 +169,10 @@
                 [
                     7,
                     11
+                ],
+                [
+                    7,
+                    12
                 ]
             ]
         },
@@ -174,27 +182,63 @@
             "positions": [
                 [
                     2,
-                    3
+                    12
                 ]
             ]
-        },
-        {
-            "command": "placeEntity",
-            "type": "magnet_box",
-            "position": [
-                2,
-                8
-            ],
-            "properties": {
-                "northPole": "south",
-                "rotateTopRight": false
-            }
         },
         {
             "command": "placeEntity",
             "type": "metal_box",
             "position": [
                 2,
+                7
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                6
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                7
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
+                8
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "magnet_box",
+            "position": [
+                3,
+                9
+            ],
+            "properties": {
+                "northPole": "west",
+                "rotateTopRight": true
+            }
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
+            "position": [
+                3,
                 10
             ]
         },
@@ -202,8 +246,8 @@
             "command": "placeEntity",
             "type": "magnet_box",
             "position": [
-                4,
-                5
+                3,
+                11
             ],
             "properties": {
                 "northPole": "west",
@@ -215,32 +259,36 @@
             "type": "metal_box",
             "position": [
                 4,
-                8
+                5
             ]
         },
         {
             "command": "placeEntity",
             "type": "magnet_box",
             "position": [
-                5,
-                3
+                4,
+                6
             ],
             "properties": {
-                "northPole": "north",
+                "northPole": "west",
                 "rotateTopRight": true
             }
         },
         {
             "command": "placeEntity",
-            "type": "magnet_box",
+            "type": "metal_box",
+            "position": [
+                4,
+                7
+            ]
+        },
+        {
+            "command": "placeEntity",
+            "type": "metal_box",
             "position": [
                 5,
-                8
-            ],
-            "properties": {
-                "northPole": "east",
-                "rotateTopRight": false
-            }
+                5
+            ]
         },
         {
             "command": "placeEntity",
