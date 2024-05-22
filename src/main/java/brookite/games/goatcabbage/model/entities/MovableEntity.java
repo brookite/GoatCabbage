@@ -5,7 +5,7 @@ import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 
 public abstract class MovableEntity extends Entity {
-    boolean move(Direction direction) {
+    protected boolean move(Direction direction) {
         if (!canMove(direction)) {
             return false;
         }
@@ -25,7 +25,7 @@ public abstract class MovableEntity extends Entity {
         fireActionEvent(new MoveEvent(entity, oldCell, this.cell, direction));
     }
 
-     boolean canMove(Direction direction) {
+    protected boolean canMove(Direction direction) {
         Cell neighbourCell = cell.neighbour(direction);
 
         if (neighbourCell == null) {

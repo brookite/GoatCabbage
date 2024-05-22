@@ -1,6 +1,7 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
+import brookite.games.goatcabbage.model.entities.hookable.HookableBox;
 import brookite.games.goatcabbage.model.events.ActionEvent;
 import brookite.games.goatcabbage.model.events.ActionListener;
 import brookite.games.goatcabbage.model.events.EatEvent;
@@ -92,7 +93,11 @@ public class Goat extends MovableEntity implements Solid {
 		Cell neighbourCell = cell.neighbour(direction);
 		if (neighbourCell != null && neighbourCell.hasEntity(Box.class)) {
 			Cell neighbourForBoxCell = neighbourCell.neighbour(direction);
-			return neighbourForBoxCell != null && !neighbourForBoxCell.hasEntity(Cabbage.class) && neighbourForBoxCell.canPutEntity(neighbourCell.getSolidEntity().get());
+			if (neighbourForBoxCell != null && !neighbourForBoxCell.hasEntity(HookableBox.class)) {
+				return !neighbourForBoxCell.hasEntity(Cabbage.class) && neighbourForBoxCell.canPutEntity(neighbourCell.getSolidEntity().get());
+			} else {
+				return neighbourForBoxCell != null && !neighbourForBoxCell.hasEntity(Cabbage.class);
+			}
 		}
 		return false;
 	}

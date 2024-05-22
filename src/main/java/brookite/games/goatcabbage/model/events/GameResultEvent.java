@@ -19,7 +19,7 @@ public class GameResultEvent extends EventObject {
 
 	public Entity getWinner() {
 		if (!isWin()) {
-			throw new RuntimeException("No winner there");
+			throw new RuntimeException("Нет победителя");
 		}
 		return ((Optional<Entity>) getSource()).get();
 	}

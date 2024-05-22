@@ -7,6 +7,7 @@ import brookite.games.goatcabbage.model.levels.data.Entities;
 import brookite.games.goatcabbage.model.utils.CellPosition;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlaceEntityCommand extends Command {
@@ -28,16 +29,21 @@ public class PlaceEntityCommand extends Command {
     }
 
     private int[] position;
+    private Map<String, Object> properties;
 
     @Override
     public void execute(Paddock paddock) {
-        Entity entity = Entities.createEntityByType(type);
+        Entity entity = Entities.createEntity(type, properties);
         paddock.cell(position[0], position[1]).clear();
         paddock.cell(position[0], position[1]).putEntity(entity);
     }
 
     public String getType() {
         return type;
+    }
+
+    public Map<String, Object> getProperties() {
+        return properties;
     }
 
     public CellPosition getPosition() {

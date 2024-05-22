@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 public class LevelLoader {
-	public static final int LEVEL_COUNT = 39;
+	public static final int LEVEL_COUNT = 44;
 
 	public static LevelGameEnvironment levelFromResource(String resourceFile) throws IOException {
 		Command.Deserializer deserializer = new Command.Deserializer("command");

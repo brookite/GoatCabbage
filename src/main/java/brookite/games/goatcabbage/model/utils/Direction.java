@@ -27,4 +27,13 @@ public enum Direction {
     public boolean isOpposite(Direction other) {
         return this.opposite().equals(other);
     }
+
+    public Direction clockwise() {
+        return switch (this) {
+            case NORTH -> EAST;
+            case SOUTH -> WEST;
+            case EAST -> SOUTH;
+            case WEST -> NORTH;
+        };
+    }
 }

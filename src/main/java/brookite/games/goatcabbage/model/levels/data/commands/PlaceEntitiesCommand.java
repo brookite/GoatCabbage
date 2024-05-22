@@ -8,16 +8,18 @@ import brookite.games.goatcabbage.model.utils.CellPosition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlaceEntitiesCommand extends Command {
     private String type;
     private List<int[]> positions;
+    private Map<String, Object> properties;
 
     @Override
     public void execute(Paddock paddock) {
         for (int[] position : positions) {
-            Entity entity = Entities.createEntityByType(type);
+            Entity entity = Entities.createEntity(type, properties);
             paddock.cell(position[0], position[1]).clear();
             paddock.cell(position[0], position[1]).putEntity(entity);
         }
@@ -25,6 +27,10 @@ public class PlaceEntitiesCommand extends Command {
 
     public String getType() {
         return type;
+    }
+
+    public Map<String, Object> getProperties() {
+        return properties;
     }
 
     @Override

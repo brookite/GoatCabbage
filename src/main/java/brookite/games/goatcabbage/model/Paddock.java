@@ -1,12 +1,10 @@
 package brookite.games.goatcabbage.model;
 
 
-import brookite.games.goatcabbage.model.entities.Goat;
-import brookite.games.goatcabbage.model.entities.Cabbage;
+import brookite.games.goatcabbage.model.entities.*;
 import brookite.games.goatcabbage.model.utils.CellPosition;
 import brookite.games.goatcabbage.model.utils.Direction;
 
-import javax.security.auth.login.AccountExpiredException;
 import java.util.*;
 
 public class Paddock implements Iterable<Cell> {
@@ -144,5 +142,6 @@ public class Paddock implements Iterable<Cell> {
     public Iterator<Cell> iterator() {
         return cells.iterator();
     }
+
 }
 
