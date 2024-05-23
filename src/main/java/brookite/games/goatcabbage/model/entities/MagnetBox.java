@@ -86,7 +86,7 @@ public class MagnetBox extends MagneticBox {
                 MagneticPole parallelOtherPole = box.getMagneticPoleByDirection(newDirection);
                 MagneticPole parallelSelfPole = getMagneticPoleByDirection(newDirection);
                 if (parallelOtherPole != null && parallelOtherPole.isOpposite(parallelSelfPole)) {
-                    if (getMagnetDirection().isOpposite(box.getMagnetDirection())) {
+                    if (box.getMagnetDirection().equals(direction) && box.getMagnetDirection().isOpposite(getMagnetDirection())) {
                         return MagnetInteraction.NONE;
                     }
                     return MagnetInteraction.ATTRACTION;
