@@ -43,12 +43,15 @@ public class MagnetBox extends MagneticBox {
     @Override
     protected MagnetInteraction canInteract(Direction direction) {
         Cell neighbourCell = cell.neighbour(direction);
+        if (neighbourCell == null) {
+            return MagnetInteraction.NONE;
+        }
         if (neighbourCell.getSolidEntity().isEmpty()) {
-            // проверка соседних ячейки
+            // проверка соседних ячеек
             for (Direction neighbourDir : Direction.values()) {
                 if (!neighbourDir.equals(direction.opposite())) {
                     Cell neighbourForEmptyCell = neighbourCell.neighbour(neighbourDir);
-                    if (neighbourForEmptyCell.hasSolidEntity()) {
+                    if (neighbourForEmptyCell != null && neighbourForEmptyCell.hasSolidEntity()) {
                         Entity entity = neighbourForEmptyCell.getSolidEntity().get();
                         if (entity instanceof MagnetBox box) {
                             MagneticPole otherPole = box.getMagneticPoleByDirection(neighbourDir.opposite());

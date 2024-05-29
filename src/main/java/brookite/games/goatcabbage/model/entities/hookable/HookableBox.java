@@ -44,7 +44,7 @@ public abstract class HookableBox extends Box {
 
     @Override
     protected boolean canMove(Direction direction) {
-        HookableBox[] figure = HookedBoxChain.getUnmovedFigureItems(this);
+        HookableBox[] figure = new HookedBoxChain(this).getUnmovedFigureItems();
         boolean result = true;
         for (HookableBox item : figure) {
             result &= item._canMove(direction);
@@ -54,10 +54,11 @@ public abstract class HookableBox extends Box {
 
     private boolean _canMove(Direction direction) {
         Cell neighbour = cell.neighbour(direction);
+        HookedBoxChain chain = new HookedBoxChain(this);
         if (neighbour.getSolidEntity().isEmpty()) {
             return true;
         } else if (neighbour.getSolidEntity().isPresent() && neighbour.getSolidEntity().get() instanceof HookableBox) {
-            return HookedBoxChain.isInOneChain(this, (HookableBox) neighbour.getSolidEntity().get());
+            return chain.isInOneChain((HookableBox) neighbour.getSolidEntity().get());
         }
         return false;
     }
@@ -68,29 +69,28 @@ public abstract class HookableBox extends Box {
             return false;
         }
         HashSet<HookableBox> moved = new HashSet<>();
-        HookableBox head = HookedBoxChain.getEdge(direction, this);
-        return head._move(direction, moved);
+        HookableBox head = new HookedBoxChain(this).getEdge(direction);
+        return head.moveBoxLayer(direction, moved);
     }
 
-    private boolean _move(Direction direction, Set<HookableBox> movedBoxes) {
+    private boolean moveBoxLayer(Direction direction, Set<HookableBox> movedBoxes) {
         boolean result = super.move(direction);
         movedBoxes.add(this);
         if (result) {
             // сначала слой переместить
             if (hooked.containsKey(direction.clockwise()) && hooked.get(direction.clockwise()) != null && !movedBoxes.contains(hooked.get(direction.clockwise()))) {
-                hooked.get(direction.clockwise())._move(direction, movedBoxes);
+                hooked.get(direction.clockwise()).moveBoxLayer(direction, movedBoxes);
             }
             if (hooked.containsKey(direction.clockwise().opposite()) && hooked.get(direction.clockwise().opposite()) != null && !movedBoxes.contains(hooked.get(direction.clockwise().opposite()))) {
-                hooked.get(direction.clockwise().opposite())._move(direction, movedBoxes);
+                hooked.get(direction.clockwise().opposite()).moveBoxLayer(direction, movedBoxes);
             }
             // потом все остальные
             for (HookableBox box : hooked.values()) {
                 if (!movedBoxes.contains(box)) {
-                    result &= box._move(direction, movedBoxes);
+                    result &= box.moveBoxLayer(direction, movedBoxes);
                 }
             }
         }
-        assert result == true;
         return result;
     }
 
