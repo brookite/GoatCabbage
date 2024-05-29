@@ -2,6 +2,7 @@ package brookite.games.goatcabbage;
 
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Box;
+import brookite.games.goatcabbage.model.entities.SimpleBox;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class PaddockTest {
     @Test
     public void paddockFillTest() {
         Paddock pd = new Paddock(5,5);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(3, 3).putEntity(box);
         Assertions.assertTrue(pd.getCells().get(12).getSolidEntity().isPresent());
         Assertions.assertEquals(pd.getCells().get(12).getSolidEntity().get(), box);
@@ -39,7 +40,7 @@ public class PaddockTest {
     @Test
     public void clearTest() {
         Paddock pd = new Paddock(5,5);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(3, 3).putEntity(box);
         pd.clear();
         Assertions.assertEquals(pd.cell(3, 3).getEntities().size(), 0);

@@ -1,10 +1,7 @@
 package brookite.games.goatcabbage;
 
 import brookite.games.goatcabbage.model.Paddock;
-import brookite.games.goatcabbage.model.entities.Box;
-import brookite.games.goatcabbage.model.entities.Cabbage;
-import brookite.games.goatcabbage.model.entities.Goat;
-import brookite.games.goatcabbage.model.entities.Wall;
+import brookite.games.goatcabbage.model.entities.*;
 import brookite.games.goatcabbage.model.events.ActionEvent;
 import brookite.games.goatcabbage.model.events.ActionListener;
 import brookite.games.goatcabbage.model.events.EatEvent;
@@ -64,7 +61,7 @@ public class GoatTest {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
         pd.cell(10, 9).putEntity(gt);
-        pd.cell(10, 10).putEntity(new Box());
+        pd.cell(10, 10).putEntity(new SimpleBox());
         Assertions.assertFalse(gt.move(Direction.EAST));
     }
 
@@ -72,9 +69,9 @@ public class GoatTest {
     public void goatBetweenBoxes() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
-        Box box2 = new Box();
-        Box box3 = new Box();
+        Box box = new SimpleBox();
+        Box box2 = new SimpleBox();
+        Box box3 = new SimpleBox();
         pd.cell(1, 1).putEntity(box3);
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
@@ -97,8 +94,8 @@ public class GoatTest {
     public void goatTryPullManyBoxes() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
-        Box box2 = new Box();
+        Box box = new SimpleBox();
+        Box box2 = new SimpleBox();
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
         pd.cell(1, 4).putEntity(box2);
@@ -114,8 +111,8 @@ public class GoatTest {
     public void goatTryPushManyBoxes() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
-        Box box2 = new Box();
+        Box box = new SimpleBox();
+        Box box2 = new SimpleBox();
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
         pd.cell(1, 4).putEntity(box2);
@@ -130,7 +127,7 @@ public class GoatTest {
     public void goatTryPushBoxNearOuterWall() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(2, 9).putEntity(gt);
         pd.cell(2, 10).putEntity(box);
 
@@ -143,7 +140,7 @@ public class GoatTest {
     public void goatTryPullBoxNearOuterWall() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(2, 10).putEntity(gt);
         pd.cell(2, 9).putEntity(box);
 
@@ -156,7 +153,7 @@ public class GoatTest {
     public void goatPushBoxNearWall() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(2, 2).putEntity(gt);
         pd.cell(2, 3).putEntity(box);
         pd.cell(2, 4).putEntity(new Wall());
@@ -173,7 +170,7 @@ public class GoatTest {
     public void testInvalidUsageOfPullAndPush() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(2, 2).putEntity(gt);
         pd.cell(2, 3).putEntity(box);
 
@@ -185,7 +182,7 @@ public class GoatTest {
     public void pushBoxAtHorizontalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(1, 1).putEntity(gt);
         pd.cell(1, 2).putEntity(box);
 
@@ -199,7 +196,7 @@ public class GoatTest {
     public void pullBoxAtHorizontalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(1, 2).putEntity(gt);
         pd.cell(1, 3).putEntity(box);
         Assertions.assertTrue(gt.movePull(Direction.WEST));
@@ -211,7 +208,7 @@ public class GoatTest {
     public void pullMoveBoxAtVerticalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(5, 5).putEntity(gt);
         pd.cell(4, 5).putEntity(box);
 
@@ -225,7 +222,7 @@ public class GoatTest {
     public void pullBoxAtVerticalTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(5, 5).putEntity(gt);
         pd.cell(6, 5).putEntity(box);
         Assertions.assertTrue(gt.movePull(Direction.NORTH));
@@ -237,7 +234,7 @@ public class GoatTest {
     public void boxDiagonallyRelativeToGoatTest() {
         Goat gt = new Goat(30);
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         pd.cell(5, 5).putEntity(gt);
         pd.cell(6, 4).putEntity(box);
 

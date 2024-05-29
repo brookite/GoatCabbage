@@ -4,6 +4,7 @@ import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Cabbage;
+import brookite.games.goatcabbage.model.entities.SimpleBox;
 import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
@@ -37,8 +38,8 @@ public class CellTest {
     @Test
     public void putSolidEntityTest() {
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
-        Box box2 = new Box();
+        Box box = new SimpleBox();
+        Box box2 = new SimpleBox();
         Cell cell = new Cell(pd);
         Assertions.assertTrue(cell.putEntity(box));
         Assertions.assertFalse(cell.canPutEntity(box2));
@@ -63,7 +64,7 @@ public class CellTest {
     @Test
     public void putSolidEntityWithPassableEntityTest() {
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
+        Box box = new SimpleBox();
         Cabbage cabbage = new Cabbage();
         Cell cell = pd.cell(1, 1);
         Assertions.assertTrue(cell.putEntity(box));
@@ -85,8 +86,8 @@ public class CellTest {
     @Test
     public void putSolidEntitiesTest() {
         Paddock pd = new Paddock(10, 10);
-        Box box = new Box();
-        Box box2 = new Box();
+        Box box = new SimpleBox();
+        Box box2 = new SimpleBox();
         Cell cell = pd.cell(1, 1);
         Assertions.assertTrue(cell.putEntity(box));
         Assertions.assertFalse(cell.canPutEntity(box2));
