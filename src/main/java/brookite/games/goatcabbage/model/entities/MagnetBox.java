@@ -1,6 +1,7 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
+import brookite.games.goatcabbage.model.entities.hookable.HookedBoxChain;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.utils.MagnetInteraction;
 import brookite.games.goatcabbage.model.utils.MagneticPole;
@@ -41,8 +42,9 @@ public class MagnetBox extends MagneticBox {
     }
 
     @Override
-    protected MagnetInteraction canInteract(Direction direction) {
+    protected MagnetInteraction canInteract(Direction direction, boolean excludeInteractionWithHooked) {
         Cell neighbourCell = cell.neighbour(direction);
+        HookedBoxChain thisChain = new HookedBoxChain(this);
         if (neighbourCell == null) {
             return MagnetInteraction.NONE;
         }
@@ -57,6 +59,9 @@ public class MagnetBox extends MagneticBox {
                             MagneticPole otherPole = box.getMagneticPoleByDirection(neighbourDir.opposite());
                             MagneticPole selfPole = getMagneticPoleByDirection(neighbourDir);
                             if (selfPole != null && otherPole != null && !otherPole.isOpposite(selfPole)) {
+                                if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                                    return MagnetInteraction.NONE;
+                                }
                                 return MagnetInteraction.REPULSION;
                             } else {
                                 // Случай, если у магнитов полюса параллельны
@@ -65,10 +70,16 @@ public class MagnetBox extends MagneticBox {
                                 MagneticPole parallelSelfPole = getMagneticPoleByDirection(newDirection);
                                 if (parallelOtherPole != null && parallelSelfPole != null &&
                                         !parallelSelfPole.isOpposite(parallelOtherPole)) {
+                                    if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                                        return MagnetInteraction.NONE;
+                                    }
                                     return MagnetInteraction.REPULSION;
                                 }
                             }
                         } else if (entity instanceof MagneticBox box) {
+                            if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                                return MagnetInteraction.NONE;
+                            }
                             return box.canInteract(neighbourDir.opposite()).equals(MagnetInteraction.REPULSION) ? MagnetInteraction.REPULSION : MagnetInteraction.NONE;
                         }
                     }
@@ -79,6 +90,9 @@ public class MagnetBox extends MagneticBox {
         }
         Entity entity = neighbourCell.getSolidEntity().get();
         if (entity instanceof MagnetBox box) {
+            if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                return MagnetInteraction.NONE;
+            }
             MagneticPole selfPole = getMagneticPoleByDirection(direction);
             MagneticPole otherPole = box.getMagneticPoleByDirection(direction.opposite());
             if (selfPole != null && otherPole != null) {
@@ -101,6 +115,9 @@ public class MagnetBox extends MagneticBox {
                 return MagnetInteraction.ATTRACTION;
             }
         } else if (entity instanceof MagneticBox box) {
+            if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                return MagnetInteraction.NONE;
+            }
             return box.canInteract(direction.opposite());
         }
         return MagnetInteraction.NONE;

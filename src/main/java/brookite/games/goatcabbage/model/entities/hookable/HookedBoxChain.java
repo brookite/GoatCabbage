@@ -84,7 +84,7 @@ public class HookedBoxChain {
         }
     }
 
-    public HookableBox[] getFigureItems(HookableBox hookableBox) {
+    public HookableBox[] getFigureItems() {
         update(false);
         return boxes.toArray(new HookableBox[0]);
     }

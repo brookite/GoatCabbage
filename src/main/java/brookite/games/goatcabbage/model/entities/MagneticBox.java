@@ -1,6 +1,7 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.entities.hookable.HookableBox;
+import brookite.games.goatcabbage.model.entities.hookable.HookedBoxChain;
 import brookite.games.goatcabbage.model.events.MagnetInteractEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.utils.MagnetInteraction;
@@ -32,10 +33,20 @@ public abstract class MagneticBox extends HookableBox {
         return result;
     }
 
-    protected abstract MagnetInteraction canInteract(Direction direction);
+    protected abstract MagnetInteraction canInteract(Direction direction, boolean excludeInteractionWithHooked);
+
+    protected MagnetInteraction canInteract(Direction direction) {
+        return canInteract(direction, false);
+    }
 
     protected boolean canMove(Direction direction) {
-        return super.canMove(direction) && !canInteract(direction).equals(MagnetInteraction.REPULSION);
+        boolean result = super.canMove(direction);
+        HookedBoxChain chain = new HookedBoxChain(this);
+        for (HookableBox item : chain.getFigureItems()) {
+            MagneticBox box = (MagneticBox) item;
+            result &= box.canInteract(direction, true) != MagnetInteraction.REPULSION;
+        }
+        return result;
     }
 
     @Override
