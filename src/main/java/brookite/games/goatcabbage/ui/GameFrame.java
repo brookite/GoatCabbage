@@ -3,7 +3,6 @@ package brookite.games.goatcabbage.ui;
 
 import brookite.games.goatcabbage.model.Game;
 import brookite.games.goatcabbage.model.events.GameResultEvent;
-import brookite.games.goatcabbage.model.events.GameStateListener;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelLoader;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;

@@ -2,8 +2,6 @@ package brookite.games.goatcabbage;
 
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.*;
-import brookite.games.goatcabbage.model.events.ActionEvent;
-import brookite.games.goatcabbage.model.events.ActionListener;
 import brookite.games.goatcabbage.model.events.EatEvent;
 import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
