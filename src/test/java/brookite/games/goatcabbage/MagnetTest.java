@@ -45,7 +45,7 @@ public class MagnetTest {
     }
 
     @Test
-    public void twoMagnetsAttractCodirectered() {
+    public void twoMagnetsAttractTowards() {
         Paddock pd = new Paddock(10, 10);
         MagnetBox firstMagnet = new MagnetBox(Direction.WEST, true);
         Direction dir = Direction.NORTH;

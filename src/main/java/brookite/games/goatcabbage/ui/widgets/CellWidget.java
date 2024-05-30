@@ -16,10 +16,6 @@ public class CellWidget extends JPanel {
     public static final int MEDIUM_SIZE = 64;
     public static final int LARGE_SIZE = 96;
 
-    static {
-
-    }
-
     public CellWidget(FieldPanel parent) {
         super();
         setMaximumSize(new Dimension(128, 128));

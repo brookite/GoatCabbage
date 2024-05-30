@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class HookableBox extends Box {
-    private Map<Direction, HookableBox> hooked = new HashMap<>();
+    private final Map<Direction, HookableBox> hooked = new HashMap<>();
 
     protected boolean isHooks(Direction direction) {
         return hooked.containsKey(direction) && hooked.get(direction) != null;

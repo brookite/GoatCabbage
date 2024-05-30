@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class MagneticBoxWidget extends BoxWidget {
-    private boolean RENDER_DEBUG_MAGNET_FIELD = true;
+    private static final boolean RENDER_DEBUG_MAGNET_FIELD = false;
     private static ImageIcon magnetFieldIcon;
 
     public MagneticBoxWidget(MagneticBox entity) {
@@ -25,13 +25,13 @@ public class MagneticBoxWidget extends BoxWidget {
                 try {
                     magnetFieldIcon = ImageLoader.loadAsImageIcon("magnet_field.png");
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    JOptionPane.showMessageDialog(this, "Не удалось загрузить изображение магнитного поля", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }
             if (magnetFieldIcon != null) {
                 Image magnetField = magnetFieldIcon.getImage();
                 MagneticBox box = (MagneticBox) getModelEntity();
-                int x = 0, y = 0;
+                int x, y;
                 if (box.interact(Direction.NORTH) == MagnetInteraction.ATTRACTION) {
                     x = getParent().getWidth() / 2 - 8;
                     y = 0;

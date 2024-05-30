@@ -8,7 +8,6 @@ import brookite.games.goatcabbage.model.events.EatEvent;
 import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 public class GoatTest {
@@ -264,17 +263,12 @@ public class GoatTest {
         pd.cell(5, 5).putEntity(gt);
         pd.cell(5, 6).putEntity(cb);
 
-        gt.addActionListener(new ActionListener() {
-            @Override
-            public void onActionPerformed(ActionEvent event) {
-                if (event instanceof EatEvent moveEvent) {
-                    throw new EventCalledException();
-                }
+        gt.addActionListener(event -> {
+            if (event instanceof EatEvent moveEvent) {
+                throw new EventCalledException();
             }
         });
-        Assertions.assertThrows(EventCalledException.class, () -> {
-            Assertions.assertTrue(gt.move(Direction.EAST));
-        });
+        Assertions.assertThrows(EventCalledException.class, () -> Assertions.assertTrue(gt.move(Direction.EAST)));
     }
 
     @Test
@@ -283,17 +277,12 @@ public class GoatTest {
         Paddock pd = new Paddock(10, 10);
         pd.cell(5, 5).putEntity(gt);
 
-        gt.addActionListener(new ActionListener() {
-            @Override
-            public void onActionPerformed(ActionEvent event) {
-                if (event instanceof MoveEvent moveEvent) {
-                    throw new EventCalledException();
-                }
+        gt.addActionListener(event -> {
+            if (event instanceof MoveEvent moveEvent) {
+                throw new EventCalledException();
             }
         });
-        Assertions.assertThrows(EventCalledException.class, () -> {
-            Assertions.assertTrue(gt.move(Direction.EAST));
-        });
+        Assertions.assertThrows(EventCalledException.class, () -> Assertions.assertTrue(gt.move(Direction.EAST)));
     }
 
 }

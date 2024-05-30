@@ -1,17 +1,15 @@
 package brookite.games.goatcabbage.model.entities;
 
 import brookite.games.goatcabbage.model.Cell;
-import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.events.ActionEvent;
 import brookite.games.goatcabbage.model.events.ActionListener;
-import brookite.games.goatcabbage.model.utils.Direction;
 
 import java.util.ArrayList;
 
 public abstract class Entity {
 
 	protected Cell cell;
-	private ArrayList<ActionListener> _listeners = new ArrayList<>();
+	private final ArrayList<ActionListener> _listeners = new ArrayList<>();
 
 	public void setCell(Cell cell) {
 		if (cell == null || this.cell == cell) {

@@ -5,9 +5,7 @@ import brookite.games.goatcabbage.model.Game;
 import brookite.games.goatcabbage.model.events.GameResultEvent;
 import brookite.games.goatcabbage.model.events.GameStateListener;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
-import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelLoader;
-import brookite.games.goatcabbage.ui.utils.EmptyLevel;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 import net.miginfocom.swing.MigLayout;
@@ -20,13 +18,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class GameFrame extends JFrame {
-    private StartGameDialog _startGameDialog;
+    private final StartGameDialog _startGameDialog;
     private FieldPanel _field;
 
     private final Game _model;
@@ -38,12 +33,9 @@ public class GameFrame extends JFrame {
         } catch (IOException | IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
-        _model.addGameStateListener(new GameStateListener() {
-            @Override
-            public void onGameFinished(GameResultEvent result) {
-                if (_model.started()) {
-                    finishGame(result);
-                }
+        _model.addGameStateListener(result -> {
+            if (_model.started()) {
+                finishGame(result);
             }
         });
         _startGameDialog = new StartGameDialog(this);
@@ -80,12 +72,9 @@ public class GameFrame extends JFrame {
 
     public void finishGame(GameResultEvent result) {
         _model.finish();
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GameOverDialog gameOver = new GameOverDialog(GameFrame.this, result, _field.getUsedSteps(), _field.getMovedBox());
-                gameOver.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            GameOverDialog gameOver = new GameOverDialog(GameFrame.this, result, _field.getUsedSteps(), _field.getMovedBox());
+            gameOver.setVisible(true);
         });
         for (KeyListener kl : _field.getActorWidget().getKeyListeners()) {
             _field.getActorWidget().removeKeyListener(kl);
@@ -132,19 +121,11 @@ public class GameFrame extends JFrame {
 
         setJMenuBar(menuBar);
 
-        exitItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        exitItem.addActionListener(e -> System.exit(0));
 
         newGameItem.addActionListener((ActionEvent e) -> selectNewLevel());
 
-        keyHelpItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(GameFrame.this, "Управление:\nW - вверх,\nA - влево,\nS - вниз,\nD - вправо.\n\nПри удерживании Ctrl можно тянуть к себе коробку, если она находится рядом с Козой", "Помощь", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+        keyHelpItem.addActionListener(e -> JOptionPane.showMessageDialog(GameFrame.this, "Управление:\nW - вверх,\nA - влево,\nS - вниз,\nD - вправо.\n\nПри удерживании Ctrl можно тянуть к себе коробку, если она находится рядом с Козой", "Помощь", JOptionPane.INFORMATION_MESSAGE));
 
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -157,9 +138,9 @@ public class GameFrame extends JFrame {
                         usedGraphics.append(line).append("\n");
                     }
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(GameFrame.this, "Не удалось отобразить окно \"Об игре\"", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
-                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 08.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics.toString());
+                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 08.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
                 try {
                     JOptionPane.showMessageDialog(GameFrame.this, text, "Об игре", JOptionPane.PLAIN_MESSAGE, ImageLoader.loadAsScaledIcon("icon.png", 128, 128));
                 } catch (IOException ex) {

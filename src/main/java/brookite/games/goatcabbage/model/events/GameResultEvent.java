@@ -16,12 +16,4 @@ public class GameResultEvent extends EventObject {
 	public boolean isWin() {
 		return isWin;
 	}
-
-	public Entity getWinner() {
-		if (!isWin()) {
-			throw new RuntimeException("Нет победителя");
-		}
-		return ((Optional<Entity>) getSource()).get();
-	}
-
 }

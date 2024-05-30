@@ -12,13 +12,10 @@ public class Main {
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
-        SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    GameFrame frame = new GameFrame();
-                    frame.setVisible(true);
-                    frame.selectNewLevel();
-                }
+        SwingUtilities.invokeLater(() -> {
+            GameFrame frame = new GameFrame();
+            frame.setVisible(true);
+            frame.selectNewLevel();
         });
     }
 }

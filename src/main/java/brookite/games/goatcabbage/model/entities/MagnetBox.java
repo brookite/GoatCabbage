@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MagnetBox extends MagneticBox {
-    private Map<MagneticPole, Direction> pole;
+    private final Map<MagneticPole, Direction> pole;
     private boolean topRightRotate;
 
     public MagnetBox(Direction northPoleDirection, boolean topOrRightDirection) {

@@ -27,7 +27,7 @@ public class LevelTest {
             Assertions.fail("Level wasn't read");
         }
 
-        Assertions.assertNotEquals(level, null);
+        Assertions.assertNotNull(level);
         Level levelJson = level.getLevelObject();
 
         Assertions.assertEquals(levelJson.getField().getWidth(), 128);
@@ -73,7 +73,7 @@ public class LevelTest {
 
     @Test
     public void paddockFromLevelCreationTest() {
-        LevelGameEnvironment level = null;
+        LevelGameEnvironment level;
         try {
             level = LevelLoader.levelFromResource("levels/test1.level");
             Assertions.assertNotEquals(level, null);

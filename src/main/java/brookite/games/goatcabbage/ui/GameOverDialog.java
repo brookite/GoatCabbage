@@ -9,16 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameOverDialog extends JDialog {
     private final GameFrame gameFrame;
-    private JLabel titleLabel;
-    private JLabel stepsLabel;
-    private JLabel boxesMovedLabel;
-    private JButton nextLevelButton;
-    private JButton finishButton;
-
 
     public GameOverDialog(GameFrame parent, GameResultEvent resultEvent, int stepsTaken, int boxesMoved) {
         super(parent, resultEvent.isWin() ? "Победа" : "Игра окончена", true);
@@ -28,10 +21,10 @@ public class GameOverDialog extends JDialog {
 
         JPanel panel = new JPanel(new MigLayout("wrap 1, insets 10", "[center]", "[top]20[top]push[center]push[bottom]"));
 
-        nextLevelButton = new JButton("Следующий уровень");
-        finishButton = new JButton("Закончить игру");
+        JButton nextLevelButton = new JButton("Следующий уровень");
+        JButton finishButton = new JButton("Закончить игру");
 
-        titleLabel = new JLabel(resultEvent.isWin() ? "Вы победили!" : "Игра окончена");
+        JLabel titleLabel = new JLabel(resultEvent.isWin() ? "Вы победили!" : "Игра окончена");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(titleLabel, "alignx center, wrap");
@@ -40,7 +33,7 @@ public class GameOverDialog extends JDialog {
         try {
             winnerIcon = resultEvent.isWin() ? ImageLoader.loadAsScaledIcon("goat.png", 0.25f) : ImageLoader.loadAsScaledIcon("cabbage.png", 0.25f);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(this, "Не удалось загрузить изображение победителя", "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
         JLabel iconLabel = new JLabel();
         iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -49,8 +42,8 @@ public class GameOverDialog extends JDialog {
         }
         panel.add(iconLabel, "alignx center, wrap");
 
-        stepsLabel = new JLabel("Шагов: " + stepsTaken);
-        boxesMovedLabel = new JLabel("Передвинутых коробок: " + boxesMoved);
+        JLabel stepsLabel = new JLabel("Шагов: " + stepsTaken);
+        JLabel boxesMovedLabel = new JLabel("Передвинутых коробок: " + boxesMoved);
         panel.add(stepsLabel, "alignx center, wrap");
         panel.add(boxesMovedLabel, "alignx center, wrap");
 
@@ -61,21 +54,13 @@ public class GameOverDialog extends JDialog {
         pack();
         setLocationRelativeTo(parent);
 
-        nextLevelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameFrame.selectNextLevel();
-                gameFrame.startGame();
-                dispose();
-            }
+        nextLevelButton.addActionListener(e -> {
+            gameFrame.selectNextLevel();
+            gameFrame.startGame();
+            dispose();
         });
 
-        finishButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        finishButton.addActionListener(e -> dispose());
 
         getRootPane().setDefaultButton(nextLevelButton);
     }

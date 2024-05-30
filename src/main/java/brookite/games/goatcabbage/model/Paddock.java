@@ -12,8 +12,8 @@ public class Paddock implements Iterable<Cell> {
     private Goat goat;
     private Cabbage cabbage;
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     public Paddock(int width, int height) {
         this.width = width;

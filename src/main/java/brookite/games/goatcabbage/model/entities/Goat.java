@@ -10,19 +10,16 @@ import brookite.games.goatcabbage.model.utils.Direction;
 
 public class Goat extends MovableEntity implements Solid {
 	public Goat() {
-		addActionListener(new ActionListener() {
-			@Override
-			public void onActionPerformed(ActionEvent event) {
-				if (event instanceof MoveEvent moveEvent) {
-					Cell cell = moveEvent.getNewPosition();
-					for (Entity entity : cell.getPassableEntities()) {
-						if (entity instanceof Cabbage) {
-							eat((Cabbage) entity);
-						}
-					}
-				}
-			}
-		});
+		addActionListener(event -> {
+            if (event instanceof MoveEvent moveEvent) {
+                Cell cell = moveEvent.getNewPosition();
+                for (Entity entity : cell.getPassableEntities()) {
+                    if (entity instanceof Cabbage) {
+                        eat(entity);
+                    }
+                }
+            }
+        });
 	}
 	private int stepAmount;
 
@@ -48,9 +45,8 @@ public class Goat extends MovableEntity implements Solid {
 	}
 
 	public boolean eat(Entity entity) {
-		if (entity instanceof Cabbage) {
-			Cabbage cabbage = (Cabbage) entity;
-			if (cabbage.getCell().equals(getCell())) {
+		if (entity instanceof Cabbage cabbage) {
+            if (cabbage.getCell().equals(getCell())) {
 				cabbage.getCell().removeEntity(cabbage);
 				fireCabbageEaten(cabbage);
 			}

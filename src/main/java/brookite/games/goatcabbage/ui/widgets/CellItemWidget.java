@@ -1,7 +1,5 @@
 package brookite.games.goatcabbage.ui.widgets;
 
-import com.formdev.flatlaf.util.ScaledImageIcon;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,6 +1,5 @@
 package brookite.games.goatcabbage.ui.widgets;
 
-import brookite.games.goatcabbage.model.entities.Box;
 import brookite.games.goatcabbage.model.entities.Cabbage;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 

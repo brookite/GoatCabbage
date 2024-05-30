@@ -15,30 +15,24 @@ public class Game {
     private int currentEnvironment = 0;
     private boolean isGameStarted = false;
 
-    private ArrayList<GameStateListener> _listeners = new ArrayList<>();
+    private final ArrayList<GameStateListener> _listeners = new ArrayList<>();
 
     public void start() {
         GameEnvironment env = getCurrentEnvironment();
         this.paddock = env.create();
 
-        paddock.getGoat().addActionListener(new ActionListener() {
-            @Override
-            public void onActionPerformed(ActionEvent event) {
-                if (event instanceof EatEvent eatEvent) {
-                    if (eatEvent.getVictim() instanceof Cabbage) {
-                        fireGameFinished((Entity) eatEvent.getEating(), true);
-                    }
+        paddock.getGoat().addActionListener(event -> {
+            if (event instanceof EatEvent eatEvent) {
+                if (eatEvent.getVictim() instanceof Cabbage) {
+                    fireGameFinished(eatEvent.getEating(), true);
                 }
             }
         });
-        paddock.getGoat().addActionListener(new ActionListener() {
-            @Override
-            public void onActionPerformed(ActionEvent event) {
-                if (event instanceof MoveEvent moveEvent) {
-                    Goat goat = (Goat) moveEvent.getActor();
-                    if (!goat.hasSteps()) {
-                        fireGameFinished(null, false);
-                    }
+        paddock.getGoat().addActionListener(event -> {
+            if (event instanceof MoveEvent moveEvent) {
+                Goat goat = (Goat) moveEvent.getActor();
+                if (!goat.hasSteps()) {
+                    fireGameFinished(null, false);
                 }
             }
         });

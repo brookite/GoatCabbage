@@ -3,7 +3,6 @@ package brookite.games.goatcabbage.model.levels.data.commands;
 import brookite.games.goatcabbage.model.Paddock;
 import brookite.games.goatcabbage.model.entities.Wall;
 import brookite.games.goatcabbage.model.levels.data.Command;
-import brookite.games.goatcabbage.model.levels.data.Directions;
 import brookite.games.goatcabbage.model.levels.data.WallFigureFragment;
 
 import java.util.ArrayList;

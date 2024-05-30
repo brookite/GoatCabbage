@@ -10,9 +10,9 @@ import java.util.Map;
 
 public abstract class Command {
     public static class Deserializer implements JsonDeserializer<Command> {
-        private String commandNameField;
-        private Gson gson;
-        private Map<String, Class<? extends Command>> commandTypeRegistry;
+        private final String commandNameField;
+        private final Gson gson;
+        private final Map<String, Class<? extends Command>> commandTypeRegistry;
 
         public Deserializer(String commandNameField) {
             this.commandNameField = commandNameField;

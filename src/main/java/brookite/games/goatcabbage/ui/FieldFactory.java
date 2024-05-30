@@ -2,8 +2,6 @@ package brookite.games.goatcabbage.ui;
 
 import brookite.games.goatcabbage.model.Game;
 import brookite.games.goatcabbage.model.levels.GameEnvironment;
-import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
-import brookite.games.goatcabbage.model.levels.data.Field;
 import brookite.games.goatcabbage.ui.utils.EmptyLevel;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
 import brookite.games.goatcabbage.ui.widgets.FieldPanel;

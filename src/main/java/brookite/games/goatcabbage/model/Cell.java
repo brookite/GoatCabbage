@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Cell implements Iterable<Entity> {
@@ -30,7 +29,7 @@ public class Cell implements Iterable<Entity> {
     }
 
     public List<Entity> getEntities() {
-        return new ArrayList<Entity>(entities);
+        return new ArrayList<>(entities);
     }
 
     public Optional<Entity> getSolidEntity() {

@@ -1,7 +1,6 @@
 package brookite.games.goatcabbage.ui.widgets;
 
 import brookite.games.goatcabbage.model.entities.MagnetBox;
-import brookite.games.goatcabbage.model.entities.MetalBox;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.model.utils.MagneticPole;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
@@ -57,10 +56,7 @@ public class MagnetBoxWidget extends MagneticBoxWidget {
             return true;
         } else if (pole.equals(MagneticPole.NORTH) && poleDirection.equals(Direction.WEST)) {
             return true;
-        } else if (pole.equals(MagneticPole.NORTH) && poleDirection.equals(Direction.EAST)) {
-            return true;
-        }
-        return false;
+        } else return pole.equals(MagneticPole.NORTH) && poleDirection.equals(Direction.EAST);
     }
 
     private static BufferedImage rotateImage(BufferedImage buffImage, double angle) {

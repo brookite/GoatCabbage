@@ -1,15 +1,11 @@
 package brookite.games.goatcabbage;
 
-import brookite.games.goatcabbage.model.Cell;
 import brookite.games.goatcabbage.model.Game;
-import brookite.games.goatcabbage.model.entities.Entity;
-import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.events.*;
 import brookite.games.goatcabbage.model.levels.LevelGameEnvironment;
 import brookite.games.goatcabbage.model.levels.LevelLoader;
 import brookite.games.goatcabbage.model.utils.Direction;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -28,19 +24,14 @@ public class GameTest {
             });
             game.start();
             Assertions.assertTrue(game.getPaddock().getGoat().hasActionListeners());
-            game.getPaddock().getGoat().addActionListener(new ActionListener() {
-                @Override
-                public void onActionPerformed(ActionEvent event) {
-                    if (event instanceof EatEvent eatEvent) {
-                        Assertions.assertEquals(game.getPaddock().getCabbage(), eatEvent.getVictim());
-                    }
+            game.getPaddock().getGoat().addActionListener(event -> {
+                if (event instanceof EatEvent eatEvent) {
+                    Assertions.assertEquals(game.getPaddock().getCabbage(), eatEvent.getVictim());
                 }
             });
             Assertions.assertTrue(game.started());
             game.getPaddock().getGoat().move(Direction.SOUTH);
-            Assertions.assertThrows(EventCalledException.class, () -> {
-                Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST));
-            });
+            Assertions.assertThrows(EventCalledException.class, () -> Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST)));
         } catch (IOException e) {
             Assertions.fail("Level wasn't loaded");
         }
@@ -63,9 +54,7 @@ public class GameTest {
             Assertions.assertTrue(game.started());
             game.getPaddock().getGoat().move(Direction.NORTH);
             game.getPaddock().getGoat().move(Direction.EAST);
-            Assertions.assertThrows(EventCalledException.class, () -> {
-                Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST));
-            });
+            Assertions.assertThrows(EventCalledException.class, () -> Assertions.assertTrue(game.getPaddock().getGoat().move(Direction.EAST)));
         } catch (IOException e) {
             Assertions.fail("Level wasn't loaded");
         }

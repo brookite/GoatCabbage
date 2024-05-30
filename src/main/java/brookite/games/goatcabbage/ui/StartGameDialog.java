@@ -6,26 +6,21 @@ import brookite.games.goatcabbage.ui.widgets.FieldPanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class StartGameDialog extends JDialog {
-    private final GameFrame gameFrame;
-    private JComboBox<GameEnvironment> levelComboBox;
-    private JButton playButton;
-    private JButton cancelButton;
+    private final JComboBox<GameEnvironment> levelComboBox;
+    private final JButton playButton;
+    private final JButton cancelButton;
     private FieldPanel preview;
-    private JPanel panel;
+    private final JPanel panel;
 
     private java.util.List<ActionListener> playActionListeners = new ArrayList<>();
     private java.util.List<ActionListener> cancelActionListeners = new ArrayList<>();
 
     public StartGameDialog(GameFrame parent) {
         super(parent, "Выберите уровень", true);
-        gameFrame = parent;
         setResizable(false);
         setLocationRelativeTo(parent);
 

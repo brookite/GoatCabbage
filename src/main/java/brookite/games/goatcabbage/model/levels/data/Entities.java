@@ -1,7 +1,6 @@
 package brookite.games.goatcabbage.model.levels.data;
 
 import brookite.games.goatcabbage.model.entities.*;
-import brookite.games.goatcabbage.model.levels.data.commands.PlaceEntityCommand;
 
 import java.util.Map;
 

@@ -3,7 +3,7 @@ package brookite.games.goatcabbage.model.levels.data;
 import java.util.Objects;
 
 public class UIProperties {
-    private String cellBackground = "cell.png";
+    private final String cellBackground = "cell.png";
 
     public String getLevelCellBackground() {
         return cellBackground;

@@ -15,9 +15,7 @@ public class LevelGameEnvironment extends GameEnvironment {
     /**
      * Level is an information object about the game environment
      * with unique placement of boxes, walls and goat and cabbage position
-     *
      * Levels stored in JSON format
-     *
      * Full Level JSON Format:
      * <pre>
      * {
@@ -58,7 +56,7 @@ public class LevelGameEnvironment extends GameEnvironment {
      * }
      * </pre>
      */
-    private Level jsonLevel;
+    private final Level jsonLevel;
 
     public LevelGameEnvironment(Level level) {
         super();

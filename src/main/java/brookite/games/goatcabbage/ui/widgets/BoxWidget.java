@@ -15,20 +15,17 @@ public class BoxWidget extends EntityWidget {
 
     public BoxWidget(Box entity) {
         super(entity);
-        entity.addActionListener(new ActionListener() {
-            @Override
-            public void onActionPerformed(ActionEvent event) {
-                FieldPanel field = getCell().getParent();
-                if (event instanceof MoveEvent moveEvent) {
-                    getCell().repaint();
-                    getCell().removeItem(BoxWidget.this);
-                    field.cellAt(moveEvent.getNewPosition().position()).addItem(BoxWidget.this);
-                    field.cellAt(moveEvent.getNewPosition().position()).repaint();
-                    field._movedBox += 1;
-                } else if (event instanceof MagnetInteractEvent interactEvent) {
-                    field.cellAt(entity.getCell().neighbour(interactEvent.getDirection()).position()).repaint();
-                    repaint();
-                }
+        entity.addActionListener(event -> {
+            FieldPanel field = getCell().getParent();
+            if (event instanceof MoveEvent moveEvent) {
+                getCell().repaint();
+                getCell().removeItem(BoxWidget.this);
+                field.cellAt(moveEvent.getNewPosition().position()).addItem(BoxWidget.this);
+                field.cellAt(moveEvent.getNewPosition().position()).repaint();
+                field._movedBox += 1;
+            } else if (event instanceof MagnetInteractEvent interactEvent) {
+                field.cellAt(entity.getCell().neighbour(interactEvent.getDirection()).position()).repaint();
+                repaint();
             }
         });
     }

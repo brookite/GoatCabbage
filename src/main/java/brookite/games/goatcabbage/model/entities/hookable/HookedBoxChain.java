@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class HookedBoxChain {
     private HashSet<HookableBox> boxes;
-    private HookableBox item;
+    private final HookableBox item;
 
     public HookedBoxChain(HookableBox itemOfFigure) {
         item = itemOfFigure;
@@ -31,7 +31,7 @@ public class HookedBoxChain {
      */
     public HookableBox getEdge(Direction direction) {
         update(true);
-        Optional<HookableBox> found = boxes.stream().min((Comparator<HookableBox>) (o1, o2) -> {
+        Optional<HookableBox> found = boxes.stream().min((o1, o2) -> {
             CellPosition pos1 = o1.getCell().position();
             CellPosition pos2 = o2.getCell().position();
             int cmp = 0;
@@ -44,12 +44,8 @@ public class HookedBoxChain {
                 cmp = Integer.compare(pos1.row, pos2.row);
                 if (cmp == 0) {
                     cmp = Integer.compare(pos1.col, pos2.col); // south-east
-                    if (cmp == 1) {
-                        cmp = -1;
-                    } else if (cmp == -1) {
-                        cmp = 1;
-                    }
-                } else if (cmp == 1) {
+                }
+                if (cmp == 1) {
                     cmp = -1;
                 } else if (cmp == -1) {
                     cmp = 1;

@@ -16,27 +16,18 @@ import java.io.IOException;
 
 public class GoatWidget extends EntityWidget {
     private static ImageIcon icon;
-    private JLabel _stepCounter;
-
+    private final JLabel _stepCounter;
 
     private class GoatKeyListener extends KeyAdapter {
         @Override
         public void keyReleased(KeyEvent e) {
-            Direction direction = null;
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_W:
-                    direction = Direction.NORTH;
-                    break;
-                case KeyEvent.VK_S:
-                    direction = Direction.SOUTH;
-                    break;
-                case KeyEvent.VK_A:
-                    direction = Direction.WEST;
-                    break;
-                case KeyEvent.VK_D:
-                    direction = Direction.EAST;
-                    break;
-            }
+            Direction direction = switch (e.getKeyCode()) {
+                case KeyEvent.VK_W -> Direction.NORTH;
+                case KeyEvent.VK_S -> Direction.SOUTH;
+                case KeyEvent.VK_A -> Direction.WEST;
+                case KeyEvent.VK_D -> Direction.EAST;
+                default -> null;
+            };
             if (direction != null && !e.isControlDown()) {
                 boolean movePushResult = getGoat().movePush(direction);
                 if (!movePushResult) {
