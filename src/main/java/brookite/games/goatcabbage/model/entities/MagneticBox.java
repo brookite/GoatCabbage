@@ -26,8 +26,12 @@ public abstract class MagneticBox extends HookableBox {
     protected boolean move(Direction direction) {
         boolean result = super.move(direction);
         if (result) {
-            for (Direction dir : Direction.values()) {
-                interact(dir);
+            for (HookableBox box : new HookedBoxChain(this).getFigureItems()) {
+                for (Direction dir : Direction.values()) {
+                    if (box instanceof MagneticBox mb) {
+                        mb.interact(dir);
+                    }
+                }
             }
         }
         return result;
