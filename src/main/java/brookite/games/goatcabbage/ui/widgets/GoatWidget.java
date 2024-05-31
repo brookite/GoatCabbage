@@ -3,6 +3,7 @@ package brookite.games.goatcabbage.ui.widgets;
 import brookite.games.goatcabbage.model.entities.Goat;
 import brookite.games.goatcabbage.model.events.ActionEvent;
 import brookite.games.goatcabbage.model.events.ActionListener;
+import brookite.games.goatcabbage.model.events.EatEvent;
 import brookite.games.goatcabbage.model.events.MoveEvent;
 import brookite.games.goatcabbage.model.utils.Direction;
 import brookite.games.goatcabbage.ui.utils.ImageLoader;
@@ -44,8 +45,8 @@ public class GoatWidget extends EntityWidget {
         goat.addActionListener(new ActionListener() {
             @Override
             public void onActionPerformed(ActionEvent event) {
+                FieldPanel field = getCell().getParent();
                 if (event instanceof MoveEvent moveEvent) {
-                    FieldPanel field = getCell().getParent();
                     CellWidget oldCell = getCell();
                     oldCell.removeItem(GoatWidget.this);
                     CellWidget newCell = field.cellAt(moveEvent.getNewPosition().position());
@@ -55,6 +56,14 @@ public class GoatWidget extends EntityWidget {
                     newCell.repaint();
                     field.usedSteps += 1;
                     requestFocus();
+                } else if (event instanceof EatEvent eatEvent) {
+                    CellWidget cabbageCell = field.cellAt(eatEvent.getEating().getCell().position());
+                    for (Component cmp : cabbageCell.getComponents()) {
+                        if (cmp instanceof CabbageWidget cabbageWidget) {
+                            cabbageCell.removeItem(cabbageWidget);
+                        }
+                    }
+                    cabbageCell.repaint();
                 }
             }
         });
