@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public abstract class Entity {
 
 	protected Cell cell;
-	private final ArrayList<ActionListener> _listeners = new ArrayList<>();
+	private final ArrayList<ActionListener> listeners = new ArrayList<>();
 
 	public void setCell(Cell cell) {
 		if (cell == null || this.cell == cell) {
@@ -35,21 +35,21 @@ public abstract class Entity {
 	}
 
 	public void addActionListener(ActionListener listener) {
-		if (!_listeners.contains(listener)) {
-			_listeners.add(listener);
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
 		}
 	}
 
 	public boolean hasActionListeners() {
-		return !_listeners.isEmpty();
+		return !listeners.isEmpty();
 	}
 
 	public void removeActionListener(ActionListener listener) {
-		_listeners.remove(listener);
+		listeners.remove(listener);
 	}
 
 	protected void fireActionEvent(ActionEvent event) {
-		for (ActionListener listener : _listeners) {
+		for (ActionListener listener : listeners) {
 			listener.onActionPerformed(event);
 		}
 	}

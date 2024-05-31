@@ -20,7 +20,7 @@ public class BoxWidget extends EntityWidget {
                 getCell().removeItem(BoxWidget.this);
                 field.cellAt(moveEvent.getNewPosition().position()).addItem(BoxWidget.this);
                 field.cellAt(moveEvent.getNewPosition().position()).repaint();
-                field._movedBox += 1;
+                field.movedBox += 1;
             } else if (event instanceof MagnetInteractEvent interactEvent) {
                 field.cellAt(entity.getCell().neighbour(interactEvent.getDirection()).position()).repaint();
                 repaint();

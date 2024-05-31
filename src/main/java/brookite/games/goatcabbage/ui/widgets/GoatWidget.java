@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class GoatWidget extends EntityWidget {
     private static ImageIcon icon;
-    private final JLabel _stepCounter;
+    private final JLabel stepCounter;
 
     private class GoatKeyListener extends KeyAdapter {
         @Override
@@ -50,20 +50,20 @@ public class GoatWidget extends EntityWidget {
                     oldCell.removeItem(GoatWidget.this);
                     CellWidget newCell = field.cellAt(moveEvent.getNewPosition().position());
                     newCell.addItem(GoatWidget.this);
-                    _stepCounter.setText(Integer.toString(getGoat().getStepAmount()));
+                    stepCounter.setText(Integer.toString(getGoat().getStepAmount()));
                     oldCell.repaint();
                     newCell.repaint();
-                    field._usedSteps += 1;
+                    field.usedSteps += 1;
                     requestFocus();
                 }
             }
         });
         addKeyListener(new GoatKeyListener());
         setLayout(new MigLayout("nogrid"));
-        _stepCounter = new JLabel(Integer.toString(goat.getStepAmount()));
-        _stepCounter.setFont(new Font("Arial", Font.BOLD, 13));
-        _stepCounter.setForeground(FieldPanel.DEFAULT_COLOR);
-        add(_stepCounter, "pos 0% 75%");
+        stepCounter = new JLabel(Integer.toString(goat.getStepAmount()));
+        stepCounter.setFont(new Font("Arial", Font.BOLD, 13));
+        stepCounter.setForeground(FieldPanel.DEFAULT_COLOR);
+        add(stepCounter, "pos 0% 75%");
     }
 
     Goat getGoat() {

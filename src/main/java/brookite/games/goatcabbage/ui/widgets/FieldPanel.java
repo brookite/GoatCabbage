@@ -14,19 +14,19 @@ import java.awt.*;
 import java.util.Collections;
 
 public class FieldPanel extends JPanel {
-    private int _horizontalCellCount = 10;
-    private int _verticalCellCount = 10;
+    private int horizontalCellCount = 10;
+    private int verticalCellCount = 10;
     static final Color DEFAULT_COLOR = new Color(54, 38, 27);
 
-    private EntityWidget _actor;
+    private EntityWidget actor;
 
     private static final int MAX_HORIZONTAL_CELL_COUNT = 24;
     private static final int MAX_VERTICAL_CELL_COUNT = 15;
 
-    int _usedSteps = 0;
-    int _movedBox = 0;
+    int usedSteps = 0;
+    int movedBox = 0;
 
-    private Paddock _modelField;
+    private Paddock modelField;
 
     public void setHorizontalCellCount(int count) throws IllegalArgumentException {
         if (count > MAX_HORIZONTAL_CELL_COUNT) {
@@ -34,7 +34,7 @@ public class FieldPanel extends JPanel {
                     "Количество ячеек по горизонтали превышает максимальное допустимое. Максимальное: %d",
                     MAX_HORIZONTAL_CELL_COUNT));
         }
-        _horizontalCellCount = count;
+        horizontalCellCount = count;
     }
 
     public void setVerticalCellCount(int count) {
@@ -43,14 +43,14 @@ public class FieldPanel extends JPanel {
                     "Количество ячеек по вертикали превышает максимальное допустимое. Максимальное: %d",
                     MAX_VERTICAL_CELL_COUNT));
         }
-        _verticalCellCount = count;
+        verticalCellCount = count;
     }
 
     void prepareNewField() {
         this.removeAll();
-        for (int i = 0; i < _verticalCellCount; i++) {
-            for (int j = 0; j < _horizontalCellCount; j++) {
-                if (j == _horizontalCellCount - 1) {
+        for (int i = 0; i < verticalCellCount; i++) {
+            for (int j = 0; j < horizontalCellCount; j++) {
+                if (j == horizontalCellCount - 1) {
                     add(new CellWidget(this), "wrap");
                 }
                 else {
@@ -58,7 +58,7 @@ public class FieldPanel extends JPanel {
                 }
             }
         }
-        int maxCellInLine = Math.max(_horizontalCellCount, _verticalCellCount);
+        int maxCellInLine = Math.max(horizontalCellCount, verticalCellCount);
         if (maxCellInLine <= 5) {
             setCellSize(CellWidget.LARGE_SIZE);
         } else if (maxCellInLine <= 8) {
@@ -85,11 +85,11 @@ public class FieldPanel extends JPanel {
     }
 
     public CellWidget cellAt(int row, int col) {
-        return (CellWidget) getComponent((row - 1) * _horizontalCellCount + (col - 1));
+        return (CellWidget) getComponent((row - 1) * horizontalCellCount + (col - 1));
     }
 
     public EntityWidget getActorWidget() {
-        return _actor;
+        return actor;
     }
 
     public FieldPanel(Paddock paddock) {
@@ -99,7 +99,7 @@ public class FieldPanel extends JPanel {
     }
 
     private void setPaddock(Paddock paddock) {
-        _modelField = paddock;
+        modelField = paddock;
         setHorizontalCellCount(paddock.getWidth());
         setVerticalCellCount(paddock.getHeight());
         setLayout(new MigLayout("gap 1"));
@@ -108,24 +108,24 @@ public class FieldPanel extends JPanel {
     }
 
     private void placeWidgets() {
-        for (Cell cell : _modelField) {
+        for (Cell cell : modelField) {
             List<Entity> entities = cell.getEntities();
             Collections.reverse(entities);
             for (Entity entity : entities) {
                 EntityWidget entityWidget = WidgetFactory.placeEntityWidget(entity, this);
                 if (entityWidget instanceof GoatWidget) {
-                    _actor = entityWidget;
-                    _actor.requestFocus();
+                    actor = entityWidget;
+                    actor.requestFocus();
                 }
             }
         }
     }
 
     public int getUsedSteps() {
-        return _usedSteps;
+        return usedSteps;
     }
 
     public int getMovedBox() {
-        return _movedBox;
+        return movedBox;
     }
 }

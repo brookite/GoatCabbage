@@ -15,7 +15,7 @@ public class Game {
     private int currentEnvironment = 0;
     private boolean isGameStarted = false;
 
-    private final ArrayList<GameStateListener> _listeners = new ArrayList<>();
+    private final ArrayList<GameStateListener> listeners = new ArrayList<>();
 
     public void start() {
         GameEnvironment env = getCurrentEnvironment();
@@ -41,20 +41,20 @@ public class Game {
     }
 
     private void fireGameFinished(Entity winner, boolean isWin) {
-        for (GameStateListener listener : _listeners) {
+        for (GameStateListener listener : listeners) {
             listener.onGameFinished(new GameResultEvent(winner, isWin));
         }
     }
 
     public void addGameStateListener(GameStateListener listener) {
-        _listeners.add(listener);
+        listeners.add(listener);
     }
 
     public void removeGameStateListener(GameStateListener listener) {
-        _listeners.add(listener);
+        listeners.add(listener);
     }
 
-    public boolean hasGameStateListeners() {return !_listeners.isEmpty();}
+    public boolean hasGameStateListeners() {return !listeners.isEmpty();}
 
     public void nextEnvironment() {
         currentEnvironment = (currentEnvironment + 1) % this.environments.length;

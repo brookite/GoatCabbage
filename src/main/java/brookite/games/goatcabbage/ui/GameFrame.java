@@ -20,28 +20,28 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class GameFrame extends JFrame {
-    private final StartGameDialog _startGameDialog;
-    private FieldPanel _field;
+    private final StartGameDialog startGameDialog;
+    private FieldPanel field;
 
-    private final Game _model;
+    private final Game model;
 
     public GameFrame() {
-        _model = new Game();
+        model = new Game();
         try {
-            _model.setEnvironments(LevelLoader.loadAllLevels());
+            model.setEnvironments(LevelLoader.loadAllLevels());
         } catch (IOException | IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
-        _model.addGameStateListener(result -> {
-            if (_model.started()) {
+        model.addGameStateListener(result -> {
+            if (model.started()) {
                 finishGame(result);
             }
         });
-        _startGameDialog = new StartGameDialog(this);
-        _startGameDialog.addLevelSelectedListener((ActionEvent e) -> {
+        startGameDialog = new StartGameDialog(this);
+        startGameDialog.addLevelSelectedListener((ActionEvent e) -> {
             GameEnvironment env = (GameEnvironment) e.getSource();
             if (env != null) {
-                _model.setCurrentEnvironment(env);
+                model.setCurrentEnvironment(env);
                 startGame();
             }
         });
@@ -56,46 +56,46 @@ public class GameFrame extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        _field = FieldFactory.empty();
+        field = FieldFactory.empty();
 
-        add(_field, "wrap");
+        add(field, "wrap");
         pack();
-        if (_field.getActorWidget() != null) {
-            _field.getActorWidget().requestFocus();
+        if (field.getActorWidget() != null) {
+            field.getActorWidget().requestFocus();
         }
     }
 
     public void selectNewLevel() {
-        _startGameDialog.setVisible(true);
+        startGameDialog.setVisible(true);
     }
 
     public void finishGame(GameResultEvent result) {
-        _model.finish();
+        model.finish();
         SwingUtilities.invokeLater(() -> {
-            GameOverDialog gameOver = new GameOverDialog(GameFrame.this, result, _field.getUsedSteps(), _field.getMovedBox());
+            GameOverDialog gameOver = new GameOverDialog(GameFrame.this, result, field.getUsedSteps(), field.getMovedBox());
             gameOver.setVisible(true);
         });
-        for (KeyListener kl : _field.getActorWidget().getKeyListeners()) {
-            _field.getActorWidget().removeKeyListener(kl);
+        for (KeyListener kl : field.getActorWidget().getKeyListeners()) {
+            field.getActorWidget().removeKeyListener(kl);
         }
     }
 
     public Game getGameModel() {
-        return _model;
+        return model;
     }
 
     public void startGame() {
-        if (_field != null) {
-            remove(_field);
+        if (field != null) {
+            remove(field);
         }
-        _model.start();
-        _field = FieldFactory.fromGameModel(_model);
-        add(_field, "wrap");
+        model.start();
+        field = FieldFactory.fromGameModel(model);
+        add(field, "wrap");
         repaint();
         revalidate();
         pack();
-        if (_field.getActorWidget() != null) {
-            _field.getActorWidget().requestFocus();
+        if (field.getActorWidget() != null) {
+            field.getActorWidget().requestFocus();
         }
     }
 
@@ -150,6 +150,6 @@ public class GameFrame extends JFrame {
     }
 
     public void selectNextLevel() {
-        _model.nextEnvironment();
+        model.nextEnvironment();
     }
 }
