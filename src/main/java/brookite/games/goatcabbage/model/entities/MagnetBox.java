@@ -41,6 +41,48 @@ public class MagnetBox extends MagneticBox {
         return null;
     }
 
+    private MagnetInteraction checkRepulsion(Direction direction, boolean excludeInteractionWithHooked) {
+        HookedBoxChain thisChain = new HookedBoxChain(this);
+        Cell neighbourCell = cell.neighbour(direction);
+        for (Direction neighbourDir : Direction.values()) {
+            if (!neighbourDir.equals(direction.opposite())) {
+                Cell neighbourForEmptyCell = neighbourCell.neighbour(neighbourDir);
+                if (neighbourForEmptyCell != null && neighbourForEmptyCell.hasSolidEntity()) {
+                    Entity entity = neighbourForEmptyCell.getSolidEntity().get();
+                    if (entity instanceof MagnetBox box) {
+                        MagneticPole otherPole = box.getMagneticPoleByDirection(neighbourDir.opposite());
+                        MagneticPole selfPole = getMagneticPoleByDirection(neighbourDir);
+                        if (selfPole != null && otherPole != null && !otherPole.isOpposite(selfPole)) {
+                            if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                                return MagnetInteraction.NONE;
+                            }
+                            return MagnetInteraction.REPULSION;
+                        } else {
+                            // Случай, если у магнитов полюса параллельны
+                            Direction newDirection = neighbourDir.clockwise();
+                            MagneticPole parallelOtherPole = box.getMagneticPoleByDirection(newDirection);
+                            MagneticPole parallelSelfPole = getMagneticPoleByDirection(newDirection);
+                            if (parallelOtherPole != null && parallelSelfPole != null &&
+                                    !parallelSelfPole.isOpposite(parallelOtherPole)) {
+                                if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                                    return MagnetInteraction.NONE;
+                                }
+                                return MagnetInteraction.REPULSION;
+                            }
+                        }
+                    } else if (entity instanceof MagneticBox box) {
+                        if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
+                            return MagnetInteraction.NONE;
+                        }
+                        return box.canInteract(neighbourDir.opposite()).equals(MagnetInteraction.REPULSION) ? MagnetInteraction.REPULSION : MagnetInteraction.NONE;
+                    }
+                }
+            }
+        }
+
+        return MagnetInteraction.NONE;
+    }
+
     @Override
     protected MagnetInteraction canInteract(Direction direction, boolean excludeInteractionWithHooked) {
         Cell neighbourCell = cell.neighbour(direction);
@@ -49,44 +91,8 @@ public class MagnetBox extends MagneticBox {
             return MagnetInteraction.NONE;
         }
         if (neighbourCell.getSolidEntity().isEmpty()) {
-            // проверка соседних ячеек
-            for (Direction neighbourDir : Direction.values()) {
-                if (!neighbourDir.equals(direction.opposite())) {
-                    Cell neighbourForEmptyCell = neighbourCell.neighbour(neighbourDir);
-                    if (neighbourForEmptyCell != null && neighbourForEmptyCell.hasSolidEntity()) {
-                        Entity entity = neighbourForEmptyCell.getSolidEntity().get();
-                        if (entity instanceof MagnetBox box) {
-                            MagneticPole otherPole = box.getMagneticPoleByDirection(neighbourDir.opposite());
-                            MagneticPole selfPole = getMagneticPoleByDirection(neighbourDir);
-                            if (selfPole != null && otherPole != null && !otherPole.isOpposite(selfPole)) {
-                                if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
-                                    return MagnetInteraction.NONE;
-                                }
-                                return MagnetInteraction.REPULSION;
-                            } else {
-                                // Случай, если у магнитов полюса параллельны
-                                Direction newDirection = neighbourDir.clockwise();
-                                MagneticPole parallelOtherPole = box.getMagneticPoleByDirection(newDirection);
-                                MagneticPole parallelSelfPole = getMagneticPoleByDirection(newDirection);
-                                if (parallelOtherPole != null && parallelSelfPole != null &&
-                                        !parallelSelfPole.isOpposite(parallelOtherPole)) {
-                                    if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
-                                        return MagnetInteraction.NONE;
-                                    }
-                                    return MagnetInteraction.REPULSION;
-                                }
-                            }
-                        } else if (entity instanceof MagneticBox box) {
-                            if (excludeInteractionWithHooked && thisChain.isInOneChain(box)) {
-                                return MagnetInteraction.NONE;
-                            }
-                            return box.canInteract(neighbourDir.opposite()).equals(MagnetInteraction.REPULSION) ? MagnetInteraction.REPULSION : MagnetInteraction.NONE;
-                        }
-                    }
-                }
-            }
-
-            return MagnetInteraction.NONE;
+            // проверка соседних ячеек на возможное отталкивание
+            return checkRepulsion(direction, excludeInteractionWithHooked);
         }
         Entity entity = neighbourCell.getSolidEntity().get();
         if (entity instanceof MagnetBox box) {

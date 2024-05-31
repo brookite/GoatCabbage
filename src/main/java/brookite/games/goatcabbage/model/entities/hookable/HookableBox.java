@@ -79,10 +79,20 @@ public abstract class HookableBox extends Box {
         if (result) {
             // сначала слой переместить
             if (hooked.containsKey(direction.clockwise()) && hooked.get(direction.clockwise()) != null && !movedBoxes.contains(hooked.get(direction.clockwise()))) {
-                hooked.get(direction.clockwise()).moveBoxLayer(direction, movedBoxes);
+                HookableBox box = hooked.get(direction.clockwise());
+                // Проверяем, что придаточные слои (спиралевидная фигура) не мешают
+                if (box.hooked.containsKey(direction) && box.hooked.get(direction) != null && !movedBoxes.contains(box.hooked.get(direction))) {
+                    box.hooked.get(direction).moveBoxLayer(direction, movedBoxes);
+                }
+                box.moveBoxLayer(direction, movedBoxes);
             }
             if (hooked.containsKey(direction.clockwise().opposite()) && hooked.get(direction.clockwise().opposite()) != null && !movedBoxes.contains(hooked.get(direction.clockwise().opposite()))) {
-                hooked.get(direction.clockwise().opposite()).moveBoxLayer(direction, movedBoxes);
+                HookableBox box = hooked.get(direction.clockwise().opposite());
+                // Проверяем, что придаточные слои (спиралевидная фигура) не мешают
+                if (box.hooked.containsKey(direction) && box.hooked.get(direction) != null && !movedBoxes.contains(box.hooked.get(direction))) {
+                    box.hooked.get(direction).moveBoxLayer(direction, movedBoxes);
+                }
+                box.moveBoxLayer(direction, movedBoxes);
             }
             // потом все остальные
             for (HookableBox box : hooked.values()) {
