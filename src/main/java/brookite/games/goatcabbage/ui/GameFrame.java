@@ -139,7 +139,7 @@ public class GameFrame extends JFrame {
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(GameFrame.this, "Не удалось отобразить окно \"Об игре\"", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
-                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\"</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 08.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
+                String text = String.format("<html><h2>GoatCabbage</h2><h4>Игра \"Коза и капуста\", версия 2</h4>Курсовой проект по дисциплине Объектно-ориентированный анализ и программирование<br>Автор: Дмитрий Шашков<br>Дата сборки: 31.05.2024<br><br>В игре использована следующая графика:<br>\n%s</html>", usedGraphics);
                 try {
                     JOptionPane.showMessageDialog(GameFrame.this, text, "Об игре", JOptionPane.PLAIN_MESSAGE, ImageLoader.loadAsScaledIcon("icon.png", 128, 128));
                 } catch (IOException ex) {
